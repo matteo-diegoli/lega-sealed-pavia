@@ -7,8 +7,8 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 0, step 5 (vedere il sito dal telefono)
-- **Prossima azione:** avviare il server con `--host`, consentirlo nel firewall di Windows, aprire l'indirizzo IP del PC dal telefono
+- **Fase attuale:** Fase 0 completata ✅ → inizio Fase 1 (dati e Scryfall)
+- **Prossima azione:** verificare su Scryfall il codice del set Reality Fracture
 - **Ultimo aggiornamento:** 2026-10-23
 
 ---
@@ -50,6 +50,9 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - git 2.55, GitHub CLI 2.103, accesso come **matteo-diegoli** (email noreply di GitHub).
 - Il PC ha un vecchio proxy aziendale (Ariadne) in git globale: in **questo** repository è disattivato con `git config http.proxy ""`.
   Proxy rimosso anche da nvm, npm e WinHTTP (comandi per rimetterlo: vedi sotto).
+- **Sito dal telefono:** `npx.cmd astro dev --host --background`, poi sul telefono `http://192.168.1.90:4321`
+  (IP del PC sul Wi-Fi di casa, rete "Privata"). Scrivere sempre `http://` a mano: con `https://`
+  compare `ERR_SSL_PROTOCOL_ERROR`. Spegnere il server con `npx.cmd astro dev stop`.
 
 ### ❓ Domande aperte (servono dalla Fase 2)
 - Se l'ultimo in classifica era assente, la busta extra va all'ultimo tra i presenti o a nessuno?
@@ -64,7 +67,7 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - [x] 2. Configurazione git (nome ed email già presenti)
 - [x] 3. Accesso a GitHub dal terminale (`gh auth login`)
 - [x] 4. Creazione progetto Astro, `npm install`, `git init`, primo avvio, primo commit
-- [ ] 5. Vedere il sito dal telefono sulla stessa rete Wi-Fi
+- [x] 5. Vedere il sito dal telefono sulla stessa rete Wi-Fi
 
 ### Fase 1 – Dati e Scryfall
 - [ ] Verifica del codice set di Reality Fracture su Scryfall
