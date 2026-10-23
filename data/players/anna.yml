@@ -3,86 +3,130 @@
 nome: Anna Bianchi
 pool:
   serata-1:
-    - Afterthought Sentry
-    - Apex Witchstalker
-    - Arni, Renowned Champion
+    - 2 Afterthought Sentry
+    - Archive Arbiter
     - Artifist Acumen
-    - Blessed Ghoul
-    - Bloombrute
+    - Awaken the Inferno
+    - 2 Bestial Incursion
     - 3 Blossom-Blessed Angel // Seed Suture
     - Budding Insurgent
-    - Chandra's Emberling
+    - Cast Away Doubt
+    - 2 Chandra's Emberling
     - Charge the Sanctum
     - Compel Brutality
+    - Desperate Futurescribe
+    - Diviner of Victory // Unwind History
     - Eardrum Rattler
-    - Extended Absence
-    - Fatehold Annex
-    - 2 Fatehold Chronologist // Peer Review
-    - Fateshaper Aspirant
-    - Generous Revival
-    - 3 Graft Surgeon
+    - Entrust the Spark
+    - Fatehold Chronologist // Peer Review
+    - 2 Formidable Commons
+    - Ghalta the Unstoppable
+    - Greenhouse Propagator
     - Heartstring Puller
-    - Hexhaven Battalion
-    - Hexhaven Invigorator
-    - 2 Icy Reception
-    - 2 Infinite Coursework
-    - Inspired Tethermage
-    - Jace, Reality Sculptor
+    - Hungering Puppetbeast
+    - 3 Icy Reception
+    - 2 Inspired Tethermage
+    - Kindred Judgment
+    - Kiora of Salt and Sand
     - Konstrari Annex
-    - 2 Last Gasp
-    - Marwyn, the Clearcutter
-    - Massacre Girl, Most Wanted
-    - Medic's Kitesail
+    - Last Gasp
+    - Living Library
+    - Loot, the Nexus
+    - Mabel, Valley Hero
+    - Marwyn, the Preserver
     - 2 Memory Trap
-    - Murmuring Volume
+    - Meticulous Commons
+    - Multiply by Zero
     - No Admittance
-    - 3 Predictive Preparations
-    - Pyre Rhymer // Molten Tide
-    - Rank Rat
+    - Pia, Determined Rebuilder
+    - Predictive Preparations
+    - Primal Witchstalker
+    - Prophesied End
+    - Rampart Hunter
+    - Recursive Recruitment
     - Rewrite Regrets
-    - Rockfall Vale
-    - Screeching Soulbreaker
-    - Shatterwing Pegasus
-    - Shipwreck Marsh
+    - 2 Screeching Soulbreaker
     - Silence the Echo
+    - 2 Skilled Battlecarver
     - Solve for Disappointment
-    - 2 Something Worth Saving
+    - Something Worth Saving
     - Sphinx's Approach
-    - Stingerquill Annex
-    - Stingerquill Charm
-    - Surgical Precision
-    - 2 Tam's Resistance
+    - 2 Stingerquill Annex
+    - Sureshot Sower
+    - 2 Surgical Precision
+    - Surveillance Phantasm
+    - Tam's Resistance
     - Tether Technician
+    - Tethermage's Advantage
     - Tetsuko Umezawa, Pursuer
     - Theorist's Proxy
-    - 2 Theorix Annex
     - Theorix Metamage // Omit Variables
-    - 2 Twinned Vision
+    - Tomik, Izzet Sparkmage
+    - 2 Transformative Commons
+    - Twinned Vision
+    - Unflinching Hortimancer
+    - Verdant Kraken
+    - Warrior's Blades
+    - Way of the Necromancer
+    - Winter, Tormented Loner
+    - 3 Wrecking Gecko
+  serata-2:
+    - Arcane Amphisbaena
+    - Blazing Crescendo
+    - Blessed Ghoul
+    - Deserted Beach
+    - Extended Absence
+    - Fateshaper Aspirant
+    - Geist of Saint Thalia
+    - Hallway Heckler // Vicious Verse
+    - Pia, Aether Ascetic
+    - Rampart Hunter
+    - Stingerquill Charm
+    - Unflinching Hortimancer
+    - Vinelasher Adept
+    - Whiplash Wordsmith // Vicious Verse
+  serata-3:
+    - Afterthought Sentry
+    - Charge the Sanctum
+    - Emergency Phytomedic // Seed Suture
+    - Fblthp, Impossibly Lost
+    - Gardenize
+    - Jiang Yanggu, Never Alone
+    - Protege's Awakening
+    - Ruric Thar, Biomagus
+    - Silence the Echo
+    - Twinned Vision
+    - Undulating Witness
     - Unflinching Hortimancer
     - Unsummon
-    - Vigorbloom Charm
-    - Vigorbloom Vanguard // Seed Suture
-    - Violent Echoes
-    - Warrior's Blades
-    - Way of the Mentor
-    - Whiplash Wordsmith // Vicious Verse
-    - Winter, Team Player
-    - Woodwork Prodigy // Soul Tether
-    - Wrath of the Bloodmane
-    - Yargle, Glutton of Urborg
-    - 2 Yuriko, Hope from the Shadows
-  serata-2:
-    - Awaken the Inferno
+    - Wrecking Gecko
+  serata-4:
+    - Blessed Ghoul
+    - Budding Insurgent
     - Campus Crier
-    - Charge the Sanctum
-    - Hexhaven Dueling Arena
-    - Inspired Tethermage
-    - Keeper of the Quiet Hour
-    - Kiora of Fire and Ashes
-    - Mind Meanderer
-    - Puppet Crafting
-    - Room of Refuge
-    - Surgical Precision
-    - Surveillance Phantasm
+    - Draconic Visitor
+    - Edgar, Ancient Bloodlord
+    - Eye of Jace
+    - Hexhaven Battalion
+    - Infinite Coursework
+    - Last Gasp
+    - Loot, the Anomaly
+    - Mindseeker Oculus
+    - Rampart Hunter
+    - Theorix Annex
+    - Unflinching Hortimancer
+  serata-5:
+    - Bestial Incursion
+    - Blessed Ghoul
+    - Compel Brutality
+    - Dedicated Commons
+    - Geist of Saint Thalia
+    - Proft, Sinister Mastermind
+    - Protege's Awakening
+    - Pyre Rhymer // Molten Tide
+    - Stingerquill Annex
     - Theorix Metamage // Omit Variables
     - Twinned Vision
+    - Undulating Witness
+    - Unflinching Hortimancer
+    - Vigorbloom Vanguard // Seed Suture

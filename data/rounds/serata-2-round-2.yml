@@ -4,11 +4,11 @@ serata: 2
 round: 2
 
 partite:
-  - giocatori: [anna, dario]
-    risultato: 2-0
-  - giocatori: [elena, carla]
-    risultato: 1-2
-  - giocatori: [fabio, bruno]
+  - giocatori: [giulia, carla]
     risultato: 0-2
+  - giocatori: [anna, fabio]
+    risultato: 0-2
+  - giocatori: [bruno, elena]
+    risultato: 2-1
 
-bye: giulia
+bye: dario

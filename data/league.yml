@@ -1,6 +1,7 @@
 # Dati generali della lega.
 # Le date si scrivono AAAA-MM-GG; null = data non ancora decisa.
 # assenti: identificativi di chi non c'era, es. [anna, bruno] (vuoto = tutti presenti).
+# ATTENZIONE: date e assenti delle serate dalla 2 in poi sono FITTIZI (npm run genera-prova).
 
 nome: Lega Sealed Pavia
 set: fra   # codice Scryfall di Reality Fracture
@@ -11,13 +12,13 @@ serate:
     assenti: []
   - numero: 2
     data: 2026-10-29   # FITTIZIA: rimettere null con i dati veri
-    assenti: [marco]
+    assenti: [marco]   # FITTIZI
   - numero: 3
-    data: 2026-11-01
+    data: 2026-11-05   # FITTIZIA: rimettere null con i dati veri
     assenti: []
   - numero: 4
-    data: null
-    assenti: []
+    data: 2026-11-12   # FITTIZIA: rimettere null con i dati veri
+    assenti: [elena]   # FITTIZI
   - numero: 5
-    data: null
+    data: 2026-11-19   # FITTIZIA: rimettere null con i dati veri
     assenti: []

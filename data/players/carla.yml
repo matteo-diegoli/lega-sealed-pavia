@@ -3,102 +3,132 @@
 nome: Carla Russo
 pool:
   serata-1:
-    - 2 Academic Ascent
-    - Afterthought Sentry
-    - Apex Witchstalker
+    - 2 Afterthought Sentry
     - Arcane Amphisbaena
     - Archive Arbiter
-    - 3 Artifist Acumen
-    - Awaken the Inferno
     - Blessed Ghoul
-    - Countersculpt
+    - Bloombrute
+    - 2 Blossom-Blessed Angel // Seed Suture
+    - Campus Crier
+    - Cast Away Doubt
+    - Dedicated Commons
+    - Deserted Beach
     - Divining Duelist
-    - 2 Extended Absence
+    - Eardrum Rattler
+    - Emergency Phytomedic // Seed Suture
     - Fatehold Chronologist // Peer Review
     - Fateshaper Aspirant
     - Ferocity of the Hunt
-    - Formidable Commons
-    - Ghalta the Unstoppable
-    - Graft Surgeon
-    - 2 Hallway Heckler // Vicious Verse
-    - Haunted Ridge
-    - 3 Heartstring Puller
-    - Hexhaven Battalion
+    - Fulminous Forte
+    - Gallia, the Merrymaker
+    - Germinate Recruits
+    - 2 Graft Surgeon
+    - Greenhouse Propagator
+    - Heartstring Puller
+    - 2 Hexhaven Battalion
+    - 2 Icy Reception
+    - Infinite Coursework
+    - Innovative Commons
     - Inspired Tethermage
-    - Keeper of the Quiet Hour
-    - Kiora of Salt and Sand
-    - Konstrari Annex
-    - Konstrari Charm
-    - Konstrari Improviser // Soul Tether
-    - Lich's Relic
+    - Jace, Reality Sculptor
+    - Karn, Argent Defender
+    - Kiora of Fire and Ashes
     - Living Library
-    - Lyra, Archangel of Dawn
-    - Medic's Kitesail
-    - Mind Meanderer
-    - Omnipresence
-    - Predictive Preparations
-    - Prophesied End
-    - Protege's Awakening
-    - 2 Rampart Hunter
-    - Room of Refuge
-    - Ruric Thar, Biomagus
-    - Saheeli, Jewel of Avishkar
-    - 2 Screeching Soulbreaker
+    - 2 Mabel, Valley Hero
+    - Massacre Girl, Most Wanted
+    - 2 Medic's Kitesail
+    - Memory Trap
+    - Meticulous Commons
+    - Mindseeker Oculus
+    - Pompous Battlemage // Improvised Act
+    - 3 Protege's Awakening
+    - Prudent Fateseer // Peer Review
+    - Rampart Hunter
+    - 2 Rank Rat
+    - Recursive Recruitment
+    - Ruric Thar, Magecrusher
     - Semester Foreseer // Peer Review
-    - Something Worth Saving
-    - Sphinx's Approach
-    - Surgical Precision
+    - 2 Sphinx's Approach
+    - Stingerquill Voxmancer // Vicious Verse
+    - Stinging Vitriol
+    - 2 Sureshot Sower
+    - 2 Surgical Precision
     - Surveillance Phantasm
-    - Tam's Resistance
-    - Tether Technician
-    - Tetsuko Umezawa, Fugitive
-    - 2 Theoretical Necromancer
+    - 2 Tether Technician
+    - Tethermage's Advantage
+    - Theoretical Necromancer
     - Theorix Annex
     - Theorix Metamage // Omit Variables
-    - 2 Transformative Commons
-    - Twisted Fates
-    - Uldaros Theorix
-    - Unflinching Hortimancer
+    - Tinybones, Pocket Nuisance
+    - Tomik, Orzhov Lawmage
+    - Transformative Commons
+    - 2 Unflinching Hortimancer
     - Unsummon
     - Vigorbloom Annex
-    - 2 Vinelasher Adept
-    - 2 Void Extrapolator // Omit Variables
-    - Vraska's Final Mercy
-    - 2 Way of the Necromancer
+    - Vinelasher Adept
+    - Violent Echoes
+    - Warrior's Blades
+    - Way of the Necromancer
     - Way of the Pyromancer
-    - Way of the Wildspeaker
     - Whiplash Wordsmith // Vicious Verse
     - Wrath of the Bloodmane
-    - Wrecking Gecko
-    - Yargle, Goliath of Otaria
-    - Yoshimaru, Scrappy Stray
-    - Your Fate Ends Here
   serata-2:
-    - Chandra's Emberling
-    - Clash of Elements
-    - Fateshaper Aspirant
-    - Formidable Commons
-    - Ghalta the Unstoppable
-    - Grim Repriser
-    - Icy Reception
-    - Keeper of the Quiet Hour
-    - Konstrari Improviser // Soul Tether
-    - Koth, the Geomancer
-    - Last Gasp
-    - Living Library
-    - Murmuring Volume
-    - No Admittance
-    - Predictive Preparations
-    - Protege's Awakening
-    - Pyre Rhymer // Molten Tide
-    - Skilled Battlecarver
-    - Solve for Disappointment
-    - Stinging Vitriol
-    - Surgical Precision
+    - Afterthought Sentry
+    - Arni, Renowned Champion
+    - Blazing Crescendo
+    - Blessed Ghoul
+    - Divining Duelist
+    - Fblthp, Knows the Way
+    - Graft Surgeon
+    - Rank Rat
+    - Shatterwing Pegasus
+    - Shipwreck Marsh
+    - Stingerquill Annex
+    - Surveillance Phantasm
     - Tam's Resistance
+    - Way of the Mentor
+  serata-3:
+    - Academic Ascent
+    - Bestial Incursion
+    - Chandra, Torch of Defiance
+    - Dedicated Commons
+    - Infinite Coursework
+    - Inspired Tethermage
+    - Last Gasp
+    - Loot, the Anomaly
+    - Mabel, Valley Hero
+    - Room of Refuge
+    - Saheeli, Jewel of Avishkar
+    - Theoretical Necromancer
+    - Vigorbloom Annex
+    - Wrecking Gecko
+  serata-4:
+    - Apex Witchstalker
+    - Awaken the Inferno
+    - Bestial Incursion
+    - Budding Insurgent
+    - Chandra's Emberling
+    - Flourishing Grapple
+    - Living Library
+    - Meticulous Commons
+    - Overgrown Farmland
+    - Prudent Fateseer // Peer Review
+    - Rewrite Regrets
+    - Solve for Disappointment
     - Theorix Metamage // Omit Variables
-    - Undulating Witness
+    - Vinelasher Adept
+  serata-5:
+    - Apex Witchstalker
+    - Cast Away Doubt
+    - Chandra's Emberling
+    - Dedicated Commons
+    - Divining Duelist
+    - Formidable Commons
+    - Living Library
+    - Mabel, Bitter Recluse
+    - Plan for All Outcomes
+    - Puppet Crafting
+    - Transformative Commons
+    - Traxos, Academy Guardian
     - Unflinching Hortimancer
     - Unsummon
-    - Violent Echoes
-    - Yargle, Goliath of Otaria

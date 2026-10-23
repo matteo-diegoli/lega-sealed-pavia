@@ -4,81 +4,129 @@ nome: Bruno Ferrari
 pool:
   serata-1:
     - Academic Ascent
-    - 2 Afterthought Sentry
-    - Ajani's Anguish
+    - Apex Witchstalker
     - Arcane Amphisbaena
+    - Archive Arbiter
     - Artifist Acumen
-    - Awaken the Inferno
-    - 3 Bestial Incursion
-    - Blessed Ghoul
-    - Budding Insurgent
-    - 2 Campus Crier
+    - 2 Bestial Incursion
+    - Bloombrute
+    - 2 Blossom-Blessed Angel // Seed Suture
+    - Cast Away Doubt
     - Compel Brutality
     - Countersculpt
-    - Desperate Futurescribe
-    - 2 Eardrum Rattler
-    - Emergency Phytomedic // Seed Suture
-    - Entrust the Spark
-    - Fateshaper Aspirant
+    - Cryotheory Adept
+    - 3 Eardrum Rattler
+    - 2 Extended Absence
+    - Extrapolate the Impossible
+    - Fatehold Chronologist // Peer Review
     - Ferocity of the Hunt
-    - Formidable Commons
-    - Gallia, the Merrymaker
-    - Generous Revival
     - Graft Surgeon
-    - Grim Repriser
-    - Hallway Heckler // Vicious Verse
-    - 2 Hexhaven Battalion
-    - Hungering Puppetbeast
+    - Greenhouse Propagator
+    - 2 Grim Repriser
+    - Heartstring Puller
+    - Heartwood Crafter // Soul Tether
     - 2 Icy Reception
-    - Infinite Coursework
-    - Inspired Tethermage
-    - Konstrari Annex
-    - 2 Konstrari Improviser // Soul Tether
+    - 3 Innovative Commons
     - Koth of the Homestead
+    - 2 Last Gasp
     - Living Library
-    - Mabel, Valley Hero
-    - 2 Memory Trap
+    - Memory Trap
+    - Meticulous Commons
+    - Mindseeker Oculus
+    - Murmuring Volume
     - 2 No Admittance
+    - Null Summoner
     - Pia, Determined Rebuilder
+    - Predictive Preparations
     - Proft, Consulting Detective
     - Protege's Awakening
-    - Pyre Rhymer // Molten Tide
-    - Rampart Hunter
+    - Prudent Fateseer // Peer Review
     - Rank Rat
+    - Refute Destiny
+    - Repurposed Enforcer
+    - Rewrite Regrets
     - Room of Refuge
-    - Samut, Hazoret's Champion
-    - 3 Screeching Soulbreaker
-    - 2 Silence the Echo
+    - Saheeli, Consul of Oversight
+    - Screeching Soulbreaker
+    - Semester Foreseer // Peer Review
+    - Silence the Echo
     - 2 Skilled Battlecarver
-    - 2 Stingerquill Annex
-    - 2 Sureshot Sower
+    - 2 Something Worth Saving
+    - Sphinx's Approach
+    - Surveillance Phantasm
+    - 2 Tam's Resistance
+    - Tarmogoyf
+    - Tether Technician
+    - Tetsuko Umezawa, Fugitive
+    - Thalia, the Survivor
+    - The Theorist, Jace Beleren
+    - 2 Theorix Annex
+    - 2 Twinned Vision
+    - 2 Undulating Witness
+    - Unflinching Hortimancer
+    - Vinelasher Adept
+    - Vraska, the Cutting Glare
+    - Way of the Cryomancer
+    - Way of the Healer
+    - Whiplash Wordsmith // Vicious Verse
+    - Winter, Tormented Loner
+  serata-2:
+    - Cast Away Doubt
+    - Charge the Sanctum
+    - Compel Brutality
+    - Extended Absence
+    - Hexhaven Battalion
+    - Inspired Tethermage
+    - Keeper of the Quiet Hour
+    - Koth, the Geomancer
+    - Lich's Relic
+    - Medic's Kitesail
+    - Proft, Sinister Mastermind
+    - Protege's Awakening
+    - Surveillance Phantasm
+    - Tomik, Orzhov Lawmage
+  serata-3:
+    - Academic Ascent
+    - Craftwork Crusher
+    - Cryotheory Adept
+    - Entrust the Spark
+    - Greenhouse Propagator
+    - Inspired Tethermage
+    - Konstrari Annex
+    - Mindseeker Oculus
+    - Perfected Theory
+    - Shatterwing Pegasus
+    - Sphinx's Approach
+    - Surgical Precision
+    - Theorix Annex
+    - Titanbones, Towering Heart
+  serata-4:
+    - Extended Absence
+    - Konstrari Annex
+    - No Admittance
+    - Paradox Shaper // Omit Variables
+    - Rank Rat
+    - Silence the Echo
+    - Skilled Battlecarver
+    - Sphinx's Approach
     - Tam's Resistance
     - Tenured Tethermage
-    - 2 Tether Technician
-    - Tetsuko Umezawa, Pursuer
-    - 2 Teyo, Diamondblade Mage
-    - Theorix Metamage // Omit Variables
+    - Tether Technician
+    - Teyo, Diamondblade Mage
     - Twinned Vision
-    - Twisted Fates
-    - Undulating Witness
-    - 3 Void Extrapolator // Omit Variables
-    - Way of the Deathbringer
-    - Way of the Mentor
-    - Yoshimaru, Beloved Companion
-    - Yoshimaru, Scrappy Stray
-    - Yuriko, Hope from the Shadows
-  serata-2:
+    - Winter, Team Player
+  serata-5:
     - Afterthought Sentry
-    - Ferocity of the Hunt
-    - Formidable Commons
-    - Medic's Kitesail
-    - Predictive Preparations
-    - Rank Rat
-    - Restore with Empathy
-    - Ruric Thar, Biomagus
+    - Bestial Incursion
+    - Dedicated Commons
+    - Edgar, Moonlit Sovereign
+    - Fateshaper Aspirant
+    - Hallway Heckler // Vicious Verse
+    - Heartstring Puller
+    - Konstrari Improviser // Soul Tether
+    - Sanctum Lurker
     - Semester Foreseer // Peer Review
-    - Tam's Resistance
-    - Theorist's Proxy
-    - Twinned Vision
-    - Vigorbloom Annex
-    - Yoshimaru, Scrappy Stray
+    - Shatterwing Pegasus
+    - Void Extrapolator // Omit Variables
+    - Warrior's Blades
+    - Way of the Cryomancer

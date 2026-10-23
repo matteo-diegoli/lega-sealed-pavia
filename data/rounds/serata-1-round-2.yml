@@ -4,13 +4,13 @@ serata: 1
 round: 2
 
 partite:
-  - giocatori: [anna, bruno]
+  - giocatori: [fabio, bruno]
+    risultato: 2-1
+  - giocatori: [giulia, anna]
+    risultato: 1-1-1
+  - giocatori: [dario, elena]
     risultato: 2-1
   - giocatori: [carla, marco]
-    risultato: 0-2
-  - giocatori: [dario, giulia]
-    risultato: 2-0
-  - giocatori: [elena, fabio]
-    risultato: 0-2
+    risultato: 2-1
 
 bye: null

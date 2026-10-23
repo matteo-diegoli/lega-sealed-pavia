@@ -7,8 +7,8 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 2 (motore della lega): classifica, abbinamenti e buste fatti ✅
-- **Prossima azione:** proporre il piano dei dati di prova che simulano tutte e 5 le serate (ultimo punto della Fase 2), e aspettare l'ok.
+- **Fase attuale:** Fase 2 (motore della lega) **completata** ✅
+- **Prossima azione:** Fase 3, primo punto: proporre 2 direzioni di stile (con una pagina di esempio ciascuna) e aspettare la scelta dell'utente.
 - **Ultimo aggiornamento:** 2026-10-23
 
 ---
@@ -114,10 +114,9 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       build non va su Internet). Immagini: solo link a Scryfall. `npm run controlla` verifica i nomi senza
       Internet (maiuscole/accenti ignorati, basta la prima faccia delle carte doppie, suggerisce il nome giusto).
       Codice in `src/lib/carte/`, 47 test in tutto.
-- [x] 8 giocatori fittizi con pool realistici e 2 serate giocate: `npm run genera-prova` (seme fisso,
-      non sovrascrive senza `-- --forza`). Buste semplificate: 1 rara (1/8 mitica), 3 non comuni, 10 comuni,
-      niente terre base. Serata 2 fittizia il 2026-10-29 con Marco assente (bye a chi doveva giocare con lui),
-      busta extra a Carla (ultima dopo la serata 1). Abbinamenti a girone, **non** svizzeri.
+- [x] 8 giocatori fittizi con pool realistici: `npm run genera-prova` (seme fisso, non sovrascrive senza `-- --forza`).
+      Buste semplificate: 1 rara (1/8 mitica), 3 non comuni, 10 comuni, niente terre base.
+      (In Fase 2 è stato rifatto per simulare tutte e 5 le serate con abbinamenti svizzeri.)
 
 ### Fase 2 – Motore della lega
 - [x] Classifica "al termine della serata X", tie-breaker: `src/lib/lega/classifica.ts` (12 test, 59 in tutto),
@@ -128,7 +127,12 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       (9 test, 83 in tutto), `npm run buste` (prossima serata) o `npm run buste -- 3`. La busta extra si decide solo
       quando la serata precedente ha tutti i risultati. Anche `genera-prova` usa questo modulo.
 - [x] `npm run pair` (e `npm run pair -- --prova`)
-- [ ] Test automatici + dati di prova che simulano tutte e 5 le serate
+- [x] Test automatici + dati di prova che simulano tutte e 5 le serate: `src/lib/lega/simulazione.ts` gioca la lega
+      con il motore vero (abbinamenti svizzeri, buste) e risultati casuali ripetibili (seme 2026, senza rivincite).
+      Assenze fittizie: Marco alla serata 2, Elena alla 4. `npm run genera-prova -- --forza` crea la lega completa;
+      `npm run genera-prova -- --fino-a 3 --forza` la ferma al termine della serata 3 con il round successivo da giocare
+      (utile in Fase 4 per vedere il sito a metà lega). 13 test della catena intera (95 in tutto); ai test delle
+      200 leghe simulate dato un limite di 30 secondi (ne servono circa 8, il limite di Vitest era 5).
 
 ### Fase 3 – Design
 - [ ] 2 direzioni di stile con una pagina di esempio ciascuna → scelta dell'utente
@@ -161,7 +165,8 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 ### Fase 9 – Documentazione
 - [ ] `GUIDA.md`: checklist di ogni serata, finale, aggiunta giocatori, pubblicazione anche da telefono, cosa fare se la build fallisce
 - [ ] Come sostituire i dati fittizi con quelli veri (inclusa la serata 1 del 22/10).
-      Ricordarsi: in `data/league.yml` la data della serata 2 e `assenti: [marco]` sono **fittizi**.
+      Ricordarsi: in `data/league.yml` date e assenti delle serate 2–5 sono **fittizi** (segnati con `# FITTIZIA`):
+      con i dati veri rimettere `data: null` e `assenti: []` e cancellare i file fittizi in `data/players/` e `data/rounds/`.
 
 ---
 

@@ -4,85 +4,135 @@ nome: Fabio Marino
 pool:
   serata-1:
     - Academic Ascent
-    - Bestial Incursion
-    - 2 Blessed Ghoul
-    - Campus Crier
-    - Cast Away Doubt
-    - Charge the Sanctum
-    - 2 Cryotheory Adept
+    - 2 Afterthought Sentry
+    - Apex Witchstalker
+    - Archive Arbiter
+    - 2 Awaken the Inferno
+    - Blazing Crescendo
+    - Blessed Ghoul
+    - Budding Insurgent
+    - Chandra's Emberling
+    - Cryotheory Adept
+    - Dedicated Commons
     - Desperate Futurescribe
-    - Diviner of Victory // Unwind History
     - Divining Duelist
+    - Eardrum Rattler
     - Emergency Phytomedic // Seed Suture
-    - Face Yourself
-    - 2 Fatehold Annex
-    - Fateshaper Aspirant
-    - 3 Ferocity of the Hunt
-    - Gallia, the Merrymaker
-    - Gardenize
-    - Ghalta the Unstoppable
-    - 2 Hall of Echoes
-    - 2 Hallway Heckler // Vicious Verse
+    - 4 Extended Absence
+    - Fatehold Annex
+    - Fblthp, Knows the Way
+    - Ferocity of the Hunt
+    - Germinate Recruits
+    - 2 Graft Surgeon
+    - Grim Repriser
     - Heartstring Puller
-    - Hexhaven Dueling Arena
-    - 2 Icy Reception
+    - Hexhaven Battalion
+    - Hunter's Axe
     - Innovative Commons
-    - Jiang Yanggu, Never Alone
-    - Konstrari Annex
-    - Konstrari Charm
-    - Konstrari Improviser // Soul Tether
+    - Inspired Tethermage
+    - Jace's Machinations
+    - Keeper of the Quiet Hour
+    - Kiora of Fire and Ashes
+    - Koth of the Homestead
     - Last Gasp
     - Living Library
-    - Loot, the Nexus
+    - Massacre Girl, Most Wanted
     - Medic's Kitesail
-    - Memory Trap
     - Meticulous Commons
-    - Mindseeker Oculus
-    - Murmuring Volume
-    - Pia, Aether Ascetic
-    - Pia, Determined Rebuilder
-    - 2 Rampart Hunter
-    - Refute Destiny
-    - 3 Room of Refuge
-    - Ruric Thar, Biomagus
-    - Saheeli, Jewel of Avishkar
+    - Mind Meanderer
+    - No Admittance
+    - Paradox Shaper // Omit Variables
+    - Predictive Preparations
+    - Protege's Awakening
+    - Rampart Hunter
+    - Rank Rat
+    - Rescue Girl, First Responder
+    - Sanctum Lurker
     - Screeching Soulbreaker
     - Semester Foreseer // Peer Review
-    - Shipwreck Marsh
-    - 2 Silence the Echo
-    - Skilled Battlecarver
-    - 2 Solve for Disappointment
     - Something Worth Saving
-    - Sphinx's Approach
     - Stingerquill Annex
-    - Stingerquill Voxmancer // Vicious Verse
     - Sureshot Sower
-    - 2 Surgical Precision
     - Surveillance Phantasm
-    - Teyo, Lightshield Expert
+    - Terminal Criticism
+    - Teyo, Diamondblade Mage
     - Theoretical Necromancer
-    - Theorix Metamage // Omit Variables
-    - Tinybones, Pocket Nuisance
-    - Traxos, Scourge Eternal
-    - Twinned Vision
-    - 3 Undulating Witness
-    - Unflinching Hortimancer
+    - Theorist's Proxy
+    - Theorist's Sanctum
+    - Theorix Annex
+    - 2 Theorix Metamage // Omit Variables
+    - Titanbones, Towering Heart
+    - 2 Twinned Vision
+    - Undulating Witness
+    - Unsummon
     - Vigorbloom Annex
-    - Violent Echoes
+    - Vigorbloom Charm
+    - 2 Vinelasher Adept
+    - 2 Void Extrapolator // Omit Variables
+    - Vraska's Final Mercy
+    - Way of the Cryomancer
+    - Way of the Mentor
     - Way of the Necromancer
     - Whiplash Wordsmith // Vicious Verse
+    - 2 Wrath of the Bloodmane
+    - Wrecking Gecko
   serata-2:
-    - Diviner of Victory // Unwind History
-    - Emergency Phytomedic // Seed Suture
-    - Hapatra, the Desert Fang
-    - Hexhaven Battalion
-    - Memory Trap
-    - Ruric Thar, Biomagus
-    - Silence the Echo
-    - Stingerquill Charm
-    - Surgical Precision
-    - Tam's Resistance
-    - Tethermage's Advantage
-    - Void Extrapolator // Omit Variables
+    - Bestial Incursion
+    - Blazing Crescendo
+    - Blessed Ghoul
+    - Chandra's Emberling
+    - Fateshaper Aspirant
+    - Hunter's Axe
+    - Innovative Commons
+    - Mindseeker Oculus
+    - Saheeli, Jewel of Avishkar
+    - Semester Foreseer // Peer Review
+    - Stinging Vitriol
+    - Sureshot Sower
+    - Tether Technician
+    - Yoshimaru, Scrappy Stray
+  serata-3:
+    - Awaken the Inferno
+    - Dedicated Commons
+    - Eardrum Rattler
+    - Konstrari Improviser // Soul Tether
+    - Marwyn, the Clearcutter
+    - Perfected Theory
+    - Rampart Hunter
+    - Samut, Hazoret's Champion
+    - Sphinx's Approach
+    - Sureshot Sower
+    - Theorix Charm
+    - Theorix Metamage // Omit Variables
     - Wrath of the Bloodmane
     - Wrecking Gecko
+  serata-4:
+    - Budding Insurgent
+    - Campus Crier
+    - Command the Stage
+    - Dedicated Commons
+    - Emergency Phytomedic // Seed Suture
+    - Ferocity of the Hunt
+    - Formidable Commons
+    - Hexhaven Battalion
+    - Lich's Relic
+    - Precise Redaction
+    - Sureshot Sower
+    - Tethermage's Advantage
+    - Tetsuko Umezawa, Fugitive
+    - Undulating Witness
+  serata-5:
+    - Awaken the Inferno
+    - Blessed Ghoul
+    - Budding Insurgent
+    - Compel Brutality
+    - Emergency Phytomedic // Seed Suture
+    - Grim Repriser
+    - Icy Reception
+    - Mindseeker Oculus
+    - Predictive Preparations
+    - Prophesied End
+    - The Echoverse Fulcrum
+    - Undulating Witness
+    - Unflinching Hortimancer
+    - Yoshimaru, Scrappy Stray

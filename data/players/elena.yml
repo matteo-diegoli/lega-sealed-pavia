@@ -3,86 +3,150 @@
 nome: Elena Ricci
 pool:
   serata-1:
-    - Afterthought Sentry
-    - Arcane Amphisbaena
-    - 3 Artifist Acumen
+    - Academic Ascent
+    - Apex Witchstalker
+    - 2 Arcane Amphisbaena
     - Awaken the Inferno
-    - Blessed Ghoul
-    - Campus Crier
-    - Cast Away Doubt
+    - Bestial Incursion
     - Chandra's Emberling
+    - Charge the Sanctum
     - Compel Brutality
-    - 2 Cryotheory Adept
-    - Darklight Phoenix
-    - 2 Dedicated Commons
-    - Emergency Phytomedic // Seed Suture
+    - Countersculpt
+    - Cruel Calculations
+    - Cryotheory Adept
+    - Desperate Futurescribe
+    - Eardrum Rattler
     - Extended Absence
-    - Fatehold Annex
     - Fatehold Chronologist // Peer Review
-    - Ferocity of the Hunt
+    - 2 Ferocity of the Hunt
     - Gardenize
     - Geist of Saint Thalia
     - Generous Revival
-    - Hexhaven Battalion
-    - 2 Icy Reception
-    - Infinite Coursework
-    - Konstrari Charm
-    - Konstrari Improviser // Soul Tether
-    - Last Gasp
-    - 3 Living Library
-    - Loot, the Anomaly
-    - 2 Memory Trap
-    - Multiply by Zero
-    - 2 Murmuring Volume
-    - Paradox Shaper // Omit Variables
-    - 2 Protege's Awakening
-    - Prudent Fateseer // Peer Review
-    - Repurposed Enforcer
-    - Rewrite Regrets
-    - Ruric Thar, Biomagus
-    - Saheeli, Consul of Oversight
-    - Samut, Hazoret's Champion
-    - Samut, Tyrant of Naktamun
+    - 2 Ghalta the Unstoppable
+    - Graft Surgeon
+    - Hallway Heckler // Vicious Verse
+    - Hapatra, the Desert Fang
+    - 2 Hexhaven Battalion
+    - Hungering Puppetbeast
+    - 4 Infinite Coursework
+    - Innovative Commons
+    - 3 Inspired Tethermage
+    - Jiang Yanggu, Never Alone
+    - Konstrari Annex
+    - Living Library
+    - Marwyn, the Preserver
+    - Medic's Kitesail
+    - Mindseeker Oculus
+    - No Admittance
+    - Perfected Theory
+    - Pia, Determined Rebuilder
+    - Proft, Sinister Mastermind
+    - Protege's Awakening
+    - Rampart Hunter
+    - Refute Destiny
+    - 2 Roiling Canopy
     - 2 Screeching Soulbreaker
     - Semester Foreseer // Peer Review
-    - Shatterwing Pegasus
+    - 4 Shatterwing Pegasus
     - Silence the Echo
+    - Solve for Disappointment
     - Sphinx's Approach
-    - Stingerquill Annex
-    - Stingerquill Charm
-    - Stingerquill Voxmancer // Vicious Verse
-    - Surgical Precision
     - Surveillance Phantasm
-    - Tam's Resistance
-    - Tenured Tethermage
     - 2 Tether Technician
-    - Tetsuko Umezawa, Fugitive
+    - Teyo, Diamondblade Mage
     - 2 Theoretical Necromancer
-    - Theorix Metamage // Omit Variables
-    - Tinybones, Pocket Nuisance
-    - Tomik, Izzet Sparkmage
+    - Theorix Annex
     - Transformative Commons
-    - Traxos, Academy Guardian
-    - Traxos, Scourge Eternal
+    - 2 Undulating Witness
     - Unflinching Hortimancer
     - Unsummon
-    - Vigorbloom Annex
-    - 3 Void Extrapolator // Omit Variables
-    - 2 Whiplash Wordsmith // Vicious Verse
-    - Woodwork Prodigy // Soul Tether
+    - Vinelasher Adept
+    - Violent Echoes
+    - Void Extrapolator // Omit Variables
+    - Vraska, the Cutting Glare
+    - Way of the Deathbringer
+    - Way of the Paradox
+    - Whiplash Wordsmith // Vicious Verse
     - Wrath of the Bloodmane
+    - Wrecking Gecko
+    - Yargle, Glutton of Urborg
   serata-2:
-    - Apex Witchstalker
-    - Countersculpt
-    - Danitha, Spear of Agony
-    - Ferocity of the Hunt
-    - Formidable Commons
-    - Konstrari Annex
-    - Memory Trap
-    - Murmuring Volume
-    - No Admittance
-    - Primal Witchstalker
+    - Academic Ascent
+    - Blazing Crescendo
+    - Blossom-Blessed Angel // Seed Suture
+    - Budding Insurgent
+    - Chandra's Emberling
+    - Compel Brutality
+    - Divining Duelist
+    - Fatehold Chronologist // Peer Review
+    - Frostbite Pyromental
+    - Hallway Heckler // Vicious Verse
+    - Hapatra, the Desert Frost
+    - 2 Infinite Coursework
+    - Inspired Tethermage
+    - Kindred Judgment
+    - Last Gasp
+    - Living Library
+    - Precise Redaction
+    - Protege's Awakening
     - Semester Foreseer // Peer Review
-    - Theorist's Sanctum
+    - Silence the Echo
+    - Tam's Resistance
+    - Theorix Metamage // Omit Variables
+    - Tomik, Orzhov Lawmage
     - Transformative Commons
-    - Undulating Witness
+    - Yargle, Glutton of Urborg
+    - Yargle, Goliath of Otaria
+    - Yuriko, Hope from the Shadows
+  serata-3:
+    - Artifist Acumen
+    - Bestial Incursion
+    - Blessed Ghoul
+    - 2 Blossom-Blessed Angel // Seed Suture
+    - Clash of Elements
+    - Command the Stage
+    - Emergency Phytomedic // Seed Suture
+    - Germinate Recruits
+    - Gideon the Oathless
+    - Hexhaven Dueling Arena
+    - Icy Reception
+    - 2 Konstrari Improviser // Soul Tether
+    - Last Gasp
+    - Medic's Kitesail
+    - Mind Meanderer
+    - Room of Refuge
+    - Something Worth Saving
+    - Surgical Precision
+    - Theoretical Necromancer
+    - 2 Transformative Commons
+    - Unflinching Hortimancer
+    - Unsummon
+    - Vigorbloom Charm
+    - Way of the Paradox
+    - Whiplash Wordsmith // Vicious Verse
+  serata-5:
+    - Afterthought Sentry
+    - Arcane Amphisbaena
+    - Artifist Acumen
+    - Charge the Sanctum
+    - Countersculpt
+    - Fatehold Annex
+    - Hallway Heckler // Vicious Verse
+    - Heartstring Puller
+    - Hexhaven Dueling Arena
+    - Inspired Tethermage
+    - Medic's Kitesail
+    - 2 Meticulous Commons
+    - Rank Rat
+    - Rescue Girl, First Responder
+    - Room of Refuge
+    - Saheeli, Consul of Oversight
+    - Shatterwing Pegasus
+    - Sureshot Sower
+    - Tam's Resistance
+    - 2 Tenured Tethermage
+    - 2 Tethermage's Advantage
+    - Unflinching Hortimancer
+    - Vigorbloom Annex
+    - Woodwork Prodigy // Soul Tether
+    - Yoshimaru, Beloved Companion

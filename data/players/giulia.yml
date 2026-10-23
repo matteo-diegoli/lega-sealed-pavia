@@ -3,87 +3,129 @@
 nome: Giulia Greco
 pool:
   serata-1:
-    - Ajani's Anguish
-    - Apex Witchstalker
     - Arcane Amphisbaena
-    - Artifist Acumen
+    - Archive Arbiter
+    - Arni, Humble Scribe
     - Awaken the Inferno
-    - Blazing Crescendo
-    - Blessed Ghoul
-    - 2 Campus Crier
-    - 2 Cast Away Doubt
-    - 3 Command the Stage
-    - Countersculpt
-    - Dedicated Commons
-    - Draconic Visitor
+    - 2 Blazing Crescendo
+    - 2 Blessed Ghoul
+    - Campus Crier
+    - Cast Away Doubt
+    - Darklight Phoenix
     - Eardrum Rattler
-    - Emergency Phytomedic // Seed Suture
-    - 2 Extended Absence
-    - Face Yourself
+    - 3 Emergency Phytomedic // Seed Suture
+    - Extrapolate the Impossible
     - Fatehold Annex
+    - 2 Fatehold Charm
     - Fatehold Chronologist // Peer Review
     - Fateshaper Aspirant
+    - Fblthp, Knows the Way
     - Ferocity of the Hunt
     - Formidable Commons
-    - Generous Revival
-    - Ghalta the Immovable
-    - 2 Graft Surgeon
-    - Hapatra, the Desert Fang
+    - Graft Surgeon
+    - 2 Greenhouse Propagator
+    - 2 Guiding Hydra
+    - Hallway Heckler // Vicious Verse
     - Heartstring Puller
     - Hexhaven Battalion
-    - Hunter's Axe
-    - Innovative Commons
-    - Karn, Gilded Guardian
+    - Icy Reception
+    - Infinite Coursework
+    - Inspired Tethermage
+    - Karn, Argent Defender
     - Keeper of the Quiet Hour
     - 2 Konstrari Annex
-    - Konstrari Improviser // Soul Tether
-    - Last Gasp
     - Living Library
+    - Marwyn, the Preserver
+    - 2 Massacre Girl, Most Wanted
     - Medic's Kitesail
-    - 2 Memory Trap
-    - Mindseeker Oculus
+    - Mind Meanderer
     - 2 No Admittance
     - Predictive Preparations
-    - Protege's Awakening
-    - 2 Rampart Hunter
+    - Prudent Fateseer // Peer Review
+    - Rampart Hunter
     - Rank Rat
+    - Restore with Empathy
     - Room of Refuge
-    - Saheeli, Consul of Oversight
-    - 2 Shipwreck Marsh
+    - 2 Semester Foreseer // Peer Review
+    - Shatterwing Pegasus
     - Silence the Echo
-    - 2 Solve for Disappointment
-    - Something Worth Saving
-    - Sureshot Sower
-    - Surveillance Phantasm
-    - Terminal Criticism
-    - Thalia, the Survivor
-    - Theoretical Necromancer
-    - Theorix Annex
-    - Theorix Metamage // Omit Variables
-    - Tomik, Orzhov Lawmage
-    - 3 Traxos, Scourge Eternal
+    - Solve for Disappointment
+    - Sphinx's Approach
+    - 2 Stingerquill Annex
+    - Stingerquill Voxmancer // Vicious Verse
+    - Stinging Vitriol
+    - Tam's Resistance
+    - 2 Terminal Criticism
+    - 2 Theorix Annex
+    - Titanbones, Towering Heart
+    - Transformative Commons
     - Twinned Vision
-    - Unflinching Hortimancer
-    - Unsummon
-    - Vigorbloom Annex
-    - Violent Echoes
-    - 2 Void Extrapolator // Omit Variables
-    - Warrior's Blades
-    - Way of the Mind Sculptor
+    - 2 Unsummon
+    - 3 Vinelasher Adept
+    - Void Extrapolator // Omit Variables
+    - Way of the Mentor
+    - Way of the Necromancer
+    - Way of the Wildspeaker
+    - 2 Whiplash Wordsmith // Vicious Verse
     - Wrath of the Bloodmane
     - Wrecking Gecko
   serata-2:
-    - Ajani's Anguish
-    - Blessed Ghoul
-    - Craftwork Crusher
-    - Extended Absence
-    - Fatehold Annex
-    - Flourishing Grapple
-    - Memory Trap
-    - Rampart Hunter
+    - Fatehold Chronologist // Peer Review
+    - Ghalta the Unstoppable
+    - Graft Surgeon
+    - Greenhouse Propagator
+    - Hapatra, the Desert Frost
+    - Hexhaven Battalion
+    - Kiora of Fire and Ashes
+    - No Admittance
+    - Overwrite the Multiverse
+    - Protege's Awakening
+    - Room of Refuge
+    - Surgical Precision
+    - Twinned Vision
+    - Vigorbloom Annex
+  serata-3:
+    - Desperate Futurescribe
+    - Emergency Phytomedic // Seed Suture
+    - Fateshaper Aspirant
+    - Formidable Commons
+    - Graft Surgeon
+    - Heartstring Puller
+    - Jace's Machinations
+    - Medic's Kitesail
+    - Screeching Soulbreaker
+    - Sureshot Sower
+    - Surgical Precision
+    - Vinelasher Adept
+    - Way of the Paradox
+    - Yoshimaru, Beloved Companion
+  serata-4:
+    - Arcane Amphisbaena
+    - Cryotheory Adept
+    - Gideon the Oathless
+    - Living Library
+    - Paradox Shaper // Omit Variables
+    - Protege's Awakening
     - Rank Rat
-    - Teyo, Lightshield Expert
+    - Something Worth Saving
+    - Sphinx's Approach
+    - Stingerquill Charm
+    - Surveillance Phantasm
     - Undulating Witness
-    - Unflinching Hortimancer
     - Unsummon
-    - Wrecking Gecko
+    - Way of the Mind Sculptor
+  serata-5:
+    - Compel Brutality
+    - Cryotheory Adept
+    - Dark Matter Manipulator
+    - Divining Duelist
+    - Emergency Phytomedic // Seed Suture
+    - Fateshaper Aspirant
+    - Formidable Commons
+    - Jiang Yanggu, Never Alone
+    - Kiora of Fire and Ashes
+    - Plan for All Outcomes
+    - Semester Foreseer // Peer Review
+    - Tam's Resistance
+    - Theoretical Necromancer
+    - Whiplash Wordsmith // Vicious Verse

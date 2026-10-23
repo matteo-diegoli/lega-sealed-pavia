@@ -170,7 +170,8 @@ function coppieDelCiclo(dati: DatiLega, dal: number, al: number): string[] {
     .flatMap((r) => r.partite.map((p) => chiaveCoppia(...p.giocatori)));
 }
 
-describe('leghe simulate', () => {
+// 200 leghe da 10 round l'una richiedono diversi secondi: il limite di 5 secondi di Vitest non basta.
+describe('leghe simulate', { timeout: 30_000 }, () => {
   it('senza assenze: mai rivincite nei cicli e tutti si affrontano nel ciclo 1', () => {
     for (let seme = 1; seme <= 200; seme++) {
       const { dati, avvisi } = simula(seme, () => []);
