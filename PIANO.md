@@ -7,11 +7,12 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 6 **completata** ✅ (step 3: `llms.txt` e `/api/*.json`).
-- **Prossima azione:** proporre il piano della Fase 7 (qualità: axe, Lighthouse, guida TalkBack/VoiceOver) e aspettare l'ok.
+- **Fase attuale:** Fase 7, step 1 **completato** ✅ (controllo axe con `npm run accessibilita`).
+- **Prossima azione:** step 2 – Lighthouse su mobile (misurare le pagine principali, correggere fino a ≥ 90,
+  poi proporre all'utente se serve un comando che si fermi sotto 90 o basta un controllo una tantum).
 - `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
-- **Ultimo aggiornamento:** 2026-10-23 (Fase 6, step 3)
+- **Ultimo aggiornamento:** 2026-10-23 (Fase 7, step 1)
 
 ---
 
@@ -245,7 +246,14 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       classifica in breve, link a pagine e JSON. I 4 file sono salvati anche dal service worker. 5 test nuovi (138 in tutto).
 
 ### Fase 7 – Qualità
-- [ ] axe nella GitHub Action (la build fallisce con errori AA)
+- [x] axe (la build fallisce con errori AA) — `npm run accessibilita` = build + `scripts/accessibilita.ts`:
+      avvia `astro preview` (porta 4329), apre con **Playwright** (Chromium, scaricato con `npx.cmd playwright install chromium`)
+      tutte le pagine di `pagineDelSito()` in tema scuro/chiaro × telefono (390 px)/PC (1280 px); per i giocatori anche
+      vista immagini e (telefono) pannello filtri aperto: 92 controlli. Regole WCAG 2.0/2.1/2.2 A e AA, messaggi di axe
+      in italiano, service worker bloccato, immagini Scryfall bloccate (niente rete). Esce con errore se trova problemi.
+      **Da collegare alla GitHub Action in Fase 8** (lì servirà `npx playwright install --with-deps chromium`).
+      Unico problema trovato e corretto: righe delle serate saltate nella pagina giocatore con `opacity: 0.7` → contrasto
+      insufficiente; ora bordo tratteggiato e sfondo trasparente, senza trasparenza del testo.
 - [ ] Lighthouse ≥ 90 su mobile
 - [ ] Guida al test manuale con TalkBack / VoiceOver
 

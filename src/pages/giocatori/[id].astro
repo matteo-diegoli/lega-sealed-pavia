@@ -230,7 +230,9 @@ const sigleEsito: Record<Esito, string> = {
 		letter-spacing: 0.08em;
 		color: var(--testo-tenue);
 	}
+	/* Serata saltata: riga "vuota" (bordo tratteggiato, niente sfondo). Niente trasparenza: il testo tenue perderebbe contrasto. */
 	.assente {
-		opacity: 0.7;
+		background: transparent;
+		border-style: dashed;
 	}
 </style>
