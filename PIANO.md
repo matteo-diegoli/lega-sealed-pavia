@@ -7,8 +7,8 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 2 (motore della lega): classifica e abbinamenti fatti ✅
-- **Prossima azione:** proporre il piano della busta extra (ultimo tra i presenti) e del recupero della busta per gli assenti, e aspettare l'ok.
+- **Fase attuale:** Fase 2 (motore della lega): classifica, abbinamenti e buste fatti ✅
+- **Prossima azione:** proporre il piano dei dati di prova che simulano tutte e 5 le serate (ultimo punto della Fase 2), e aspettare l'ok.
 - **Ultimo aggiornamento:** 2026-10-23
 
 ---
@@ -21,8 +21,11 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - **Buste:** 6 alla serata 1, poi 1 a ogni serata successiva.
 - **Busta extra:** 1 busta in più all'**ultimo in classifica** al termine della serata precedente (dalla serata 2 in poi; parità → decidono i tie-breaker).
   **Non spetta** a chi ha saltato la serata precedente: va all'**ultimo in classifica tra i presenti** alla serata precedente.
-- **Assenti:** chi salta una serata **recupera la busta normale** di quella serata alla serata successiva in cui è presente
-  (es. assente alla 2 → alla 3 riceve 2 buste).
+  Se l'ultimo **è assente alla serata in cui la riceverebbe**, passa al penultimo (e così via) (deciso il 2026-10-23).
+  La busta extra non si recupera.
+- **Assenti:** chi salta una o più serate **riceve tutte le buste normali saltate** alla prima serata in cui si presenta
+  (es. assente alla 2 → alla 3 riceve 2 buste; assente alla 1 → alla 2 riceve 6 + 1 = 7 buste).
+  Chi è assente alla finale non recupera niente (non ci sono serate dopo).
 - **2 round a serata = 10 round in totale.**
 
 | Serata | Round | Tipo | Punti |
@@ -121,7 +124,9 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       `npm run classifica` (attuale) o `npm run classifica -- 2` (al termine della serata 2)
 - [x] Abbinamenti svizzeri con backtracking, cicli 1 e 2, bye, moltiplicatore ×2: `src/lib/lega/abbinamenti.ts`
       (15 test, tra cui 400 leghe simulate con e senza assenze; 74 test in tutto). Aiuti per i test in `src/lib/lega/prova.ts`
-- [ ] Busta extra all'ultimo tra i presenti + recupero della busta per chi è stato assente
+- [x] Busta extra all'ultimo tra i presenti + recupero delle buste per chi è stato assente: `src/lib/lega/buste.ts`
+      (9 test, 83 in tutto), `npm run buste` (prossima serata) o `npm run buste -- 3`. La busta extra si decide solo
+      quando la serata precedente ha tutti i risultati. Anche `genera-prova` usa questo modulo.
 - [x] `npm run pair` (e `npm run pair -- --prova`)
 - [ ] Test automatici + dati di prova che simulano tutte e 5 le serate
 

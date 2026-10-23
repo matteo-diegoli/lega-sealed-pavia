@@ -7,6 +7,8 @@ import { dump } from 'js-yaml';
 import type { Carta } from '../src/lib/carte/carta.ts';
 import { controllaDati, leggiCacheCarte } from '../src/lib/dati/carica.ts';
 import { FILE_LEGA } from '../src/lib/dati/valida.ts';
+import { busteDellaSerata } from '../src/lib/lega/buste.ts';
+import { type PartitaBreve, lega as legaDiProva, round as roundDiProva } from '../src/lib/lega/prova.ts';
 
 const GIOCATORI = [
   { id: 'anna', nome: 'Anna Bianchi' },
@@ -123,11 +125,17 @@ function genera(seme: number, perRarita: Record<string, Carta[]>) {
     rounds.push({ serata: 2, round: r - 1, partite, bye });
   }
 
-  // Pool: 6 buste alla serata 1; alla serata 2 una busta ai presenti, più una all'ultimo dopo la serata 1.
+  // Pool: le buste di ogni serata seguono le regole della lega (src/lib/lega/buste.ts).
+  const datiLega = legaDiProva(
+    ids,
+    rounds.map((r) => roundDiProva((r.serata - 1) * 2 + r.round, r.partite.map((p): PartitaBreve => [p.a, p.b, p.risultato]), r.bye)),
+    [[], [ASSENTE_SERATA_2]],
+  );
+  const buste = [1, 2].map((serata) => new Map(busteDellaSerata(datiLega, serata).giocatori.map((g) => [g.id, g.totale])));
   const pool = new Map(
     ids.map((id) => {
-      const serata1 = Array.from({ length: 6 }, () => busta(perRarita, rnd)).flat();
-      const buste2 = id === ASSENTE_SERATA_2 ? 0 : id === ultimo ? 2 : 1;
+      const serata1 = Array.from({ length: buste[0]!.get(id)! }, () => busta(perRarita, rnd)).flat();
+      const buste2 = buste[1]!.get(id)!;
       const serata2 = Array.from({ length: buste2 }, () => busta(perRarita, rnd)).flat();
       return [id, { serata1, serata2 }];
     }),

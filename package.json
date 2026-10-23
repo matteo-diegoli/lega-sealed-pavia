@@ -12,6 +12,7 @@
     "genera-prova": "node scripts/genera-prova.ts",
     "classifica": "node scripts/classifica.ts",
     "pair": "node scripts/pair.ts",
+    "buste": "node scripts/buste.ts",
     "prebuild": "npm run controlla",
     "build": "astro build",
     "preview": "astro preview",
