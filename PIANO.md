@@ -7,11 +7,12 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 7, step 2 **completato** ✅ (Lighthouse: 100 su velocità, accessibilità, buone pratiche).
-- **Prossima azione:** step 3 – scrivere `docs/TEST-LETTORE-SCHERMO.md` (guida passo per passo a TalkBack e VoiceOver).
+- **Fase attuale:** Fase 7 **completata** ✅ (axe, Lighthouse, guida al lettore di schermo).
+- **Prossima azione:** proporre il piano della Fase 8 (repository GitHub, primo push, Action con build + `npm run accessibilita`
+  + deploy su Pages, verifica online) e aspettare l'ok.
 - `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
-- **Ultimo aggiornamento:** 2026-10-23 (Fase 7, step 2)
+- **Ultimo aggiornamento:** 2026-10-23 (Fase 7, step 3)
 
 ---
 
@@ -257,12 +258,15 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       Playwright via `CHROME_PATH`) su `astro preview`: Home, Match e giocatore → **100** velocità, accessibilità e buone
       pratiche (LCP 1,1–1,4 s, TBT ≈ 0, CLS 0, 25–46 kB). SEO 60 solo per il `noindex` voluto: va bene così.
       **Deciso dall'utente: controllo una tantum**, niente comando fisso. **Da ripetere online in Fase 8.**
-- [ ] Guida al test manuale con TalkBack / VoiceOver
+- [x] Guida al test manuale con TalkBack / VoiceOver — `docs/TEST-LETTORE-SCHERMO.md`: accendere/spegnere (con le
+      scorciatoie: tasti del volume su Android, triplo clic del tasto laterale su iPhone), gesti di base, lista di controlli
+      per barra in alto, Home, Match, pagina giocatore e pool, ognuno con cosa si deve sentire. La pagina offline è esclusa
+      (il service worker salva tutte le pagine alla prima visita: non si vede quasi mai). **Prova vera in Fase 8.**
 
 ### Fase 8 – Rilascio
 - [ ] Repository su GitHub e primo push
-- [ ] GitHub Action per build e deploy su Pages
-- [ ] Verifica online + installazione su iPhone e Android (+ rimisurare Lighthouse sul sito online)
+- [ ] GitHub Action per build e deploy su Pages (con `npm run accessibilita`: `npx playwright install --with-deps chromium`)
+- [ ] Verifica online + installazione su iPhone e Android (+ rimisurare Lighthouse sul sito online, + prova con TalkBack/VoiceOver seguendo `docs/TEST-LETTORE-SCHERMO.md`)
 - [ ] (facoltativo) dominio personalizzato
 
 ### Fase 9 – Documentazione
