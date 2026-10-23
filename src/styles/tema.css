@@ -1,0 +1,122 @@
+/*
+ * Colori e misure del sito (stile "Arena", scelto in Fase 3).
+ * Tema scuro di base; il tema chiaro usa gli stessi nomi di variabile.
+ * Il tema segue l'impostazione del dispositivo, a meno che l'utente non l'abbia
+ * scelto con il pulsante (attributo data-tema="chiaro" o "scuro" su <html>).
+ */
+
+:root {
+	/* Superfici e testo */
+	--sfondo: #0e1117;
+	--superficie: #171b24;
+	--superficie-alta: #1f2531;
+	--bordo: #2a3140;
+	--testo: #e9edf4;
+	--testo-tenue: #9aa4b5;
+
+	/* Accenti: la sfumatura viola → turchese è il "marchio" del sito */
+	--accento: #8b7cff;
+	--accento-2: #3ad6c5;
+	--sfumatura: linear-gradient(90deg, var(--accento), var(--accento-2));
+	--su-accento: #0b0d12;
+
+	/* Finale ×2 e podio */
+	--oro: #f2c14e;
+	--argento: #c3cbd8;
+	--bronzo: #d4895a;
+	--su-medaglia: #14110a;
+
+	/* Esiti */
+	--vittoria: #4ade80;
+	--sconfitta: #f87171;
+
+	/* Colori del mana (pallini) */
+	--mana-w: #f6eecb;
+	--mana-u: #4a9be8;
+	--mana-b: #a48fb3;
+	--mana-r: #ef5a3c;
+	--mana-g: #3fb46a;
+
+	/* Bagliore delle illustrazioni e ombre */
+	--bagliore: 0 0 6px rgb(139 124 255 / 0.55);
+	--ombra: 0 6px 16px rgb(0 0 0 / 0.5);
+	--sfondo-testata:
+		radial-gradient(60rem 20rem at 10% -20%, rgb(139 124 255 / 0.35), transparent 70%),
+		radial-gradient(40rem 18rem at 100% 0%, rgb(58 214 197 / 0.2), transparent 70%);
+
+	/* Icona del pulsante del tema: nel tema scuro si vede il sole (per passare al chiaro) */
+	--vedi-sole: inline;
+	--vedi-luna: none;
+
+	/* Misure */
+	--raggio: 12px;
+	--raggio-piccolo: 6px;
+	--larghezza: 60rem;
+	--carattere: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+	color-scheme: dark;
+}
+
+/* Tema chiaro: scelto dal dispositivo (se l'utente non ha forzato lo scuro)… */
+@media (prefers-color-scheme: light) {
+	:root:not([data-tema='scuro']) {
+		--sfondo: #f3f4f9;
+		--superficie: #ffffff;
+		--superficie-alta: #e9ecf3;
+		--bordo: #d5dae4;
+		--testo: #131722;
+		--testo-tenue: #525c6c;
+		--accento: #5a48e0;
+		--accento-2: #0b8a7f;
+		--su-accento: #ffffff;
+		--oro: #f2c14e;
+		--argento: #c9d0dc;
+		--bronzo: #e09a6c;
+		--vittoria: #15803d;
+		--sconfitta: #c0262d;
+		--mana-w: #efe3b0;
+		--mana-u: #2f7fcf;
+		--mana-b: #5d4a6b;
+		--mana-r: #d8432a;
+		--mana-g: #26904f;
+		--bagliore: none;
+		--ombra: 0 4px 12px rgb(19 23 34 / 0.15);
+		--sfondo-testata:
+			radial-gradient(60rem 20rem at 10% -20%, rgb(90 72 224 / 0.18), transparent 70%),
+			radial-gradient(40rem 18rem at 100% 0%, rgb(11 138 127 / 0.12), transparent 70%);
+		--vedi-sole: none;
+		--vedi-luna: inline;
+		color-scheme: light;
+	}
+}
+
+/* …oppure scelto con il pulsante (stessi valori di sopra) */
+:root[data-tema='chiaro'] {
+	--sfondo: #f3f4f9;
+	--superficie: #ffffff;
+	--superficie-alta: #e9ecf3;
+	--bordo: #d5dae4;
+	--testo: #131722;
+	--testo-tenue: #525c6c;
+	--accento: #5a48e0;
+	--accento-2: #0b8a7f;
+	--su-accento: #ffffff;
+	--oro: #f2c14e;
+	--argento: #c9d0dc;
+	--bronzo: #e09a6c;
+	--vittoria: #15803d;
+	--sconfitta: #c0262d;
+	--mana-w: #efe3b0;
+	--mana-u: #2f7fcf;
+	--mana-b: #5d4a6b;
+	--mana-r: #d8432a;
+	--mana-g: #26904f;
+	--bagliore: none;
+	--ombra: 0 4px 12px rgb(19 23 34 / 0.15);
+	--sfondo-testata:
+		radial-gradient(60rem 20rem at 10% -20%, rgb(90 72 224 / 0.18), transparent 70%),
+		radial-gradient(40rem 18rem at 100% 0%, rgb(11 138 127 / 0.12), transparent 70%);
+	--vedi-sole: none;
+	--vedi-luna: inline;
+	color-scheme: light;
+}

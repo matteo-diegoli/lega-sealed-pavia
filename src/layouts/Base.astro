@@ -1,0 +1,140 @@
+---
+// Layout comune a tutte le pagine: <head>, intestazione con il pulsante del tema, piè di pagina.
+import '../styles/tema.css';
+import '../styles/base.css';
+import Emblema from '../components/Emblema.astro';
+
+interface Props {
+	/** Titolo della pagina (finisce nella scheda del browser). */
+	titolo: string;
+	descrizione?: string;
+}
+const { titolo, descrizione = 'Classifica, abbinamenti e pool della Lega Sealed di Pavia.' } = Astro.props;
+const NOME_SITO = 'Lega Sealed Pavia';
+const titoloCompleto = titolo === NOME_SITO ? titolo : `${titolo} · ${NOME_SITO}`;
+---
+
+<html lang="it">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex, nofollow" />
+		<meta name="description" content={descrizione} />
+		<meta name="color-scheme" content="dark light" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{titoloCompleto}</title>
+		<!-- Applica subito il tema scelto con il pulsante, prima di disegnare la pagina (niente lampi di colore). -->
+		<script is:inline>
+			try {
+				const tema = localStorage.getItem('tema');
+				if (tema === 'chiaro' || tema === 'scuro') document.documentElement.dataset.tema = tema;
+			} catch {}
+		</script>
+	</head>
+	<body>
+		<a class="salta" href="#contenuto">Vai al contenuto</a>
+
+		<header class="barra">
+			<div class="contenitore barra-interno">
+				<a class="marchio" href="/">
+					<Emblema dimensione={32} />
+					<span>{NOME_SITO}</span>
+				</a>
+				<button type="button" class="cambia-tema" aria-label="Cambia tema: chiaro o scuro" title="Cambia tema">
+					<svg class="icona-sole" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+						<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+							<circle cx="12" cy="12" r="4.5" />
+							<path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" />
+						</g>
+					</svg>
+					<svg class="icona-luna" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+						<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+					</svg>
+				</button>
+			</div>
+		</header>
+
+		<main id="contenuto">
+			<slot />
+		</main>
+
+		<footer class="piede">
+			<div class="contenitore">
+				<p>{NOME_SITO} · set Reality Fracture</p>
+				<p class="legale">
+					Sito amatoriale non ufficiale. Magic: The Gathering è un marchio di Wizards of the Coast.
+					Immagini delle carte da <a href="https://scryfall.com">Scryfall</a>.
+				</p>
+			</div>
+		</footer>
+
+		<script>
+			// Pulsante del tema: passa al tema opposto a quello visibile e se lo ricorda.
+			const pulsante = document.querySelector<HTMLButtonElement>('.cambia-tema');
+			pulsante?.addEventListener('click', () => {
+				const radice = document.documentElement;
+				const attuale = radice.dataset.tema ?? (matchMedia('(prefers-color-scheme: light)').matches ? 'chiaro' : 'scuro');
+				const nuovo = attuale === 'chiaro' ? 'scuro' : 'chiaro';
+				radice.dataset.tema = nuovo;
+				try {
+					localStorage.setItem('tema', nuovo);
+				} catch {
+					// Navigazione privata o archiviazione bloccata: il tema vale solo per questa pagina.
+				}
+			});
+		</script>
+	</body>
+</html>
+
+<style>
+	.barra {
+		border-bottom: 1px solid var(--bordo);
+		background: var(--superficie);
+	}
+	.barra-interno {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		min-height: 3.5rem;
+	}
+	.marchio {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6rem;
+		color: var(--testo);
+		text-decoration: none;
+		font-weight: 800;
+		letter-spacing: -0.01em;
+	}
+	.cambia-tema {
+		display: grid;
+		place-items: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: 50%;
+		border: 1px solid var(--bordo);
+		background: var(--superficie-alta);
+		color: var(--testo);
+		cursor: pointer;
+	}
+	.icona-sole {
+		display: var(--vedi-sole);
+	}
+	.icona-luna {
+		display: var(--vedi-luna);
+	}
+	.piede {
+		margin-top: 3rem;
+		padding: 1.5rem 0 2rem;
+		border-top: 1px solid var(--bordo);
+		color: var(--testo-tenue);
+		font-size: 0.85rem;
+	}
+	.piede p {
+		margin: 0.25rem 0;
+	}
+	.legale {
+		font-size: 0.75rem;
+	}
+</style>

@@ -7,9 +7,11 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 3 (design): stile scelto (**B – Arena**), manca il secondo punto
-- **Prossima azione:** Fase 3, secondo punto: proporre il piano per variabili CSS comuni, tema scuro/chiaro
-  e illustrazioni SVG di Pavia nello stile Arena, e aspettare l'ok.
+- **Fase attuale:** Fase 3 (design) **completata** ✅
+- **Prossima azione:** Fase 4, primo punto: proporre il piano della Home / Classifica (tabella + schede su mobile,
+  evoluzione per serata, ×2 della finale) usando `Base.astro` e la vetrina attuale come riferimento, e aspettare l'ok.
+- Domanda in sospeso: la cartella `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore)
+  contiene le foto dei pool veri? Chiarire prima di sostituire i dati fittizi (Fase 9).
 - **Ultimo aggiornamento:** 2026-10-23
 
 ---
@@ -151,7 +153,13 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ### Fase 3 – Design
 - [x] 2 direzioni di stile con una pagina di esempio ciascuna → scelto **B – Arena** (vedi "Stile")
-- [ ] Illustrazioni SVG originali di Pavia, variabili CSS, tema scuro/chiaro
+- [x] Illustrazioni SVG originali di Pavia, variabili CSS, tema scuro/chiaro:
+      `src/styles/tema.css` (variabili: scuro di base, chiaro con gli stessi nomi; segue il dispositivo o il pulsante),
+      `src/styles/base.css` (scheda, badge, mana, pulsanti, `.solo-lettori`, focus), `src/layouts/Base.astro`
+      (noindex, barra con emblema e pulsante sole/luna ricordato in `localStorage`, piè di pagina con avviso legale),
+      `src/components/SkylinePavia.astro` (Castello Visconteo, torri, San Michele, Duomo, Ponte Coperto, Ticino),
+      `src/components/Emblema.astro` (carta con torre: base per l'icona dell'app in Fase 6).
+      `src/pages/index.astro` è una vetrina provvisoria dello stile, da sostituire con la classifica in Fase 4.
 
 ### Fase 4 – Pagine
 - [ ] Home / Classifica (tabella + card su mobile, evoluzione per serata, ×2 della finale)

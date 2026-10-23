@@ -1,0 +1,122 @@
+---
+// Skyline di Pavia disegnato a linee luminose (disegno originale, stile "Arena").
+// Da sinistra: Castello Visconteo, torri medievali, San Michele, cupola del Duomo,
+// altre torri e il Ponte Coperto sul Ticino con la cappella al centro.
+// Decorativo: nascosto ai lettori di schermo.
+
+interface Props {
+	class?: string;
+}
+const { class: classe } = Astro.props;
+
+// Identificativo unico per la sfumatura (più skyline nella stessa pagina non si disturbano).
+const id = `skyline-${Math.random().toString(36).slice(2, 8)}`;
+
+const BASE = 196; // linea del terreno
+const ACQUA = 228; // pelo dell'acqua del Ticino
+
+/** Torre medievale: rettangolo stretto e alto con una finestrella. */
+const torre = (x: number, larghezza: number, cima: number) =>
+	`M${x} ${BASE} V${cima} H${x + larghezza} V${BASE} ` +
+	`M${x + larghezza / 2 - 2} ${cima + 14} v8 h4 v-8 Z`;
+
+/** Merlatura su una linea orizzontale, da x1 a x2 all'altezza y. */
+const merli = (x1: number, x2: number, y: number, passo = 10) => {
+	let d = `M${x1} ${y}`;
+	for (let x = x1; x < x2; x += passo) d += ` v-6 h${passo / 2} v6 h${passo / 2}`;
+	return d;
+};
+
+// Ponte Coperto: 5 arcate con piloni, galleria con colonnine, tetto e cappella centrale.
+const PONTE_DA = 640;
+const PONTE_A = 1160;
+const ARCATA = 92;
+const PILONE = 12;
+let archi = '';
+for (let i = 0; i < 5; i++) {
+	const x = PONTE_DA + PILONE / 2 + i * (ARCATA + PILONE);
+	archi += `M${x} ${ACQUA} V214 Q${x + ARCATA / 2} 186 ${x + ARCATA} 214 V${ACQUA} `;
+}
+let colonnine = '';
+for (let x = PONTE_DA + 20; x < PONTE_A; x += 26) {
+	if (x > 868 && x < 932) continue; // spazio della cappella
+	colonnine += `M${x} ${BASE} V178 `;
+}
+const ponte =
+	`M${PONTE_DA} ${BASE} H${PONTE_A} ` + // impalcato
+	`M${PONTE_DA - 10} 178 L${PONTE_DA + 6} 166 H${PONTE_A - 6} L${PONTE_A + 10} 178 Z ` + // tetto
+	`M876 166 V140 L900 122 L924 140 V166 ` + // cappella
+	`M894 166 v-14 a6 6 0 0 1 12 0 v14`; // porta della cappella
+
+const castello =
+	`M60 ${BASE} V150 H180 V${BASE} ` +
+	merli(60, 180, 150) +
+	` M44 ${BASE} V128 H80 V${BASE} ` +
+	merli(44, 80, 128, 9) +
+	` M160 ${BASE} V128 H196 V${BASE} ` +
+	merli(160, 196, 128, 9) +
+	` M110 ${BASE} v-22 a10 10 0 0 1 20 0 v22`; // portone
+
+const sanMichele =
+	`M340 ${BASE} V132 L390 102 L440 132 V${BASE} ` +
+	`M380 ${BASE} v-26 a10 10 0 0 1 20 0 v26 ` + // portale
+	`M390 126 m-9 0 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0 ` + // rosone
+	`M356 140 v40 M424 140 v40`; // lesene
+
+const duomo =
+	`M478 ${BASE} V142 H632 V${BASE} ` + // corpo
+	`M508 142 V116 H602 V142 ` + // tamburo
+	`M500 116 Q500 54 555 50 Q610 54 610 116 ` + // cupola
+	`M528 66 Q540 86 540 116 M582 66 Q570 86 570 116 ` + // costoloni
+	`M548 50 V34 H562 V50 M555 34 V22 M550 27 H560`; // lanterna e croce
+
+const torri = [
+	torre(222, 16, 56),
+	torre(254, 12, 98),
+	torre(292, 20, 36),
+	torre(650, 14, 74),
+	torre(1004, 16, 70),
+	torre(1046, 12, 104),
+	torre(1088, 18, 48),
+].join(' ');
+
+const fiume = `M0 ${ACQUA + 4} q25 -5 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0`;
+---
+
+<svg
+	class:list={['skyline', classe]}
+	viewBox="0 0 1200 240"
+	preserveAspectRatio="xMidYMax slice"
+	aria-hidden="true"
+	focusable="false"
+>
+	<defs>
+		<linearGradient id={id} x1="0" x2="1" y1="0" y2="0">
+			<stop offset="0" style="stop-color: var(--accento)" />
+			<stop offset="1" style="stop-color: var(--accento-2)" />
+		</linearGradient>
+	</defs>
+	<g fill="none" stroke={`url(#${id})`} stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+		<path class="riempito" d={`${castello} ${torri} ${sanMichele} ${duomo}`} />
+		<path d={`M0 ${BASE} H${PONTE_DA}`} />
+		<path class="riempito" d={`${ponte} ${archi}`} />
+		<path d={colonnine} stroke-width="1.5" />
+		<path class="fiume" d={fiume} stroke-width="1.5" />
+	</g>
+</svg>
+
+<style>
+	.skyline {
+		display: block;
+		width: 100%;
+		height: auto;
+		filter: drop-shadow(var(--bagliore));
+	}
+	.riempito {
+		fill: var(--superficie);
+		fill-opacity: 0.6;
+	}
+	.fiume {
+		opacity: 0.6;
+	}
+</style>
