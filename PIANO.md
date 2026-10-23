@@ -7,12 +7,11 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 7, step 1 **completato** ✅ (controllo axe con `npm run accessibilita`).
-- **Prossima azione:** step 2 – Lighthouse su mobile (misurare le pagine principali, correggere fino a ≥ 90,
-  poi proporre all'utente se serve un comando che si fermi sotto 90 o basta un controllo una tantum).
+- **Fase attuale:** Fase 7, step 2 **completato** ✅ (Lighthouse: 100 su velocità, accessibilità, buone pratiche).
+- **Prossima azione:** step 3 – scrivere `docs/TEST-LETTORE-SCHERMO.md` (guida passo per passo a TalkBack e VoiceOver).
 - `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
-- **Ultimo aggiornamento:** 2026-10-23 (Fase 7, step 1)
+- **Ultimo aggiornamento:** 2026-10-23 (Fase 7, step 2)
 
 ---
 
@@ -254,13 +253,16 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       **Da collegare alla GitHub Action in Fase 8** (lì servirà `npx playwright install --with-deps chromium`).
       Unico problema trovato e corretto: righe delle serate saltate nella pagina giocatore con `opacity: 0.7` → contrasto
       insufficiente; ora bordo tratteggiato e sfondo trasparente, senza trasparenza del testo.
-- [ ] Lighthouse ≥ 90 su mobile
+- [x] Lighthouse ≥ 90 su mobile — misurato il 2026-10-23 con `npx lighthouse@12` (telefono simulato, Chromium di
+      Playwright via `CHROME_PATH`) su `astro preview`: Home, Match e giocatore → **100** velocità, accessibilità e buone
+      pratiche (LCP 1,1–1,4 s, TBT ≈ 0, CLS 0, 25–46 kB). SEO 60 solo per il `noindex` voluto: va bene così.
+      **Deciso dall'utente: controllo una tantum**, niente comando fisso. **Da ripetere online in Fase 8.**
 - [ ] Guida al test manuale con TalkBack / VoiceOver
 
 ### Fase 8 – Rilascio
 - [ ] Repository su GitHub e primo push
 - [ ] GitHub Action per build e deploy su Pages
-- [ ] Verifica online + installazione su iPhone e Android
+- [ ] Verifica online + installazione su iPhone e Android (+ rimisurare Lighthouse sul sito online)
 - [ ] (facoltativo) dominio personalizzato
 
 ### Fase 9 – Documentazione
