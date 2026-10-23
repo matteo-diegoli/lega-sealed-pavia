@@ -1,0 +1,2 @@
+# Fine riga uniformi (LF) per tutti i file di testo, anche se si modifica da Windows o dal sito di GitHub
+* text=auto eol=lf
