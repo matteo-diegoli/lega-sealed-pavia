@@ -1,5 +1,11 @@
 {
   "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    // Tipi di Node per gli script e la lettura dei file in data/.
+    "types": ["node"],
+    // Solo sintassi che Node può eseguire direttamente (npm run controlla).
+    "erasableSyntaxOnly": true
+  },
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"]
 }

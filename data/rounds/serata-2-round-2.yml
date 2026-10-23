@@ -1,0 +1,14 @@
+# Dati FITTIZI generati da "npm run genera-prova": da sostituire con quelli veri.
+
+serata: 2
+round: 2
+
+partite:
+  - giocatori: [anna, dario]
+    risultato: 2-0
+  - giocatori: [elena, carla]
+    risultato: 1-2
+  - giocatori: [fabio, bruno]
+    risultato: 0-2
+
+bye: giulia

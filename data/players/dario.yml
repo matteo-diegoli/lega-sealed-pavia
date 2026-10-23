@@ -1,0 +1,88 @@
+# Dati FITTIZI generati da "npm run genera-prova": da sostituire con quelli veri.
+
+nome: Dario Colombo
+pool:
+  serata-1:
+    - Academic Ascent
+    - 3 Apex Witchstalker
+    - Archive Arbiter
+    - Arni, Renowned Champion
+    - Awaken the Inferno
+    - 2 Bestial Incursion
+    - Blazing Crescendo
+    - Bloombrute
+    - Break Under Pressure
+    - 2 Budding Insurgent
+    - Campus Crier
+    - 2 Cast Away Doubt
+    - Chandra's Emberling
+    - Clash of Elements
+    - Cruel Calculations
+    - Dedicated Commons
+    - 2 Divining Duelist
+    - Eardrum Rattler
+    - Entrust the Spark
+    - 2 Essence Burn
+    - Extended Absence
+    - Fatehold Chronologist // Peer Review
+    - Ferocity of the Hunt
+    - Formidable Commons
+    - Gallia, Tragic Host
+    - 2 Graft Surgeon
+    - Hexhaven Dueling Arena
+    - Hungering Puppetbeast
+    - 2 Icy Reception
+    - 2 Innovative Commons
+    - Inspired Tethermage
+    - Keeper of the Quiet Hour
+    - Konstrari Annex
+    - Last Gasp
+    - Memory Trap
+    - Murmuring Volume
+    - No Admittance
+    - Predictive Preparations
+    - Proft, Consulting Detective
+    - Prophesied End
+    - Protege's Awakening
+    - Rank Rat
+    - Restore with Empathy
+    - 3 Room of Refuge
+    - Ruric Thar, Biomagus
+    - Saheeli, Jewel of Avishkar
+    - Semester Foreseer // Peer Review
+    - Shatterwing Pegasus
+    - Silence the Echo
+    - Skilled Battlecarver
+    - Solitary Cell
+    - Something Worth Saving
+    - 2 Stingerquill Annex
+    - 2 Stingerquill Voxmancer // Vicious Verse
+    - Sureshot Sower
+    - Surgical Precision
+    - The Echoverse Fulcrum
+    - Theorist's Proxy
+    - Theorix Annex
+    - 2 Theorix Metamage // Omit Variables
+    - Tinybones, Pocket Nuisance
+    - 2 Twinned Vision
+    - Unflinching Hortimancer
+    - Unsummon
+    - Vinelasher Adept
+    - Void Extrapolator // Omit Variables
+    - Whiplash Wordsmith // Vicious Verse
+    - Winter, Team Player
+  serata-2:
+    - Compel Brutality
+    - Curse-Marred Demon
+    - Essence Burn
+    - Ferocity of the Hunt
+    - Icy Reception
+    - Konstrari Annex
+    - Last Gasp
+    - Mabel, Valley Hero
+    - Meticulous Commons
+    - Mindseeker Oculus
+    - Room of Refuge
+    - Thalia, the Survivor
+    - Theorix Annex
+    - Vigorbloom Annex

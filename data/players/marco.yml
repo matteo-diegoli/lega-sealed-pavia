@@ -1,0 +1,71 @@
+# Dati FITTIZI generati da "npm run genera-prova": da sostituire con quelli veri.
+
+nome: Marco Bruno
+pool:
+  serata-1:
+    - Academic Ascent
+    - 2 Arcane Amphisbaena
+    - Archive Arbiter
+    - 2 Artifist Acumen
+    - Awaken the Inferno
+    - Blessed Ghoul
+    - Cast Away Doubt
+    - Chandra, Torch of Defiance
+    - Chandra's Emberling
+    - Charge the Sanctum
+    - Cryotheory Adept
+    - Desperate Futurescribe
+    - 2 Divining Duelist
+    - Eardrum Rattler
+    - Eye of Jace
+    - 2 Fatehold Chronologist // Peer Review
+    - 2 Fulminous Forte
+    - Ghalta the Immovable
+    - Ghalta the Unstoppable
+    - 2 Graft Surgeon
+    - Greenhouse Propagator
+    - Icy Reception
+    - Infinite Coursework
+    - Innovative Commons
+    - Inspired Tethermage
+    - Jace, Reality Sculptor
+    - Konstrari Charm
+    - 2 Konstrari Improviser // Soul Tether
+    - Koth, the Geomancer
+    - 2 Last Gasp
+    - Living Library
+    - Mabel, Bitter Recluse
+    - Meticulous Commons
+    - Mindseeker Oculus
+    - Pia, Aether Ascetic
+    - Pompous Battlemage // Improvised Act
+    - Predictive Preparations
+    - 3 Protege's Awakening
+    - Rampart Hunter
+    - Refute Destiny
+    - Room of Refuge
+    - 2 Screeching Soulbreaker
+    - Shatterwing Pegasus
+    - Something Worth Saving
+    - 2 Stingerquill Annex
+    - Stinging Vitriol
+    - Surveillance Phantasm
+    - Tether Technician
+    - Teyo, Lightshield Expert
+    - Theorix Annex
+    - Theorix Charm
+    - 3 Theorix Metamage // Omit Variables
+    - Twinned Vision
+    - 2 Undulating Witness
+    - Unflinching Hortimancer
+    - Unsummon
+    - Vindictive Triumph
+    - 2 Vinelasher Adept
+    - Vraska, Soul of Stone
+    - Warrior's Blades
+    - Way of the Pyromancer
+    - Way of the Wildspeaker
+    - 3 Whiplash Wordsmith // Vicious Verse
+    - Wrath of the Bloodmane
+    - Wrecking Gecko
+    - Yoshimaru, Scrappy Stray

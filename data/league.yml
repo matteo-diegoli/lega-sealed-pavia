@@ -1,0 +1,23 @@
+# Dati generali della lega.
+# Le date si scrivono AAAA-MM-GG; null = data non ancora decisa.
+# assenti: identificativi di chi non c'era, es. [anna, bruno] (vuoto = tutti presenti).
+
+nome: Lega Sealed Pavia
+set: fra   # codice Scryfall di Reality Fracture
+
+serate:
+  - numero: 1
+    data: 2026-10-22
+    assenti: []
+  - numero: 2
+    data: 2026-10-29   # FITTIZIA: rimettere null con i dati veri
+    assenti: [marco]
+  - numero: 3
+    data: null
+    assenti: []
+  - numero: 4
+    data: null
+    assenti: []
+  - numero: 5
+    data: null
+    assenti: []

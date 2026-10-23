@@ -1,0 +1,88 @@
+# Dati FITTIZI generati da "npm run genera-prova": da sostituire con quelli veri.
+
+nome: Anna Bianchi
+pool:
+  serata-1:
+    - Afterthought Sentry
+    - Apex Witchstalker
+    - Arni, Renowned Champion
+    - Artifist Acumen
+    - Blessed Ghoul
+    - Bloombrute
+    - 3 Blossom-Blessed Angel // Seed Suture
+    - Budding Insurgent
+    - Chandra's Emberling
+    - Charge the Sanctum
+    - Compel Brutality
+    - Eardrum Rattler
+    - Extended Absence
+    - Fatehold Annex
+    - 2 Fatehold Chronologist // Peer Review
+    - Fateshaper Aspirant
+    - Generous Revival
+    - 3 Graft Surgeon
+    - Heartstring Puller
+    - Hexhaven Battalion
+    - Hexhaven Invigorator
+    - 2 Icy Reception
+    - 2 Infinite Coursework
+    - Inspired Tethermage
+    - Jace, Reality Sculptor
+    - Konstrari Annex
+    - 2 Last Gasp
+    - Marwyn, the Clearcutter
+    - Massacre Girl, Most Wanted
+    - Medic's Kitesail
+    - 2 Memory Trap
+    - Murmuring Volume
+    - No Admittance
+    - 3 Predictive Preparations
+    - Pyre Rhymer // Molten Tide
+    - Rank Rat
+    - Rewrite Regrets
+    - Rockfall Vale
+    - Screeching Soulbreaker
+    - Shatterwing Pegasus
+    - Shipwreck Marsh
+    - Silence the Echo
+    - Solve for Disappointment
+    - 2 Something Worth Saving
+    - Sphinx's Approach
+    - Stingerquill Annex
+    - Stingerquill Charm
+    - Surgical Precision
+    - 2 Tam's Resistance
+    - Tether Technician
+    - Tetsuko Umezawa, Pursuer
+    - Theorist's Proxy
+    - 2 Theorix Annex
+    - Theorix Metamage // Omit Variables
+    - 2 Twinned Vision
+    - Unflinching Hortimancer
+    - Unsummon
+    - Vigorbloom Charm
+    - Vigorbloom Vanguard // Seed Suture
+    - Violent Echoes
+    - Warrior's Blades
+    - Way of the Mentor
+    - Whiplash Wordsmith // Vicious Verse
+    - Winter, Team Player
+    - Woodwork Prodigy // Soul Tether
+    - Wrath of the Bloodmane
+    - Yargle, Glutton of Urborg
+    - 2 Yuriko, Hope from the Shadows
+  serata-2:
+    - Awaken the Inferno
+    - Campus Crier
+    - Charge the Sanctum
+    - Hexhaven Dueling Arena
+    - Inspired Tethermage
+    - Keeper of the Quiet Hour
+    - Kiora of Fire and Ashes
+    - Mind Meanderer
+    - Puppet Crafting
+    - Room of Refuge
+    - Surgical Precision
+    - Surveillance Phantasm
+    - Theorix Metamage // Omit Variables
+    - Twinned Vision

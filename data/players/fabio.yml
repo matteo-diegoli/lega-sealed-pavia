@@ -1,0 +1,88 @@
+# Dati FITTIZI generati da "npm run genera-prova": da sostituire con quelli veri.
+
+nome: Fabio Marino
+pool:
+  serata-1:
+    - Academic Ascent
+    - Bestial Incursion
+    - 2 Blessed Ghoul
+    - Campus Crier
+    - Cast Away Doubt
+    - Charge the Sanctum
+    - 2 Cryotheory Adept
+    - Desperate Futurescribe
+    - Diviner of Victory // Unwind History
+    - Divining Duelist
+    - Emergency Phytomedic // Seed Suture
+    - Face Yourself
+    - 2 Fatehold Annex
+    - Fateshaper Aspirant
+    - 3 Ferocity of the Hunt
+    - Gallia, the Merrymaker
+    - Gardenize
+    - Ghalta the Unstoppable
+    - 2 Hall of Echoes
+    - 2 Hallway Heckler // Vicious Verse
+    - Heartstring Puller
+    - Hexhaven Dueling Arena
+    - 2 Icy Reception
+    - Innovative Commons
+    - Jiang Yanggu, Never Alone
+    - Konstrari Annex
+    - Konstrari Charm
+    - Konstrari Improviser // Soul Tether
+    - Last Gasp
+    - Living Library
+    - Loot, the Nexus
+    - Medic's Kitesail
+    - Memory Trap
+    - Meticulous Commons
+    - Mindseeker Oculus
+    - Murmuring Volume
+    - Pia, Aether Ascetic
+    - Pia, Determined Rebuilder
+    - 2 Rampart Hunter
+    - Refute Destiny
+    - 3 Room of Refuge
+    - Ruric Thar, Biomagus
+    - Saheeli, Jewel of Avishkar
+    - Screeching Soulbreaker
+    - Semester Foreseer // Peer Review
+    - Shipwreck Marsh
+    - 2 Silence the Echo
+    - Skilled Battlecarver
+    - 2 Solve for Disappointment
+    - Something Worth Saving
+    - Sphinx's Approach
+    - Stingerquill Annex
+    - Stingerquill Voxmancer // Vicious Verse
+    - Sureshot Sower
+    - 2 Surgical Precision
+    - Surveillance Phantasm
+    - Teyo, Lightshield Expert
+    - Theoretical Necromancer
+    - Theorix Metamage // Omit Variables
+    - Tinybones, Pocket Nuisance
+    - Traxos, Scourge Eternal
+    - Twinned Vision
+    - 3 Undulating Witness
+    - Unflinching Hortimancer
+    - Vigorbloom Annex
+    - Violent Echoes
+    - Way of the Necromancer
+    - Whiplash Wordsmith // Vicious Verse
+  serata-2:
+    - Diviner of Victory // Unwind History
+    - Emergency Phytomedic // Seed Suture
+    - Hapatra, the Desert Fang
+    - Hexhaven Battalion
+    - Memory Trap
+    - Ruric Thar, Biomagus
+    - Silence the Echo
+    - Stingerquill Charm
+    - Surgical Precision
+    - Tam's Resistance
+    - Tethermage's Advantage
+    - Void Extrapolator // Omit Variables
+    - Wrath of the Bloodmane
+    - Wrecking Gecko

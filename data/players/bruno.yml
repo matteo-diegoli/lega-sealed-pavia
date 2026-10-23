@@ -1,0 +1,84 @@
+# Dati FITTIZI generati da "npm run genera-prova": da sostituire con quelli veri.
+
+nome: Bruno Ferrari
+pool:
+  serata-1:
+    - Academic Ascent
+    - 2 Afterthought Sentry
+    - Ajani's Anguish
+    - Arcane Amphisbaena
+    - Artifist Acumen
+    - Awaken the Inferno
+    - 3 Bestial Incursion
+    - Blessed Ghoul
+    - Budding Insurgent
+    - 2 Campus Crier
+    - Compel Brutality
+    - Countersculpt
+    - Desperate Futurescribe
+    - 2 Eardrum Rattler
+    - Emergency Phytomedic // Seed Suture
+    - Entrust the Spark
+    - Fateshaper Aspirant
+    - Ferocity of the Hunt
+    - Formidable Commons
+    - Gallia, the Merrymaker
+    - Generous Revival
+    - Graft Surgeon
+    - Grim Repriser
+    - Hallway Heckler // Vicious Verse
+    - 2 Hexhaven Battalion
+    - Hungering Puppetbeast
+    - 2 Icy Reception
+    - Infinite Coursework
+    - Inspired Tethermage
+    - Konstrari Annex
+    - 2 Konstrari Improviser // Soul Tether
+    - Koth of the Homestead
+    - Living Library
+    - Mabel, Valley Hero
+    - 2 Memory Trap
+    - 2 No Admittance
+    - Pia, Determined Rebuilder
+    - Proft, Consulting Detective
+    - Protege's Awakening
+    - Pyre Rhymer // Molten Tide
+    - Rampart Hunter
+    - Rank Rat
+    - Room of Refuge
+    - Samut, Hazoret's Champion
+    - 3 Screeching Soulbreaker
+    - 2 Silence the Echo
+    - 2 Skilled Battlecarver
+    - 2 Stingerquill Annex
+    - 2 Sureshot Sower
+    - Tam's Resistance
+    - Tenured Tethermage
+    - 2 Tether Technician
+    - Tetsuko Umezawa, Pursuer
+    - 2 Teyo, Diamondblade Mage
+    - Theorix Metamage // Omit Variables
+    - Twinned Vision
+    - Twisted Fates
+    - Undulating Witness
+    - 3 Void Extrapolator // Omit Variables
+    - Way of the Deathbringer
+    - Way of the Mentor
+    - Yoshimaru, Beloved Companion
+    - Yoshimaru, Scrappy Stray
+    - Yuriko, Hope from the Shadows
+  serata-2:
+    - Afterthought Sentry
+    - Ferocity of the Hunt
+    - Formidable Commons
+    - Medic's Kitesail
+    - Predictive Preparations
+    - Rank Rat
+    - Restore with Empathy
+    - Ruric Thar, Biomagus
+    - Semester Foreseer // Peer Review
+    - Tam's Resistance
+    - Theorist's Proxy
+    - Twinned Vision
+    - Vigorbloom Annex
+    - Yoshimaru, Scrappy Stray

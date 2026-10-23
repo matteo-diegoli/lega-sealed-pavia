@@ -7,11 +7,24 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "controlla": "node scripts/controlla.ts",
+    "scryfall": "node scripts/scryfall.ts",
+    "genera-prova": "node scripts/genera-prova.ts",
+    "prebuild": "npm run controlla",
     "build": "astro build",
     "preview": "astro preview",
+    "test": "vitest run",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.4.2"
+    "astro": "^7.4.2",
+    "js-yaml": "^5.5.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@types/node": "^24.19.2",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
   }
 }

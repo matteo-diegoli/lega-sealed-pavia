@@ -1,0 +1,89 @@
+# Dati FITTIZI generati da "npm run genera-prova": da sostituire con quelli veri.
+
+nome: Giulia Greco
+pool:
+  serata-1:
+    - Ajani's Anguish
+    - Apex Witchstalker
+    - Arcane Amphisbaena
+    - Artifist Acumen
+    - Awaken the Inferno
+    - Blazing Crescendo
+    - Blessed Ghoul
+    - 2 Campus Crier
+    - 2 Cast Away Doubt
+    - 3 Command the Stage
+    - Countersculpt
+    - Dedicated Commons
+    - Draconic Visitor
+    - Eardrum Rattler
+    - Emergency Phytomedic // Seed Suture
+    - 2 Extended Absence
+    - Face Yourself
+    - Fatehold Annex
+    - Fatehold Chronologist // Peer Review
+    - Fateshaper Aspirant
+    - Ferocity of the Hunt
+    - Formidable Commons
+    - Generous Revival
+    - Ghalta the Immovable
+    - 2 Graft Surgeon
+    - Hapatra, the Desert Fang
+    - Heartstring Puller
+    - Hexhaven Battalion
+    - Hunter's Axe
+    - Innovative Commons
+    - Karn, Gilded Guardian
+    - Keeper of the Quiet Hour
+    - 2 Konstrari Annex
+    - Konstrari Improviser // Soul Tether
+    - Last Gasp
+    - Living Library
+    - Medic's Kitesail
+    - 2 Memory Trap
+    - Mindseeker Oculus
+    - 2 No Admittance
+    - Predictive Preparations
+    - Protege's Awakening
+    - 2 Rampart Hunter
+    - Rank Rat
+    - Room of Refuge
+    - Saheeli, Consul of Oversight
+    - 2 Shipwreck Marsh
+    - Silence the Echo
+    - 2 Solve for Disappointment
+    - Something Worth Saving
+    - Sureshot Sower
+    - Surveillance Phantasm
+    - Terminal Criticism
+    - Thalia, the Survivor
+    - Theoretical Necromancer
+    - Theorix Annex
+    - Theorix Metamage // Omit Variables
+    - Tomik, Orzhov Lawmage
+    - 3 Traxos, Scourge Eternal
+    - Twinned Vision
+    - Unflinching Hortimancer
+    - Unsummon
+    - Vigorbloom Annex
+    - Violent Echoes
+    - 2 Void Extrapolator // Omit Variables
+    - Warrior's Blades
+    - Way of the Mind Sculptor
+    - Wrath of the Bloodmane
+    - Wrecking Gecko
+  serata-2:
+    - Ajani's Anguish
+    - Blessed Ghoul
+    - Craftwork Crusher
+    - Extended Absence
+    - Fatehold Annex
+    - Flourishing Grapple
+    - Memory Trap
+    - Rampart Hunter
+    - Rank Rat
+    - Teyo, Lightshield Expert
+    - Undulating Witness
+    - Unflinching Hortimancer
+    - Unsummon
+    - Wrecking Gecko
