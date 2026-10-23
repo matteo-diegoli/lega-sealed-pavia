@@ -7,12 +7,11 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 6 – step 2 (anteprime e metadati) **completato** ✅ e salvato in git.
-- **Prossima azione:** proporre il piano dello step 3 (`llms.txt` e `/api/*.json`: classifica, match, giocatori,
-  creati durante la build dagli stessi dati del sito) e aspettare l'ok. Poi Fase 7.
+- **Fase attuale:** Fase 6 **completata** ✅ (step 3: `llms.txt` e `/api/*.json`).
+- **Prossima azione:** proporre il piano della Fase 7 (qualità: axe, Lighthouse, guida TalkBack/VoiceOver) e aspettare l'ok.
 - `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
-- **Ultimo aggiornamento:** 2026-10-23 (Fase 6, step 2)
+- **Ultimo aggiornamento:** 2026-10-23 (Fase 6, step 3)
 
 ---
 
@@ -234,7 +233,16 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       JSON-LD `EventSeries` con una serata per data decisa, solo nella Home (`src/lib/sito/dati-strutturati.ts`).
       `robots.txt` che lascia entrare tutti (conta solo con un dominio personale: su github.io si legge quello della radice).
       8 test nuovi (133 in tutto).
-- [ ] `llms.txt` e `/api/*.json`
+- [x] `llms.txt` e `/api/*.json`
+      — Contenuti in `src/lib/sito/api.ts` (riusa classifica, match, giocatore e riepilogo: stessi numeri delle pagine),
+      file da `src/pages/llms.txt.ts` e `src/pages/api/{classifica,match,giocatori}.json.ts`. Chiavi in italiano, nomi delle
+      carte in inglese; in ogni JSON `versione` (1), `lega`, `aggiornato` (ora della build), `sito`; link sempre completi.
+      `classifica.json`: stato della lega + righe con punti, V/P/S, game e tie-breaker in percentuale 0–100 (un decimale).
+      Come la pagina, conta anche i risultati già scritti del round in corso (`dopoIlRound`).
+      `match.json`: tutte le serate (data, finale, moltiplicatore, assenti) con round, partite (risultato dal punto di vista
+      del primo giocatore, vincitore, esito) e bye. `giocatori.json` (circa 210 kB): posizione, partite dalla prima e
+      **pool completo** (copie, serate, colori, costo, tipo, rarità, link Scryfall). `llms.txt`: regole, situazione,
+      classifica in breve, link a pagine e JSON. I 4 file sono salvati anche dal service worker. 5 test nuovi (138 in tutto).
 
 ### Fase 7 – Qualità
 - [ ] axe nella GitHub Action (la build fallisce con errori AA)
