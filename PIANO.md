@@ -7,8 +7,9 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 2 (motore della lega) **completata** ✅
-- **Prossima azione:** Fase 3, primo punto: proporre 2 direzioni di stile (con una pagina di esempio ciascuna) e aspettare la scelta dell'utente.
+- **Fase attuale:** Fase 3 (design): stile scelto (**B – Arena**), manca il secondo punto
+- **Prossima azione:** Fase 3, secondo punto: proporre il piano per variabili CSS comuni, tema scuro/chiaro
+  e illustrazioni SVG di Pavia nello stile Arena, e aspettare l'ok.
 - **Ultimo aggiornamento:** 2026-10-23
 
 ---
@@ -77,14 +78,28 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - PWA con `@vite-pwa/astro`. Test con Vitest; accessibilità con Playwright + axe.
 - Deploy: GitHub Actions → GitHub Pages.
 
+### Stile (deciso il 2026-10-23 in Fase 3)
+- Scelto lo **stile B – "Arena"** (scartato A – "Pavia storica": chiaro, serif, rosso mattone).
+- Fondo scuro (`#0e1117`), superfici a schede con angoli arrotondati (12px), testo `#e9edf4`, testo tenue `#9aa4b5`.
+- Accenti: viola `#8b7cff` → turchese `#3ad6c5` (sfumatura); oro `#f2c14e` per la finale ×2 e il primo posto;
+  medaglie oro/argento/bronzo per il podio; verde/rosso per vittorie, sconfitte e frecce in classifica.
+- Caratteri di sistema (`system-ui`), titoli molto marcati; titoli di sezione piccoli, maiuscoli e spaziati.
+- Testata con barra dei 10 round (le ultime 2, la finale, in oro); classifica con barre dei punti;
+  carte rare e mitiche con cornice colorata; colori del mana come pallini.
+- La pagina di esempio è nel commit "Fase 3: pagine di prova dei due stili": per rivederla,
+  `git show 826446a:src/pages/prova-stile-b.astro`.
+
 ### Ambiente (PC Windows 11 dell'utente)
 - Node **24.22.1** gestito da **nvm-windows 1.2.2** (link attivo in `C:\nvm4w\nodejs`).
 - Esiste ancora un vecchio link `C:\Program Files\nodejs` → Node 20: se un terminale mostra v20, usare `nvm use 24` o riaprire il terminale.
 - git 2.55, GitHub CLI 2.103, accesso come **matteo-diegoli** (email noreply di GitHub).
 - Il PC ha un vecchio proxy aziendale (Ariadne) in git globale: in **questo** repository è disattivato con `git config http.proxy ""`.
   Proxy rimosso anche da nvm, npm e WinHTTP (comandi per rimetterlo: vedi sotto).
-- **Sito dal telefono:** `npx.cmd astro dev --host --background`, poi sul telefono `http://192.168.1.90:4321`
-  (IP del PC sul Wi-Fi di casa, rete "Privata"). Scrivere sempre `http://` a mano: con `https://`
+- **Sito dal telefono:** `npx.cmd astro dev --host --background`, poi sul telefono `http://<IP del PC>:4321`
+  (rete Wi-Fi di casa "Privata"). L'IP **cambia** ogni tanto (era 192.168.1.90, il 2026-10-23 è diventato
+  192.168.1.18): se il telefono dà `ERR_ADDRESS_UNREACHABLE`, ritrovarlo con
+  `Get-NetIPAddress -InterfaceAlias Wi-Fi -AddressFamily IPv4` (non fidarsi dell'indirizzo stampato da
+  `astro dev status`: è quello di quando il server è partito). Scrivere sempre `http://` a mano: con `https://`
   compare `ERR_SSL_PROTOCOL_ERROR`. Spegnere il server con `npx.cmd astro dev stop`.
 
 ### ❓ Domande aperte
@@ -135,7 +150,7 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       200 leghe simulate dato un limite di 30 secondi (ne servono circa 8, il limite di Vitest era 5).
 
 ### Fase 3 – Design
-- [ ] 2 direzioni di stile con una pagina di esempio ciascuna → scelta dell'utente
+- [x] 2 direzioni di stile con una pagina di esempio ciascuna → scelto **B – Arena** (vedi "Stile")
 - [ ] Illustrazioni SVG originali di Pavia, variabili CSS, tema scuro/chiaro
 
 ### Fase 4 – Pagine
