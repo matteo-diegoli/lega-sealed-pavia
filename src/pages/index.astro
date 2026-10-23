@@ -16,8 +16,12 @@ import {
 	puntiInFinale,
 	statoLega,
 } from '../lib/lega/riepilogo.ts';
+import { anteprimaClassifica } from '../lib/sito/anteprime.ts';
+import { datiStrutturatiLega } from '../lib/sito/dati-strutturati.ts';
+import { percorso } from '../lib/sito/percorso.ts';
 
 const dati = caricaDati();
+const anteprima = anteprimaClassifica(dati);
 const stato = statoLega(dati);
 const attuale = classificaAttuale(dati);
 const tappe = evoluzione(dati);
@@ -48,7 +52,12 @@ const sottotitoloClassifica =
 			(attuale.rispettoAllaSerata ? ` · frecce rispetto alla fine della serata ${attuale.rispettoAllaSerata}` : '');
 ---
 
-<Base titolo={dati.lega.nome}>
+<Base
+	titolo={dati.lega.nome}
+	titoloAnteprima={anteprima.titolo}
+	descrizione={anteprima.descrizione}
+	jsonLd={datiStrutturatiLega(dati, new URL(percorso(), Astro.site).href)}
+>
 	<section class="eroe">
 		<div class="contenitore">
 			<p class="etichetta"><span class="punto" aria-hidden="true"></span> {etichetta}</p>

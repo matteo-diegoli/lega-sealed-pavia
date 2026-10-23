@@ -5,8 +5,10 @@ import Round from '../components/Round.astro';
 import { caricaDati } from '../lib/dati/carica.ts';
 import { roundCorrente, storico } from '../lib/lega/match.ts';
 import { NUMERO_ROUND, formattaData, statoLega } from '../lib/lega/riepilogo.ts';
+import { anteprimaMatch } from '../lib/sito/anteprime.ts';
 
 const dati = caricaDati();
+const anteprima = anteprimaMatch(dati);
 const stato = statoLega(dati);
 const corrente = roundCorrente(dati);
 const serateGiocate = storico(dati);
@@ -18,7 +20,7 @@ const dataCorrente = dataDi(stato.serata);
 const quanti = (n: number) => (n === 1 ? '1 round' : `${n} round`);
 ---
 
-<Base titolo="Match" descrizione="Abbinamenti del round in corso e risultati di tutti i round della Lega Sealed Pavia.">
+<Base titolo="Match" titoloAnteprima={anteprima.titolo} descrizione={anteprima.descrizione} immagine="anteprime/match.png">
 	<section class="testata">
 		<div class="contenitore">
 			<h1>Match</h1>

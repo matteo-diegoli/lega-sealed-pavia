@@ -7,12 +7,12 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 6 – step 1 (app installabile e offline) **completato** ✅ (controllato dall'utente dal telefono).
-- **Prossima azione:** proporre il piano dello step 2 (meta, Open Graph con immagini generate, JSON-LD, robots)
-  e aspettare l'ok; poi step 3 (`llms.txt` e `/api/*.json`). Piano della fase approvato il 2026-10-23.
+- **Fase attuale:** Fase 6 – step 2 (anteprime e metadati) **completato** ✅ e salvato in git.
+- **Prossima azione:** proporre il piano dello step 3 (`llms.txt` e `/api/*.json`: classifica, match, giocatori,
+  creati durante la build dagli stessi dati del sito) e aspettare l'ok. Poi Fase 7.
 - `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
-- **Ultimo aggiornamento:** 2026-10-23 (Fase 6, step 1)
+- **Ultimo aggiornamento:** 2026-10-23 (Fase 6, step 2)
 
 ---
 
@@ -223,7 +223,17 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       in Fase 8. Provato su PC con Edge + `astro preview` spegnendo il server: pagine salvate, stile e pagina offline ok.
       Con `astro dev` chi apre `/` o la cartella senza `/` finale viene rimandato dentro
       (plugin in `astro.config.mjs`, solo per le pagine HTML). Colore della barra del telefono (`theme-color`) che segue anche il tema scelto a mano. 5 test nuovi (125 in tutto).
-- [ ] Meta, Open Graph con immagini generate, JSON-LD, robots, noindex (sitemap esclusa: vedi decisioni)
+- [x] Meta, Open Graph con immagini generate, JSON-LD, robots, noindex (sitemap esclusa: vedi decisioni)
+      — Testi in `src/lib/sito/anteprime.ts` (titolo, descrizione e righe dell'immagine per Home, Match e giocatori),
+      disegno 1200×630 in `src/lib/sito/immagine-anteprima.ts` (emblema, skyline, righe con medaglie o pallini dei colori)
+      convertito in PNG con `@resvg/resvg-js` e il carattere **Inter** salvato in `assets/font/` (licenza OFL in
+      `assets/font/LICENSE.txt`; i caratteri di sistema cambiano tra PC e server). Immagini create a ogni build in
+      `anteprime/classifica.png`, `anteprime/match.png`, `anteprime/giocatori/<id>.png` (circa 110 kB l'una).
+      Skyline spostato in `src/lib/sito/skyline.ts` (stessa forma per sito e immagini). `Base.astro` ha le nuove proprietà
+      `titoloAnteprima`, `immagine`, `jsonLd`; `meta description` = descrizione dell'anteprima.
+      JSON-LD `EventSeries` con una serata per data decisa, solo nella Home (`src/lib/sito/dati-strutturati.ts`).
+      `robots.txt` che lascia entrare tutti (conta solo con un dominio personale: su github.io si legge quello della radice).
+      8 test nuovi (133 in tutto).
 - [ ] `llms.txt` e `/api/*.json`
 
 ### Fase 7 – Qualità
