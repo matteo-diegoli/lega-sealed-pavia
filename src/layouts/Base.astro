@@ -12,6 +12,13 @@ interface Props {
 const { titolo, descrizione = 'Classifica, abbinamenti e pool della Lega Sealed di Pavia.' } = Astro.props;
 const NOME_SITO = 'Lega Sealed Pavia';
 const titoloCompleto = titolo === NOME_SITO ? titolo : `${titolo} · ${NOME_SITO}`;
+
+// Voci del menu; quella della pagina aperta viene evidenziata.
+const menu = [
+	{ href: '/', testo: 'Classifica' },
+	{ href: '/match/', testo: 'Match' },
+];
+const percorso = Astro.url.pathname.replace(/\/?$/, '/');
 ---
 
 <html lang="it">
@@ -38,8 +45,17 @@ const titoloCompleto = titolo === NOME_SITO ? titolo : `${titolo} · ${NOME_SITO
 			<div class="contenitore barra-interno">
 				<a class="marchio" href="/">
 					<Emblema dimensione={32} />
-					<span>{NOME_SITO}</span>
+					<span class="nome-sito">{NOME_SITO}</span>
 				</a>
+				<nav aria-label="Pagine del sito" class="menu">
+					{
+						menu.map((voce) => (
+							<a href={voce.href} aria-current={voce.href === percorso ? 'page' : undefined}>
+								{voce.testo}
+							</a>
+						))
+					}
+				</nav>
 				<button type="button" class="cambia-tema" aria-label="Cambia tema: chiaro o scuro" title="Cambia tema">
 					<svg class="icona-sole" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
 						<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -107,7 +123,41 @@ const titoloCompleto = titolo === NOME_SITO ? titolo : `${titolo} · ${NOME_SITO
 		font-weight: 800;
 		letter-spacing: -0.01em;
 	}
+	.menu {
+		display: flex;
+		gap: 0.25rem;
+		margin-left: auto;
+	}
+	.menu a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.75rem;
+		padding: 0 0.75rem;
+		border-radius: var(--raggio-piccolo);
+		color: var(--testo-tenue);
+		font-weight: 600;
+		text-decoration: none;
+	}
+	.menu a:hover {
+		color: var(--testo);
+	}
+	.menu a[aria-current='page'] {
+		color: var(--testo);
+		background: var(--superficie-alta);
+	}
+	/* Sul telefono si vede solo l'emblema, per lasciare spazio al menu */
+	@media (max-width: 30rem) {
+		.nome-sito {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+			white-space: nowrap;
+		}
+	}
 	.cambia-tema {
+		flex: none;
 		display: grid;
 		place-items: center;
 		width: 2.75rem;

@@ -7,9 +7,9 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 4 (pagine): Home / Classifica **completata** ✅
-- **Prossima azione:** proporre il piano della pagina "Prossimi match" (round corrente, storico richiudibile,
-  stile speciale della finale) e aspettare l'ok.
+- **Fase attuale:** Fase 4 (pagine): Home / Classifica e "Prossimi match" **completate** ✅
+- **Prossima azione:** proporre il piano della pagina giocatore (`/giocatori/<id>/`: pool, statistiche, storico
+  partite; niente mazzi) e aspettare l'ok. I nomi nella Home e nella pagina Match puntano già lì.
 - `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
 - **Ultimo aggiornamento:** 2026-10-23
@@ -171,7 +171,13 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       La classifica è la prima cosa dopo la testata (richiesta utente): i riquadri ×2, busta extra e vincitore
       stanno sotto. Evoluzione con `<details>` senza JavaScript, mostrata da 2 serate concluse in su. I nomi portano a
       `/giocatori/<id>/` (pagina ancora da fare: per ora 404).
-- [ ] Prossimi match (round corrente, storico richiudibile, stile speciale della finale)
+- [x] Prossimi match (round corrente, storico richiudibile, stile speciale della finale)
+      — `src/pages/match.astro` (indirizzo `/match/`), componenti `Round.astro` e `Partita.astro`,
+      `src/lib/lega/match.ts` (round in corso, storico per serata dalla più recente, vincitore e risultato; 4 test, 106 in tutto).
+      In cima il round abbinato ancora senza tutti i risultati (o "non ancora abbinato"); a lega finita niente
+      riquadro "Lega conclusa" (basta il sottotitolo + il menu: richiesta utente). Sotto i round giocati in pannelli
+      per serata (l'ultima aperta), con gli assenti. Finale: bordo dorato ed etichetta "Finale · punti ×2".
+      Menu "Classifica / Match" nella barra in alto (`Base.astro`); sotto i 30rem si vede solo l'emblema.
 - [ ] Pagina giocatore (pool, statistiche, storico partite) — niente mazzi, deciso in Fase 1
 
 ### Fase 5 – Pool interattivo

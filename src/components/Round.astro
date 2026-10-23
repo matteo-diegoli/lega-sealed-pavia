@@ -1,0 +1,75 @@
+---
+// Un round: titolo, tavoli e bye. I round della finale hanno lo stile dorato.
+import Partita from './Partita.astro';
+import { NUMERO_SERATE } from '../lib/dati/schema.ts';
+import type { Round } from '../lib/dati/valida.ts';
+
+interface Props {
+	round: Round;
+	nomi: Map<string, string>;
+}
+const { round, nomi } = Astro.props;
+const finale = round.serata === NUMERO_SERATE;
+---
+
+<div class:list={['round', { finale }]}>
+	<h3 class="titolo-round">
+		Round {round.numeroGlobale}
+		<span class="dove">serata {round.serata}, {round.round === 1 ? 'primo' : 'secondo'} round</span>
+		{finale && <span class="etichetta-finale">Finale · punti ×2</span>}
+	</h3>
+	<ol class="tavoli">
+		{round.partite.map((partita, i) => <Partita partita={partita} tavolo={i + 1} nomi={nomi} finale={finale} />)}
+	</ol>
+	{
+		round.bye && (
+			<p class="bye">
+				<strong>Bye:</strong> <a href={`/giocatori/${round.bye}/`}>{nomi.get(round.bye) ?? round.bye}</a> (vale come
+				vittoria 2-0)
+			</p>
+		)
+	}
+</div>
+
+<style>
+	.titolo-round {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.25rem 0.75rem;
+		margin: 0 0 0.75rem;
+		font-size: 1.25rem;
+		font-weight: 800;
+	}
+	.dove {
+		font-size: 0.85rem;
+		font-weight: 400;
+		color: var(--testo-tenue);
+	}
+	.etichetta-finale {
+		font-size: 0.75rem;
+		font-weight: 800;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--su-medaglia);
+		background: var(--oro);
+		padding: 0.15rem 0.6rem;
+		border-radius: 999px;
+	}
+	.tavoli {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 0.5rem;
+	}
+	.bye {
+		margin: 0.6rem 0 0;
+		font-size: 0.9rem;
+		color: var(--testo-tenue);
+	}
+	.bye a {
+		color: var(--testo);
+		font-weight: 600;
+	}
+</style>

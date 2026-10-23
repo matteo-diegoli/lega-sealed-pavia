@@ -1,0 +1,165 @@
+---
+// Match: il round da giocare adesso in cima, sotto lo storico dei round giocati diviso per serata.
+import Base from '../layouts/Base.astro';
+import Round from '../components/Round.astro';
+import { caricaDati } from '../lib/dati/carica.ts';
+import { roundCorrente, storico } from '../lib/lega/match.ts';
+import { NUMERO_ROUND, formattaData, statoLega } from '../lib/lega/riepilogo.ts';
+
+const dati = caricaDati();
+const stato = statoLega(dati);
+const corrente = roundCorrente(dati);
+const serateGiocate = storico(dati);
+const nomi = new Map(dati.giocatori.map((g) => [g.id, g.nome]));
+const dataDi = (serata: number) => dati.lega.serate.find((s) => s.numero === serata)?.data ?? null;
+const elencoNomi = (ids: string[]) => ids.map((id) => nomi.get(id) ?? id).join(', ');
+
+const dataCorrente = dataDi(stato.serata);
+const quanti = (n: number) => (n === 1 ? '1 round' : `${n} round`);
+---
+
+<Base titolo="Match" descrizione="Abbinamenti del round in corso e risultati di tutti i round della Lega Sealed Pavia.">
+	<section class="testata">
+		<div class="contenitore">
+			<h1>Match</h1>
+			<p class="sottotitolo">
+				{
+					stato.finita
+						? `Tutti i ${NUMERO_ROUND} round sono stati giocati.`
+						: `Serata ${stato.serata}` + (dataCorrente ? ` · ${formattaData(dataCorrente)}` : '')
+				}
+			</p>
+		</div>
+	</section>
+
+	<div class="contenitore">
+		{
+			/* A lega finita non c'è niente da giocare: il sottotitolo lo dice già. */
+			!stato.finita && (
+				<section aria-labelledby="titolo-adesso">
+					<h2 id="titolo-adesso" class="titolo-sezione">Adesso</h2>
+					{corrente ? (
+						<Round round={corrente} nomi={nomi} />
+					) : (
+						<p class="scheda messaggio">
+							Il round {stato.roundGiocati + 1} non è ancora stato abbinato.
+							{dataCorrente && ` Si gioca ${formattaData(dataCorrente)}.`}
+						</p>
+					)}
+				</section>
+			)
+		}
+
+		{
+			serateGiocate.length > 0 && (
+				<section aria-labelledby="titolo-storico">
+					<h2 id="titolo-storico" class="titolo-sezione">Round giocati</h2>
+					{serateGiocate.map((s, i) => (
+						<details class="serata" open={i === 0}>
+							<summary>
+								<span class="numero-serata">Serata {s.serata}</span>
+								{s.data && <span class="tenue">{formattaData(s.data)}</span>}
+								<span class="tenue a-destra">{quanti(s.round.length)}</span>
+							</summary>
+							{s.assenti.length > 0 && <p class="assenti">Assenti: {elencoNomi(s.assenti)}</p>}
+							<div class="round-serata">
+								{s.round.map((r) => (
+									<Round round={r} nomi={nomi} />
+								))}
+							</div>
+						</details>
+					))}
+				</section>
+			)
+		}
+	</div>
+</Base>
+
+<style>
+	.testata {
+		background: var(--sfondo-testata);
+		border-bottom: 1px solid var(--bordo);
+		padding: 2rem 0 1.5rem;
+	}
+	h1 {
+		margin: 0;
+		font-size: clamp(2rem, 8vw, 3rem);
+		font-weight: 800;
+		letter-spacing: -0.03em;
+		line-height: 1.05;
+	}
+	.sottotitolo {
+		margin: 0.25rem 0 0;
+		color: var(--testo-tenue);
+	}
+	section:not(.testata) {
+		margin: 2rem 0 2.5rem;
+	}
+	.messaggio {
+		margin: 0;
+		color: var(--testo-tenue);
+	}
+
+	/* Storico richiudibile, una serata per pannello */
+	.serata {
+		background: var(--superficie);
+		border: 1px solid var(--bordo);
+		border-radius: var(--raggio);
+		padding: 0 1rem;
+		margin-top: 0.75rem;
+	}
+	.serata[open] {
+		padding-bottom: 1rem;
+	}
+	summary {
+		cursor: pointer;
+		min-height: 2.75rem;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.25rem 0.75rem;
+		list-style: none;
+	}
+	summary::-webkit-details-marker {
+		display: none;
+	}
+	/* Freccetta che ruota quando il pannello è aperto */
+	summary::before {
+		content: '▸';
+		transition: rotate 0.15s;
+	}
+	details[open] > summary::before {
+		rotate: 90deg;
+	}
+	.numero-serata {
+		font-weight: 800;
+	}
+	.tenue {
+		font-size: 0.85rem;
+		color: var(--testo-tenue);
+	}
+	.a-destra {
+		margin-left: auto;
+	}
+	.assenti {
+		margin: 0 0 0.75rem;
+		font-size: 0.85rem;
+		color: var(--testo-tenue);
+	}
+	.round-serata {
+		display: grid;
+		gap: 1.5rem;
+	}
+	/* Dentro il pannello le schede dei tavoli si staccano dal fondo */
+	.serata :global(.partita) {
+		background: var(--superficie-alta);
+	}
+	.serata :global(.tavolo) {
+		background: var(--superficie);
+	}
+	.serata :global(.partita.finale) {
+		background:
+			linear-gradient(var(--superficie-alta), var(--superficie-alta)) padding-box,
+			linear-gradient(120deg, var(--oro), #b8862b 40%, var(--accento)) border-box;
+	}
+</style>
