@@ -13,6 +13,7 @@
     "classifica": "node scripts/classifica.ts",
     "pair": "node scripts/pair.ts",
     "buste": "node scripts/buste.ts",
+    "icone": "node scripts/icone.ts",
     "prebuild": "npm run controlla",
     "build": "astro build",
     "preview": "astro preview",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^24.19.2",
     "typescript": "^6.0.3",
     "vitest": "^5.0.5"

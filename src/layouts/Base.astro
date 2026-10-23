@@ -3,6 +3,7 @@
 import '../styles/tema.css';
 import '../styles/base.css';
 import Emblema from '../components/Emblema.astro';
+import { percorso } from '../lib/sito/percorso.ts';
 
 interface Props {
 	/** Titolo della pagina (finisce nella scheda del browser). */
@@ -15,10 +16,10 @@ const titoloCompleto = titolo === NOME_SITO ? titolo : `${titolo} · ${NOME_SITO
 
 // Voci del menu; quella della pagina aperta viene evidenziata.
 const menu = [
-	{ href: '/', testo: 'Classifica' },
-	{ href: '/match/', testo: 'Match' },
+	{ href: percorso(), testo: 'Classifica' },
+	{ href: percorso('match/'), testo: 'Match' },
 ];
-const percorso = Astro.url.pathname.replace(/\/?$/, '/');
+const paginaAttuale = Astro.url.pathname.replace(/\/?$/, '/');
 ---
 
 <html lang="it">
@@ -28,13 +29,23 @@ const percorso = Astro.url.pathname.replace(/\/?$/, '/');
 		<meta name="robots" content="noindex, nofollow" />
 		<meta name="description" content={descrizione} />
 		<meta name="color-scheme" content="dark light" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href={percorso('favicon.svg')} />
+		<link rel="apple-touch-icon" href={percorso('apple-touch-icon.png')} />
+		<link rel="manifest" href={percorso('manifest.webmanifest')} />
+		<!-- Colore della barra del telefono: quello della barra in alto del sito. -->
+		<meta name="theme-color" content="#171b24" media="(prefers-color-scheme: dark)" />
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 		<title>{titoloCompleto}</title>
 		<!-- Applica subito il tema scelto con il pulsante, prima di disegnare la pagina (niente lampi di colore). -->
 		<script is:inline>
 			try {
 				const tema = localStorage.getItem('tema');
-				if (tema === 'chiaro' || tema === 'scuro') document.documentElement.dataset.tema = tema;
+				if (tema === 'chiaro' || tema === 'scuro') {
+					document.documentElement.dataset.tema = tema;
+					// Il tema scelto a mano vale anche per la barra del telefono.
+					const colore = tema === 'chiaro' ? '#ffffff' : '#171b24';
+					document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute('content', colore));
+				}
 			} catch {}
 		</script>
 	</head>
@@ -43,14 +54,14 @@ const percorso = Astro.url.pathname.replace(/\/?$/, '/');
 
 		<header class="barra">
 			<div class="contenitore barra-interno">
-				<a class="marchio" href="/">
+				<a class="marchio" href={percorso()}>
 					<Emblema dimensione={32} />
 					<span class="nome-sito">{NOME_SITO}</span>
 				</a>
 				<nav aria-label="Pagine del sito" class="menu">
 					{
 						menu.map((voce) => (
-							<a href={voce.href} aria-current={voce.href === percorso ? 'page' : undefined}>
+							<a href={voce.href} aria-current={voce.href === paginaAttuale ? 'page' : undefined}>
 								{voce.testo}
 							</a>
 						))
@@ -92,6 +103,8 @@ const percorso = Astro.url.pathname.replace(/\/?$/, '/');
 				const attuale = radice.dataset.tema ?? (matchMedia('(prefers-color-scheme: light)').matches ? 'chiaro' : 'scuro');
 				const nuovo = attuale === 'chiaro' ? 'scuro' : 'chiaro';
 				radice.dataset.tema = nuovo;
+				const colore = nuovo === 'chiaro' ? '#ffffff' : '#171b24';
+				document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute('content', colore));
 				try {
 					localStorage.setItem('tema', nuovo);
 				} catch {
@@ -99,6 +112,20 @@ const percorso = Astro.url.pathname.replace(/\/?$/, '/');
 				}
 			});
 		</script>
+
+		{
+			// App installabile e offline: il service worker si registra solo nel sito pubblicato
+			// (in sviluppo terrebbe in memoria pagine vecchie e confonderebbe le prove).
+			import.meta.env.PROD && (
+				<script is:inline define:vars={{ indirizzoSw: percorso('sw.js'), cartella: percorso() }}>
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', () => {
+							navigator.serviceWorker.register(indirizzoSw, { scope: cartella }).catch(() => {});
+						});
+					}
+				</script>
+			)
+		}
 	</body>
 </html>
 

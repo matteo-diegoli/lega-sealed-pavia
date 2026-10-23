@@ -7,11 +7,12 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 5 (pool interattivo) **completata** ✅
-- **Prossima azione:** proporre il piano della Fase 6 (PWA, SEO e agenti AI) e aspettare l'ok.
+- **Fase attuale:** Fase 6 – step 1 (app installabile e offline) **completato** ✅ (controllato dall'utente dal telefono).
+- **Prossima azione:** proporre il piano dello step 2 (meta, Open Graph con immagini generate, JSON-LD, robots)
+  e aspettare l'ok; poi step 3 (`llms.txt` e `/api/*.json`). Piano della fase approvato il 2026-10-23.
 - `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
-- **Ultimo aggiornamento:** 2026-10-23
+- **Ultimo aggiornamento:** 2026-10-23 (Fase 6, step 1)
 
 ---
 
@@ -79,6 +80,15 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - PWA con `@vite-pwa/astro`. Test con Vitest; accessibilità con Playwright + axe.
 - Deploy: GitHub Actions → GitHub Pages.
 
+### Indirizzo del sito e app (deciso il 2026-10-23 in Fase 6)
+- Indirizzo: **`https://matteo-diegoli.github.io/lega-sealed-pavia/`**, scritto in `data/league.yml` (`indirizzo:`).
+  Per cambiarlo basta quella riga; al momento della build lo si può scavalcare con la variabile `SITO_URL`
+  (es. `$env:SITO_URL='https://lega.example.it/'; npm.cmd run build`). `astro.config.mjs` ne ricava `site` e `base`.
+- Ogni link interno passa da `percorso()` / `linkGiocatore()` in `src/lib/sito/percorso.ts` (mai scrivere `href="/..."`).
+- **Niente `@vite-pwa/astro`**: dichiara compatibilità solo fino ad Astro 5. Service worker scritto a mano
+  (`src/lib/sito/service-worker.ts`, pubblicato come `sw.js`).
+- **Niente sitemap**: con il `noindex` non serve.
+
 ### Stile (deciso il 2026-10-23 in Fase 3)
 - Scelto lo **stile B – "Arena"** (scartato A – "Pavia storica": chiaro, serif, rosso mattone).
 - Fondo scuro (`#0e1117`), superfici a schede con angoli arrotondati (12px), testo `#e9edf4`, testo tenue `#9aa4b5`.
@@ -96,7 +106,8 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - git 2.55, GitHub CLI 2.103, accesso come **matteo-diegoli** (email noreply di GitHub).
 - Il PC ha un vecchio proxy aziendale (Ariadne) in git globale: in **questo** repository è disattivato con `git config http.proxy ""`.
   Proxy rimosso anche da nvm, npm e WinHTTP (comandi per rimetterlo: vedi sotto).
-- **Sito dal telefono:** `npx.cmd astro dev --host --background`, poi sul telefono `http://<IP del PC>:4321`
+- **Sito dal telefono:** `npx.cmd astro dev --host --background`, poi sul telefono `http://<IP del PC>:4321/lega-sealed-pavia/`
+  (dalla Fase 6 il sito vive nella sottocartella dell'indirizzo: vedi "Indirizzo del sito")
   (rete Wi-Fi di casa "Privata"). L'IP **cambia** ogni tanto (era 192.168.1.90, il 2026-10-23 è diventato
   192.168.1.18): se il telefono dà `ERR_ADDRESS_UNREACHABLE`, ritrovarlo con
   `Get-NetIPAddress -InterfaceAlias Wi-Fi -AddressFamily IPv4` (non fidarsi dell'indirizzo stampato da
@@ -201,8 +212,18 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       Prove dei clic fatte con uno script temporaneo che pilota Edge (DevTools); in Fase 7 arriverà Playwright.
 
 ### Fase 6 – PWA, SEO e agenti AI
-- [ ] Manifest, icone, service worker, offline
-- [ ] Meta, Open Graph con immagini generate, JSON-LD, sitemap, robots, noindex
+- [x] Manifest, icone, service worker, offline
+      — Icone da `npm run icone` (`scripts/icone.ts` + `@resvg/resvg-js`, disegno in `src/lib/sito/emblema.ts`, lo stesso
+      di `Emblema.astro`): `favicon.svg`, `icona-192/512.png`, `icona-maskable-512.png`, `apple-touch-icon.png` in `public/`,
+      salvate in git (eliminata la vecchia `favicon.ico` di Astro). Manifest da `src/pages/manifest.webmanifest.ts`.
+      Service worker da `src/pages/sw.js.ts`: alla prima visita salva tutte le pagine (`src/lib/sito/pagine.ts`) e i loro
+      file `_astro/`; pagine prima dalla rete poi dalla copia (ignorando `?q=…`), poi `offline/`; immagini Scryfall salvate
+      quando si vedono (richiesta CORS, massimo 600); versione = ora della build. Si registra **solo nel sito pubblicato**
+      (non con `astro dev`) e solo su `https://` o `localhost`: dal telefono via IP di casa non parte, si proverà online
+      in Fase 8. Provato su PC con Edge + `astro preview` spegnendo il server: pagine salvate, stile e pagina offline ok.
+      Con `astro dev` chi apre `/` o la cartella senza `/` finale viene rimandato dentro
+      (plugin in `astro.config.mjs`, solo per le pagine HTML). Colore della barra del telefono (`theme-color`) che segue anche il tema scelto a mano. 5 test nuovi (125 in tutto).
+- [ ] Meta, Open Graph con immagini generate, JSON-LD, robots, noindex (sitemap esclusa: vedi decisioni)
 - [ ] `llms.txt` e `/api/*.json`
 
 ### Fase 7 – Qualità

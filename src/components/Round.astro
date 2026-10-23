@@ -3,6 +3,7 @@
 import Partita from './Partita.astro';
 import { NUMERO_SERATE } from '../lib/dati/schema.ts';
 import type { Round } from '../lib/dati/valida.ts';
+import { linkGiocatore } from '../lib/sito/percorso.ts';
 
 interface Props {
 	round: Round;
@@ -24,7 +25,7 @@ const finale = round.serata === NUMERO_SERATE;
 	{
 		round.bye && (
 			<p class="bye">
-				<strong>Bye:</strong> <a href={`/giocatori/${round.bye}/`}>{nomi.get(round.bye) ?? round.bye}</a> (vale come
+				<strong>Bye:</strong> <a href={linkGiocatore(round.bye)}>{nomi.get(round.bye) ?? round.bye}</a> (vale come
 				vittoria 2-0)
 			</p>
 		)

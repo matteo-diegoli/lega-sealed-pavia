@@ -3,6 +3,7 @@
 // incrociano più file (giocatori esistenti, assenti, ecc.) sono in valida.ts.
 
 import { z } from 'zod';
+import { scomponiIndirizzo } from '../sito/indirizzo.ts';
 
 // Messaggi generici di Zod in italiano (quelli specifici sono scritti a mano sotto).
 z.config(z.locales.it());
@@ -57,6 +58,17 @@ export const schemaLega = z.strictObject({
   set: z
     .string({ error: 'manca il codice del set (es. fra)' })
     .regex(/^[a-z0-9]{3,6}$/, { error: 'il codice del set va scritto in minuscolo, come su Scryfall (es. fra)' }),
+  // Indirizzo pubblico del sito (facoltativo): vedi src/lib/sito/indirizzo.ts.
+  indirizzo: z
+    .string({ error: 'l\'indirizzo del sito va scritto come testo, es. https://matteo-diegoli.github.io/lega-sealed-pavia/' })
+    .superRefine((testo, ctx) => {
+      try {
+        scomponiIndirizzo(testo);
+      } catch (errore) {
+        ctx.addIssue({ code: 'custom', message: (errore as Error).message });
+      }
+    })
+    .nullish(),
   serate: z
     .array(schemaSerata, { error: 'manca l\'elenco delle serate' })
     .min(1, { error: 'serve almeno una serata' }),

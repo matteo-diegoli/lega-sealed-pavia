@@ -4,7 +4,8 @@
 //                                        successivo già abbinato e i risultati da scrivere (null).
 // Non sovrascrive giocatori o round già presenti, a meno di aggiungere "--forza".
 
-import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { load } from 'js-yaml';
 import { controllaDati, leggiCacheCarte } from '../src/lib/dati/carica.ts';
 import { NUMERO_SERATE } from '../src/lib/dati/schema.ts';
 import { busteDellaSerata } from '../src/lib/lega/buste.ts';
@@ -51,7 +52,12 @@ function principale() {
     return;
   }
 
-  const completa = simulaLega(opzioniDiProva(cache.carte));
+  // L'indirizzo del sito già scritto in league.yml resta com'è.
+  let indirizzo: string | null = null;
+  try {
+    indirizzo = (load(readFileSync('data/league.yml', 'utf8')) as { indirizzo?: string } | null)?.indirizzo ?? null;
+  } catch {}
+  const completa = simulaLega({ ...opzioniDiProva(cache.carte), indirizzo });
   const sim = fino === null ? completa : fermaAllaSerata(completa, fino);
 
   rmSync('data/players', { recursive: true, force: true });

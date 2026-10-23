@@ -2,6 +2,7 @@
 // Classifica: tabella completa sugli schermi larghi, una scheda per giocatore sul telefono.
 // Le due versioni hanno gli stessi dati; quella nascosta (display: none) non viene letta.
 import { formattaPercentuale, type Classifica } from '../lib/lega/classifica.ts';
+import { linkGiocatore } from '../lib/sito/percorso.ts';
 
 interface Props {
 	classifica: Classifica;
@@ -24,7 +25,6 @@ const game = (r: (typeof classifica.righe)[number]) =>
 	`${r.gameVinti}-${r.gamePersi}${r.gamePareggiati ? `-${r.gamePareggiati}` : ''}`;
 const frase = (n: number) =>
 	n > 0 ? `salito di ${n} ${n === 1 ? 'posizione' : 'posizioni'}` : `sceso di ${-n} ${n === -1 ? 'posizione' : 'posizioni'}`;
-const linkGiocatore = (id: string) => `/giocatori/${id}/`;
 ---
 
 <div class="classifica">

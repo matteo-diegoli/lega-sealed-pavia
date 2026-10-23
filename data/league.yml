@@ -6,6 +6,10 @@
 nome: Lega Sealed Pavia
 set: fra   # codice Scryfall di Reality Fracture
 
+# Indirizzo pubblico del sito. Per un dominio personale scrivi ad es. https://lega.example.it/
+# (si può scavalcare al momento della build con la variabile SITO_URL).
+indirizzo: https://matteo-diegoli.github.io/lega-sealed-pavia/
+
 serate:
   - numero: 1
     data: 2026-10-22

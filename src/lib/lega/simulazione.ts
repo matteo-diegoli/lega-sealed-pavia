@@ -22,6 +22,8 @@ export interface OpzioniSimulazione {
   seme: number;
   /** Carte del set da cui pescare le buste. */
   carte: Carta[];
+  /** Indirizzo del sito da riscrivere in league.yml (facoltativo). */
+  indirizzo?: string | null;
 }
 
 export interface Simulazione {
@@ -115,6 +117,7 @@ export function simulaLega(opzioni: OpzioniSimulazione): Simulazione {
     lega: {
       nome: opzioni.nomeLega,
       set: opzioni.set,
+      indirizzo: opzioni.indirizzo ?? null,
       serate: opzioni.date.map((data, i) => ({ numero: i + 1, data, assenti: opzioni.assenti[i] ?? [] })),
     },
     giocatori: opzioni.giocatori.map((g) => ({ ...g, pool: [] })),
@@ -198,7 +201,13 @@ export function fileDellaSimulazione(sim: Simulazione): FileDati[] {
     '# Le date si scrivono AAAA-MM-GG; null = data non ancora decisa.\n' +
     '# assenti: identificativi di chi non c\'era, es. [anna, bruno] (vuoto = tutti presenti).\n' +
     '# ATTENZIONE: date e assenti delle serate dalla 2 in poi sono FITTIZI (npm run genera-prova).\n\n' +
-    `nome: ${lega.nome}\nset: ${lega.set}   # codice Scryfall di Reality Fracture\n\nserate:\n${serate.join('')}`;
+    `nome: ${lega.nome}\nset: ${lega.set}   # codice Scryfall di Reality Fracture\n\n` +
+    (lega.indirizzo
+      ? '# Indirizzo pubblico del sito. Per un dominio personale scrivi ad es. https://lega.example.it/\n' +
+        '# (si può scavalcare al momento della build con la variabile SITO_URL).\n' +
+        `indirizzo: ${lega.indirizzo}\n\n`
+      : '') +
+    `serate:\n${serate.join('')}`;
 
   const files: FileDati[] = [{ percorso: FILE_LEGA, testo: testoLega }];
 

@@ -9,6 +9,7 @@ import { NUMERO_SERATE } from '../../lib/dati/schema.ts';
 import type { Giocatore } from '../../lib/dati/valida.ts';
 import { partiteDelGiocatore, poolDelGiocatore, type Esito } from '../../lib/lega/giocatore.ts';
 import { classificaAttuale } from '../../lib/lega/riepilogo.ts';
+import { linkGiocatore } from '../../lib/sito/percorso.ts';
 
 export const getStaticPaths = (() =>
 	caricaDati().giocatori.map((giocatore) => ({ params: { id: giocatore.id }, props: { giocatore } }))) satisfies GetStaticPaths;
@@ -95,7 +96,7 @@ const sigleEsito: Record<Esito, string> = {
 									{r.avversario ? (
 										<>
 											<span class="tenue">{r.esito === 'da-giocare' ? 'contro' : 'vs'}</span>{' '}
-											<a href={`/giocatori/${r.avversario}/`}>{nomi.get(r.avversario) ?? r.avversario}</a>
+											<a href={linkGiocatore(r.avversario)}>{nomi.get(r.avversario) ?? r.avversario}</a>
 										</>
 									) : (
 										<span class="tenue" aria-hidden="true">

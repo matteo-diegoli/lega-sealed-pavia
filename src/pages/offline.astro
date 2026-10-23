@@ -1,0 +1,28 @@
+---
+// Pagina mostrata dall'app quando manca la rete e la pagina chiesta non è stata salvata sul telefono.
+import Base from '../layouts/Base.astro';
+import { percorso } from '../lib/sito/percorso.ts';
+---
+
+<Base titolo="Sei offline" descrizione="Pagina mostrata quando manca la connessione.">
+	<section class="contenitore offline">
+		<div class="scheda">
+			<h1>Sei offline</h1>
+			<p>Questa pagina non è ancora salvata sul telefono. Riprova quando torna la connessione.</p>
+			<p>Intanto puoi aprire le pagine già salvate:</p>
+			<ul>
+				<li><a href={percorso()}>Classifica</a></li>
+				<li><a href={percorso('match/')}>Match</a></li>
+			</ul>
+		</div>
+	</section>
+</Base>
+
+<style>
+	.offline {
+		padding-block: 2rem;
+	}
+	h1 {
+		margin-top: 0;
+	}
+</style>

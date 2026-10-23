@@ -2,6 +2,7 @@
 // Un tavolo: i due giocatori uno di fronte all'altro, con il risultato in mezzo (o "da giocare").
 import type { Partita } from '../lib/dati/schema.ts';
 import { testoRisultato, vincitore } from '../lib/lega/match.ts';
+import { linkGiocatore } from '../lib/sito/percorso.ts';
 
 interface Props {
 	partita: Partita;
@@ -21,7 +22,7 @@ const stato = (lato: 0 | 1) => (esito === lato ? 'vince' : typeof esito === 'num
 <li class:list={['scheda', 'partita', { finale }]}>
 	<span class="tavolo"><span class="solo-lettori">Tavolo </span><span aria-hidden="true">T</span>{tavolo}</span>
 	<span class:list={['giocatore', stato(0)]}>
-		<a href={`/giocatori/${a}/`}>{nomi.get(a) ?? a}</a>{esito === 0 && <span class="solo-lettori"> (vince)</span>}
+		<a href={linkGiocatore(a)}>{nomi.get(a) ?? a}</a>{esito === 0 && <span class="solo-lettori"> (vince)</span>}
 	</span>
 	<span class:list={['risultato', { 'da-giocare': !risultato }]}>
 		{risultato ?? 'vs'}
@@ -29,7 +30,7 @@ const stato = (lato: 0 | 1) => (esito === lato ? 'vince' : typeof esito === 'num
 		{esito === 'pareggio' && <span class="solo-lettori"> (pareggio)</span>}
 	</span>
 	<span class:list={['giocatore', 'destra', stato(1)]}>
-		<a href={`/giocatori/${b}/`}>{nomi.get(b) ?? b}</a>{esito === 1 && <span class="solo-lettori"> (vince)</span>}
+		<a href={linkGiocatore(b)}>{nomi.get(b) ?? b}</a>{esito === 1 && <span class="solo-lettori"> (vince)</span>}
 	</span>
 </li>
 
