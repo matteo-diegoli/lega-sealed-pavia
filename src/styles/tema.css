@@ -26,6 +26,7 @@
 	--argento: #c3cbd8;
 	--bronzo: #d4895a;
 	--su-medaglia: #14110a;
+	--mitica: #ff8a4c; /* carte mitiche */
 
 	/* Esiti */
 	--vittoria: #4ade80;
@@ -74,6 +75,7 @@
 		--testo-oro: #8a6100;
 		--argento: #c9d0dc;
 		--bronzo: #e09a6c;
+		--mitica: #b4461a;
 		--vittoria: #15803d;
 		--sconfitta: #c0262d;
 		--mana-w: #efe3b0;
@@ -107,6 +109,7 @@
 	--testo-oro: #8a6100;
 	--argento: #c9d0dc;
 	--bronzo: #e09a6c;
+	--mitica: #b4461a;
 	--vittoria: #15803d;
 	--sconfitta: #c0262d;
 	--mana-w: #efe3b0;

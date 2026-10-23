@@ -1,0 +1,372 @@
+---
+// Pagina di un giocatore: nome e posizione in classifica, il pool diviso per colore, lo storico delle partite.
+// Una pagina per ogni file in data/players/ (indirizzo /giocatori/<id>/).
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import { caricaDati, leggiCacheCarte } from '../../lib/dati/carica.ts';
+import { NUMERO_SERATE } from '../../lib/dati/schema.ts';
+import type { Giocatore } from '../../lib/dati/valida.ts';
+import { partiteDelGiocatore, poolDelGiocatore, type Esito } from '../../lib/lega/giocatore.ts';
+import { classificaAttuale } from '../../lib/lega/riepilogo.ts';
+
+export const getStaticPaths = (() =>
+	caricaDati().giocatori.map((giocatore) => ({ params: { id: giocatore.id }, props: { giocatore } }))) satisfies GetStaticPaths;
+
+interface Props {
+	giocatore: Giocatore;
+}
+const { giocatore } = Astro.props;
+
+const dati = caricaDati();
+const nomi = new Map(dati.giocatori.map((g) => [g.id, g.nome]));
+const classifica = classificaAttuale(dati).classifica;
+const riga = classifica.righe.find((r) => r.id === giocatore.id);
+const iniziata = classifica.finoAlRound > 0;
+const medaglia = riga && iniziata ? (['oro', 'argento', 'bronzo'][riga.posizione - 1] ?? null) : null;
+
+const pool = poolDelGiocatore(giocatore, leggiCacheCarte()?.carte ?? []);
+const partite = partiteDelGiocatore(dati, giocatore.id);
+
+const nomiRarita: Record<string, string> = {
+	common: 'Comune',
+	uncommon: 'Non comune',
+	rare: 'Rara',
+	mythic: 'Mitica',
+	special: 'Speciale',
+	bonus: 'Bonus',
+};
+const sigleRarita: Record<string, string> = { common: 'C', uncommon: 'N', rare: 'R', mythic: 'M', special: 'S', bonus: 'B' };
+const nomiEsito: Record<Esito, string> = {
+	vittoria: 'Vittoria',
+	pareggio: 'Pareggio',
+	sconfitta: 'Sconfitta',
+	'da-giocare': 'Da giocare',
+	bye: 'Bye',
+	assente: 'Assente',
+};
+const sigleEsito: Record<Esito, string> = {
+	vittoria: 'V',
+	pareggio: 'P',
+	sconfitta: 'S',
+	'da-giocare': '–',
+	bye: 'V',
+	assente: '–',
+};
+const carteDellaSerata = pool.perSerata.map((s) => `serata ${s.serata}: ${s.carte}`).join(' · ');
+---
+
+<Base titolo={giocatore.nome} descrizione={`Pool e partite di ${giocatore.nome} nella ${dati.lega.nome}.`}>
+	<section class="testata">
+		<div class="contenitore">
+			<h1>{giocatore.nome}</h1>
+			<p class="posizione">
+				{
+					riga && iniziata ? (
+						<>
+							<span class:list={['badge', medaglia]}>{riga.posizione}</span>
+							<span>
+								{riga.posizione}° in classifica{riga.pariMerito && ' (pari merito)'} ·{' '}
+								<strong>{riga.punti} {riga.punti === 1 ? 'punto' : 'punti'}</strong>
+							</span>
+						</>
+					) : (
+						<span class="tenue">La classifica partirà dopo il primo round.</span>
+					)
+				}
+			</p>
+		</div>
+	</section>
+
+	<div class="contenitore">
+		<section aria-labelledby="titolo-pool">
+			<h2 id="titolo-pool" class="titolo-sezione">Pool</h2>
+			{
+				pool.totale === 0 ? (
+					<p class="scheda tenue">Nessuna carta registrata.</p>
+				) : (
+					<>
+						<p class="nota">
+							{pool.totale} carte <span class="tenue">({carteDellaSerata})</span>
+						</p>
+						<div class="gruppi">
+							{pool.gruppi.map((gruppo) => (
+								<section class="scheda gruppo" aria-labelledby={`gruppo-${gruppo.chiave}`}>
+									<h3 id={`gruppo-${gruppo.chiave}`} class="titolo-gruppo">
+										<span class:list={['segno', gruppo.chiave]} aria-hidden="true" />
+										{gruppo.nome}
+										<span class="tenue conteggio">{gruppo.totale}</span>
+									</h3>
+									<ul class="carte">
+										{gruppo.carte.map(({ nome, copie, carta }) => (
+											<li class:list={['carta', carta?.rarita]}>
+												<span class="copie">{copie > 1 ? `${copie}×` : ''}</span>
+												<span class="nome-carta">
+													{carta?.scryfall ? <a href={carta.scryfall}>{nome}</a> : nome}
+												</span>
+												{carta && (
+													<span class:list={['rarita', carta.rarita]} title={nomiRarita[carta.rarita]}>
+														<span aria-hidden="true">{sigleRarita[carta.rarita]}</span>
+														<span class="solo-lettori">, {nomiRarita[carta.rarita]}</span>
+													</span>
+												)}
+											</li>
+										))}
+									</ul>
+								</section>
+							))}
+						</div>
+					</>
+				)
+			}
+		</section>
+
+		<section aria-labelledby="titolo-partite">
+			<h2 id="titolo-partite" class="titolo-sezione">Partite</h2>
+			{
+				partite.length === 0 ? (
+					<p class="scheda tenue">Nessun round ancora abbinato.</p>
+				) : (
+					<ol class="partite">
+						{partite.map((r) => (
+							<li class:list={['scheda', 'riga-partita', r.esito, { finale: r.serata === NUMERO_SERATE }]}>
+								<span class="numero-round">
+									R{r.numeroGlobale}
+									<span class="solo-lettori">, serata {r.serata}</span>
+								</span>
+								<span class="esito" aria-hidden="true">
+									{sigleEsito[r.esito]}
+								</span>
+								<span class="contro">
+									<span class="solo-lettori">{nomiEsito[r.esito]}</span>
+									{r.avversario ? (
+										<>
+											<span class="tenue">{r.esito === 'da-giocare' ? 'contro' : 'vs'}</span>{' '}
+											<a href={`/giocatori/${r.avversario}/`}>{nomi.get(r.avversario) ?? r.avversario}</a>
+										</>
+									) : (
+										<span class="tenue" aria-hidden="true">
+											{nomiEsito[r.esito]}
+										</span>
+									)}
+									{r.serata === NUMERO_SERATE && <span class="etichetta-finale">×2</span>}
+								</span>
+								<span class="risultato">{r.esito === 'da-giocare' ? 'da giocare' : (r.risultato ?? '')}</span>
+							</li>
+						))}
+					</ol>
+				)
+			}
+		</section>
+	</div>
+</Base>
+
+<style>
+	.testata {
+		background: var(--sfondo-testata);
+		border-bottom: 1px solid var(--bordo);
+		padding: 2rem 0 1.5rem;
+	}
+	h1 {
+		margin: 0;
+		font-size: clamp(2rem, 8vw, 3rem);
+		font-weight: 800;
+		letter-spacing: -0.03em;
+		line-height: 1.05;
+		overflow-wrap: anywhere;
+	}
+	.posizione {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin: 0.75rem 0 0;
+	}
+	section:not(.testata, .gruppo) {
+		margin: 2rem 0 2.5rem;
+	}
+	.tenue {
+		color: var(--testo-tenue);
+	}
+	.nota {
+		margin: -0.5rem 0 1rem;
+		font-weight: 700;
+	}
+	.nota .tenue {
+		font-weight: 400;
+		font-size: 0.85rem;
+	}
+	a {
+		color: var(--testo);
+		text-decoration: none;
+	}
+	a:hover {
+		color: var(--accento);
+		text-decoration: underline;
+	}
+
+	/* --- Pool: un riquadro per colore --- */
+	.gruppi {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+		gap: 0.75rem;
+		align-items: start;
+	}
+	.titolo-gruppo {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin: 0 0 0.5rem;
+		font-size: 1rem;
+		font-weight: 800;
+	}
+	.conteggio {
+		margin-left: auto;
+		font-variant-numeric: tabular-nums;
+	}
+	/* Pallino del colore del gruppo (multicolore: sfumatura; incolore: grigio) */
+	.segno {
+		width: 0.85rem;
+		height: 0.85rem;
+		border-radius: 50%;
+		box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.25);
+		background: var(--superficie-alta);
+	}
+	.segno.W { background: var(--mana-w); }
+	.segno.U { background: var(--mana-u); }
+	.segno.B { background: var(--mana-b); }
+	.segno.R { background: var(--mana-r); }
+	.segno.G { background: var(--mana-g); }
+	.segno.multi {
+		background: conic-gradient(var(--mana-w), var(--mana-u), var(--mana-b), var(--mana-r), var(--mana-g), var(--mana-w));
+	}
+	.segno.incolore {
+		background: var(--argento);
+	}
+	.carte {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.carta {
+		display: grid;
+		grid-template-columns: 1.6rem 1fr auto;
+		align-items: center;
+		gap: 0.4rem;
+		min-height: 2rem;
+		border-top: 1px solid var(--bordo);
+		font-size: 0.9rem;
+	}
+	.copie {
+		font-weight: 700;
+		color: var(--testo-tenue);
+		font-variant-numeric: tabular-nums;
+	}
+	.nome-carta {
+		min-width: 0;
+		overflow-wrap: anywhere;
+	}
+	.carta.rare .nome-carta,
+	.carta.mythic .nome-carta {
+		font-weight: 700;
+	}
+	/* Sigla della rarità: rare e mitiche con il bordo colorato */
+	.rarita {
+		display: inline-grid;
+		place-items: center;
+		width: 1.4rem;
+		height: 1.4rem;
+		border-radius: 4px;
+		font-size: 0.7rem;
+		font-weight: 800;
+		color: var(--testo-tenue);
+		background: var(--superficie-alta);
+	}
+	.rarita.rare {
+		color: var(--testo-oro);
+		box-shadow: inset 0 0 0 2px var(--oro);
+	}
+	.rarita.mythic {
+		color: var(--mitica);
+		box-shadow: inset 0 0 0 2px var(--mitica);
+	}
+
+	/* --- Storico delle partite --- */
+	.partite {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 0.5rem;
+	}
+	.riga-partita {
+		display: grid;
+		grid-template-columns: auto auto 1fr auto;
+		align-items: center;
+		gap: 0.75rem;
+	}
+	.riga-partita.finale {
+		border-color: transparent;
+		background:
+			linear-gradient(var(--superficie), var(--superficie)) padding-box,
+			linear-gradient(120deg, var(--oro), #b8862b 40%, var(--accento)) border-box;
+	}
+	.numero-round {
+		font-size: 0.7rem;
+		font-weight: 700;
+		color: var(--testo-tenue);
+		background: var(--superficie-alta);
+		padding: 0.15rem 0.4rem;
+		border-radius: 4px;
+	}
+	.esito {
+		display: inline-grid;
+		place-items: center;
+		width: 1.75rem;
+		height: 1.75rem;
+		border-radius: 50%;
+		font-size: 0.8rem;
+		font-weight: 800;
+		background: var(--superficie-alta);
+		color: var(--testo-tenue);
+	}
+	.vittoria .esito,
+	.bye .esito {
+		background: var(--vittoria);
+		color: var(--su-accento);
+	}
+	.sconfitta .esito {
+		background: var(--sconfitta);
+		color: var(--su-accento);
+	}
+	.contro {
+		font-weight: 600;
+		min-width: 0;
+		overflow-wrap: anywhere;
+	}
+	.contro .tenue {
+		font-weight: 400;
+	}
+	.etichetta-finale {
+		margin-left: 0.5rem;
+		font-size: 0.7rem;
+		font-weight: 800;
+		color: var(--su-medaglia);
+		background: var(--oro);
+		padding: 0.1rem 0.45rem;
+		border-radius: 999px;
+	}
+	.risultato {
+		font-weight: 800;
+		font-size: 1.1rem;
+		font-variant-numeric: tabular-nums;
+	}
+	.da-giocare .risultato {
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--testo-tenue);
+	}
+	.assente {
+		opacity: 0.7;
+	}
+</style>

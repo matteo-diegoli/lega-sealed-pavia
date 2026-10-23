@@ -7,9 +7,9 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 4 (pagine): Home / Classifica e "Prossimi match" **completate** ✅
-- **Prossima azione:** proporre il piano della pagina giocatore (`/giocatori/<id>/`: pool, statistiche, storico
-  partite; niente mazzi) e aspettare l'ok. I nomi nella Home e nella pagina Match puntano già lì.
+- **Fase attuale:** Fase 4 (pagine) **completata** ✅ (Home, Match, pagina giocatore)
+- **Prossima azione:** Fase 5 – pool interattivo nella pagina giocatore: proporre il piano (filtri, ordinamento,
+  ricerca, contatore, stato nell'URL, bottom sheet su mobile) e aspettare l'ok.
 - `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
 - **Ultimo aggiornamento:** 2026-10-23
@@ -178,7 +178,13 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       riquadro "Lega conclusa" (basta il sottotitolo + il menu: richiesta utente). Sotto i round giocati in pannelli
       per serata (l'ultima aperta), con gli assenti. Finale: bordo dorato ed etichetta "Finale · punti ×2".
       Menu "Classifica / Match" nella barra in alto (`Base.astro`); sotto i 30rem si vede solo l'emblema.
-- [ ] Pagina giocatore (pool, statistiche, storico partite) — niente mazzi, deciso in Fase 1
+- [x] Pagina giocatore — `src/pages/giocatori/[id].astro` (indirizzo `/giocatori/<id>/`, una per file in `data/players/`),
+      `src/lib/lega/giocatore.ts` (pool unito tra le serate e diviso per colore, storico visto dal giocatore; 6 test, 112 in tutto).
+      Ordine deciso dall'utente: **nome e posizione in classifica → pool → partite**. **Statistiche e andamento omessi**
+      (non servono per ora). Pool: un riquadro per colore (W U B R G, multicolore, incolore), carte per valore di mana,
+      copie sommate, sigla di rarità (rare con bordo oro, mitiche con il nuovo colore `--mitica`), nome che porta a Scryfall,
+      carte per serata in cima. Partite dalla più recente: esito V/P/S colorato, avversario cliccabile, risultato dal punto
+      di vista del giocatore, bye, assenze, finale con bordo dorato e "×2".
 
 ### Fase 5 – Pool interattivo
 - [ ] Filtri a tag, ordinamento, ricerca, contatore, stato nell'URL, bottom sheet su mobile
