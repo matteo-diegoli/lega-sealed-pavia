@@ -13,7 +13,7 @@ serate:
     data: 2026-10-29   # FITTIZIA: rimettere null con i dati veri
     assenti: [marco]
   - numero: 3
-    data: null
+    data: 2026-11-01
     assenti: []
   - numero: 4
     data: null

@@ -7,8 +7,8 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 1 completata ✅ → inizio Fase 2 (motore della lega)
-- **Prossima azione:** proporre il piano della Fase 2 (classifica e tie-breaker per primi) e aspettare l'ok.
+- **Fase attuale:** Fase 2 (motore della lega): classifica e abbinamenti fatti ✅
+- **Prossima azione:** proporre il piano della busta extra (ultimo tra i presenti) e del recupero della busta per gli assenti, e aspettare l'ok.
 - **Ultimo aggiornamento:** 2026-10-23
 
 ---
@@ -38,6 +38,19 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - **Ciclo 2 (R8–R10):** abbinamenti per classifica, nessuna rivincita *dentro* il ciclo 2; riaffrontare chi si è incontrato in R1–R7 è ammesso.
 - **Punti:** BO3, vittoria 3, pareggio 1, sconfitta 0. Bye = vittoria 2-0, al giocatore con meno punti che non l'ha ancora avuto.
 - **Tie-breaker:** OMW% (minimo 33%), GW%, OGW%. La finale **conta normalmente** nei tie-breaker (il ×2 vale solo per i punti).
+- **Parità su tutto** (deciso il 2026-10-23): stessa posizione in classifica ("pari merito"). Quando bisogna
+  sceglierne uno (es. busta extra): scontro diretto (se sono più di due: punti negli scontri tra loro),
+  poi sorteggio fisso (hash dell'identificativo: sempre lo stesso risultato).
+- Dettagli del calcolo: il bye conta come vittoria 2-0 (3 punti, ×2 in finale) e vale per MW% e GW%, ma non è
+  un avversario in OMW%/OGW%; l'assenza non conta niente; le partite con risultato `null` si ignorano.
+  Il minimo del 33% vale solo per gli avversari (il proprio MW%/GW% resta quello vero).
+- **Abbinamenti** (deciso il 2026-10-23): ordine della classifica dopo l'ultimo round; dall'alto in basso, ognuno
+  contro il più alto libero e mai incontrato nel ciclo. Backtracking: un abbinamento si accetta solo se i round
+  rimasti nel ciclo restano abbinabili senza rivincite, supponendo tutti presenti (al massimo n − 1 round per ciclo).
+  Bye: al più basso in classifica tra chi ne ha avuti meno; se serve a evitare rivincite passa al candidato successivo.
+  Se le assenze rendono le rivincite inevitabili: il minor numero possibile, le più vecchie, con un **avviso**.
+- **`npm run pair`**: trova da solo il prossimo round, si rifiuta se mancano risultati o la data della serata,
+  crea `data/rounds/serata-X-round-Y.yml` con `risultato: null` (mai sovrascrivere). `-- --prova` mostra soltanto.
 
 ### Dati (formato YAML, deciso in Fase 1)
 - `data/league.yml`: nome, `set: fra`, elenco serate con `numero`, `data` (o `null`), `assenti`.
@@ -104,10 +117,12 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       busta extra a Carla (ultima dopo la serata 1). Abbinamenti a girone, **non** svizzeri.
 
 ### Fase 2 – Motore della lega
-- [ ] Classifica "al termine della serata X", tie-breaker
-- [ ] Abbinamenti svizzeri con backtracking, cicli 1 e 2, bye, moltiplicatore ×2
+- [x] Classifica "al termine della serata X", tie-breaker: `src/lib/lega/classifica.ts` (12 test, 59 in tutto),
+      `npm run classifica` (attuale) o `npm run classifica -- 2` (al termine della serata 2)
+- [x] Abbinamenti svizzeri con backtracking, cicli 1 e 2, bye, moltiplicatore ×2: `src/lib/lega/abbinamenti.ts`
+      (15 test, tra cui 400 leghe simulate con e senza assenze; 74 test in tutto). Aiuti per i test in `src/lib/lega/prova.ts`
 - [ ] Busta extra all'ultimo tra i presenti + recupero della busta per chi è stato assente
-- [ ] `npm run pair`
+- [x] `npm run pair` (e `npm run pair -- --prova`)
 - [ ] Test automatici + dati di prova che simulano tutte e 5 le serate
 
 ### Fase 3 – Design

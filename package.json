@@ -10,6 +10,8 @@
     "controlla": "node scripts/controlla.ts",
     "scryfall": "node scripts/scryfall.ts",
     "genera-prova": "node scripts/genera-prova.ts",
+    "classifica": "node scripts/classifica.ts",
+    "pair": "node scripts/pair.ts",
     "prebuild": "npm run controlla",
     "build": "astro build",
     "preview": "astro preview",
