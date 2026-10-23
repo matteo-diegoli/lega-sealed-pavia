@@ -1,0 +1,272 @@
+---
+// TEMPORANEO (Fase 3): direzione di stile A, "Pavia storica".
+import { datiProvaStile } from '../lib/prova-stile.ts';
+
+const d = datiProvaStile();
+const nomiRarita = { mythic: 'Mitica', rare: 'Rara', uncommon: 'Non comune', common: 'Comune', special: 'Speciale', bonus: 'Bonus' };
+const nomiColori: Record<string, string> = { W: 'bianco', U: 'blu', B: 'nero', R: 'rosso', G: 'verde' };
+---
+
+<html lang="it">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex" />
+		<title>Stile A – Pavia storica · {d.nomeLega}</title>
+	</head>
+	<body>
+		<a class="salta" href="#contenuto">Vai al contenuto</a>
+		<header class="testata">
+			<!-- Skyline stilizzato: torri medievali e Ponte Coperto sul Ticino (disegno originale, provvisorio) -->
+			<svg class="skyline" viewBox="0 0 400 90" aria-hidden="true" preserveAspectRatio="xMidYMax slice">
+				<g fill="currentColor">
+					<rect x="30" y="18" width="16" height="62" />
+					<rect x="33" y="10" width="10" height="10" />
+					<rect x="60" y="34" width="12" height="46" />
+					<rect x="84" y="4" width="18" height="76" />
+					<rect x="88" y="0" width="10" height="6" />
+					<rect x="112" y="40" width="22" height="40" />
+					<path d="M150 80 V48 q14 -22 28 0 V80 Z" />
+					<rect x="160" y="30" width="8" height="20" />
+					<rect x="196" y="24" width="14" height="56" />
+					<path d="M226 80 V50 h40 V80 Z M232 50 l14 -14 l14 14 Z" />
+					<rect x="290" y="14" width="15" height="66" />
+					<rect x="318" y="38" width="12" height="42" />
+					<rect x="346" y="26" width="16" height="54" />
+				</g>
+				<path class="ponte" d="M0 86 H400 M0 80 H400" stroke="currentColor" stroke-width="2" fill="none" />
+				<path class="ponte" d="M20 86 q30 -14 60 0 q30 -14 60 0 q30 -14 60 0 q30 -14 60 0 q30 -14 60 0 q30 -14 60 0" stroke="currentColor" stroke-width="2" fill="none" />
+			</svg>
+			<div class="testata-testo">
+				<p class="sopratitolo">Reality Fracture · Sealed</p>
+				<h1>{d.nomeLega}</h1>
+				<p class="sottotitolo">Serata {d.serataAttuale} di 5 · round {d.roundAttuale} di 10</p>
+			</div>
+		</header>
+
+		<main id="contenuto">
+			<section aria-labelledby="titolo-classifica">
+				<h2 id="titolo-classifica">Classifica</h2>
+				<p class="nota">Al termine del round {d.roundAttuale}. Le frecce indicano lo spostamento rispetto alla serata precedente.</p>
+
+				<table class="classifica">
+					<caption class="solo-lettori">Classifica della lega, dal primo all'ultimo</caption>
+					<thead>
+						<tr>
+							<th scope="col">Pos</th>
+							<th scope="col">Giocatore</th>
+							<th scope="col" class="num">Punti</th>
+							<th scope="col" class="num">V-P-S</th>
+							<th scope="col" class="num"><abbr title="Percentuale di match vinti dagli avversari">OMW%</abbr></th>
+							<th scope="col" class="num"><abbr title="Percentuale di game vinti">GW%</abbr></th>
+							<th scope="col" class="num"><abbr title="Percentuale di game vinti dagli avversari">OGW%</abbr></th>
+						</tr>
+					</thead>
+					<tbody>
+						{d.righe.map((r) => (
+							<tr class:list={[{ podio: Number.parseInt(r.posizione) <= 3 }]}>
+								<td class="pos">{r.posizione}</td>
+								<th scope="row">
+									{r.nome}
+									{r.variazione !== 0 && (
+										<span class:list={['freccia', r.variazione > 0 ? 'su' : 'giu']}>
+											<span aria-hidden="true">{r.variazione > 0 ? '▲' : '▼'}{Math.abs(r.variazione)}</span>
+											<span class="solo-lettori">{r.variazione > 0 ? 'sale' : 'scende'} di {Math.abs(r.variazione)}</span>
+										</span>
+									)}
+								</th>
+								<td class="num punti">{r.punti}</td>
+								<td class="num">{r.record}</td>
+								<td class="num">{r.omw}</td>
+								<td class="num">{r.gw}</td>
+								<td class="num">{r.ogw}</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+
+				<ol class="classifica-schede">
+					{d.righe.map((r) => (
+						<li class:list={['scheda', { podio: Number.parseInt(r.posizione) <= 3 }]}>
+							<span class="pos" aria-label={`Posizione ${r.posizione}`}>{r.posizione}</span>
+							<span class="chi">
+								<strong>{r.nome}</strong>
+								<span class="dettagli">{r.record} · OMW {r.omw}</span>
+							</span>
+							<span class="punti"><strong>{r.punti}</strong> pt</span>
+						</li>
+					))}
+				</ol>
+			</section>
+
+			<section aria-labelledby="titolo-match" class:list={['match', { finale: d.finale }]}>
+				<h2 id="titolo-match">
+					{d.finale ? 'La finale' : 'Prossimi match'}
+					{d.finale && <span class="sigillo">Punti ×{d.moltiplicatore}</span>}
+				</h2>
+				<p class="nota">Serata {d.serataAttuale}, round {d.roundAttuale}</p>
+				<ul class="partite">
+					{d.partite.map((p, i) => (
+						<li class="partita">
+							<span class="tavolo">Tavolo {i + 1}</span>
+							<span class:list={['giocatore', { vince: p.vincitore === 'a' }]}>{p.a}</span>
+							<span class="risultato">{p.risultato ?? 'vs'}</span>
+							<span class:list={['giocatore', 'destra', { vince: p.vincitore === 'b' }]}>{p.b}</span>
+						</li>
+					))}
+				</ul>
+				{d.bye && <p class="nota">Bye: {d.bye}</p>}
+			</section>
+
+			<section aria-labelledby="titolo-pool">
+				<h2 id="titolo-pool">Il pool di {d.pool.nome}</h2>
+				<p class="nota">{d.pool.totaleCarte} carte aperte · le più rare</p>
+				<ul class="carte">
+					{d.pool.carte.map((c) => (
+						<li class="carta">
+							<img src={c.immagine} alt={c.nome} loading="lazy" width="244" height="340" />
+							<span class="carta-info">
+								<span class:list={['rarita', c.rarita]}>{nomiRarita[c.rarita]}</span>
+								<span class="colori">
+									{c.colori.map((col) => (
+										<span class:list={['mana', col]} title={nomiColori[col]}>
+											<span class="solo-lettori">{nomiColori[col]}</span>
+										</span>
+									))}
+								</span>
+								{c.copie > 1 && <span class="copie">×{c.copie}</span>}
+							</span>
+						</li>
+					))}
+				</ul>
+			</section>
+		</main>
+
+		<footer>
+			<p>Pagina di prova dello <strong>stile A – Pavia storica</strong>. Dati fittizi.</p>
+		</footer>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--carta: #f5eddc;
+		--carta-scura: #ebe0c8;
+		--inchiostro: #2b1d14;
+		--inchiostro-tenue: #5e4a3a;
+		--mattone: #9c3220;
+		--oro: #8a6414;
+		--oro-chiaro: #d9b45a;
+		--ticino: #2c5566;
+		--bordo: #cdb998;
+		--serif: 'Palatino Linotype', 'Book Antiqua', Palatino, 'Iowan Old Style', Georgia, serif;
+		color-scheme: light;
+	}
+	* { box-sizing: border-box; }
+	body {
+		margin: 0;
+		background: var(--carta);
+		color: var(--inchiostro);
+		font-family: var(--serif);
+		font-size: 1.0625rem;
+		line-height: 1.5;
+	}
+	.salta { position: absolute; left: -999px; }
+	.salta:focus { left: 1rem; top: 1rem; background: var(--inchiostro); color: var(--carta); padding: .5rem 1rem; z-index: 1; }
+	.solo-lettori {
+		position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+	}
+
+	.testata {
+		position: relative;
+		background: var(--mattone);
+		color: #fbf3e4;
+		padding: 2.5rem 1rem 0;
+		text-align: center;
+		border-bottom: 4px double var(--oro-chiaro);
+	}
+	.testata-testo { position: relative; padding-bottom: 5.5rem; }
+	.sopratitolo { margin: 0; letter-spacing: .2em; text-transform: uppercase; font-size: .8rem; color: #f3d99a; }
+	h1 { margin: .25rem 0; font-size: clamp(2rem, 7vw, 3.25rem); font-weight: normal; letter-spacing: .02em; }
+	.sottotitolo { margin: 0; font-style: italic; }
+	.skyline { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 90px; color: #7a2617; }
+
+	main { max-width: 60rem; margin: 0 auto; padding: 1rem; }
+	section { margin: 2.5rem 0; }
+	h2 {
+		font-weight: normal;
+		font-size: 1.75rem;
+		margin: 0;
+		display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
+	}
+	h2::after { content: ''; flex: 1; border-bottom: 1px solid var(--bordo); min-width: 2rem; }
+	.nota { margin: .25rem 0 1rem; color: var(--inchiostro-tenue); font-style: italic; font-size: .95rem; }
+
+	/* Classifica: tabella su schermi larghi */
+	.classifica { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+	.classifica th, .classifica td { padding: .6rem .5rem; border-bottom: 1px solid var(--bordo); text-align: left; }
+	.classifica thead th { font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--inchiostro-tenue); font-weight: normal; border-bottom: 2px solid var(--inchiostro); }
+	.classifica tbody th { font-weight: normal; }
+	.classifica .num { text-align: right; }
+	.classifica .pos { font-size: 1.25rem; color: var(--mattone); width: 3rem; }
+	.classifica .punti { font-weight: bold; font-size: 1.15rem; }
+	.classifica tr.podio { background: linear-gradient(90deg, rgba(217, 180, 90, .25), transparent); }
+	abbr { text-decoration: none; cursor: help; }
+	.freccia { font-size: .75rem; margin-left: .4rem; }
+	.freccia.su { color: #2f6b2f; }
+	.freccia.giu { color: var(--mattone); }
+
+	/* Classifica: schede su telefono */
+	.classifica-schede { display: none; list-style: none; padding: 0; margin: 0; }
+	.scheda {
+		display: grid; grid-template-columns: 2.5rem 1fr auto; align-items: center; gap: .75rem;
+		padding: .75rem; border-bottom: 1px solid var(--bordo);
+	}
+	.scheda.podio { background: linear-gradient(90deg, rgba(217, 180, 90, .3), transparent); }
+	.scheda .pos { font-size: 1.5rem; color: var(--mattone); text-align: center; }
+	.scheda .chi { display: flex; flex-direction: column; }
+	.scheda .dettagli { font-size: .85rem; color: var(--inchiostro-tenue); font-variant-numeric: tabular-nums; }
+	.scheda .punti strong { font-size: 1.4rem; }
+	@media (max-width: 40rem) {
+		.classifica { display: none; }
+		.classifica-schede { display: block; }
+	}
+
+	/* Match */
+	.match.finale {
+		background: var(--carta-scura);
+		border: 1px solid var(--oro);
+		outline: 1px solid var(--oro);
+		outline-offset: 4px;
+		padding: 1.25rem;
+	}
+	.sigillo {
+		font-size: .85rem; letter-spacing: .1em; text-transform: uppercase;
+		background: var(--mattone); color: #fbf3e4; padding: .2rem .7rem; border-radius: 999px;
+		order: 2;
+	}
+	.partite { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+	.partita {
+		display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: .5rem 1rem;
+		background: #fbf6ea; border: 1px solid var(--bordo); padding: .75rem 1rem;
+	}
+	.tavolo { grid-column: 1 / -1; font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; color: var(--inchiostro-tenue); }
+	.giocatore.destra { text-align: right; }
+	.giocatore.vince { font-weight: bold; color: var(--mattone); }
+	.risultato { font-variant-numeric: tabular-nums; font-size: 1.2rem; color: var(--ticino); }
+
+	/* Pool */
+	.carte { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: 1rem; }
+	.carta img { width: 100%; height: auto; border-radius: 4.5% / 3.5%; display: block; box-shadow: 0 2px 6px rgba(43, 29, 20, .35); }
+	.carta-info { display: flex; align-items: center; gap: .4rem; margin-top: .4rem; font-size: .8rem; }
+	.rarita { font-style: italic; }
+	.rarita.mythic { color: var(--mattone); }
+	.rarita.rare { color: var(--oro); }
+	.copie { margin-left: auto; font-weight: bold; }
+	.colori { display: inline-flex; gap: 2px; }
+	.mana { width: .7rem; height: .7rem; border-radius: 50%; border: 1px solid rgba(43, 29, 20, .5); display: inline-block; }
+	.mana.W { background: #f8f1d8; } .mana.U { background: #3d78b8; } .mana.B { background: #3a3030; }
+	.mana.R { background: #c8432b; } .mana.G { background: #3c7d4a; }
+
+	footer { text-align: center; color: var(--inchiostro-tenue); font-size: .9rem; padding: 2rem 1rem; border-top: 1px solid var(--bordo); }
+</style>
