@@ -7,11 +7,11 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 3 (design) **completata** ✅
-- **Prossima azione:** Fase 4, primo punto: proporre il piano della Home / Classifica (tabella + schede su mobile,
-  evoluzione per serata, ×2 della finale) usando `Base.astro` e la vetrina attuale come riferimento, e aspettare l'ok.
-- Domanda in sospeso: la cartella `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore)
-  contiene le foto dei pool veri? Chiarire prima di sostituire i dati fittizi (Fase 9).
+- **Fase attuale:** Fase 4 (pagine): Home / Classifica **completata** ✅
+- **Prossima azione:** proporre il piano della pagina "Prossimi match" (round corrente, storico richiudibile,
+  stile speciale della finale) e aspettare l'ok.
+- `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore) contiene le foto dei **pool veri**
+  della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
 - **Ultimo aggiornamento:** 2026-10-23
 
 ---
@@ -103,6 +103,8 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
   `Get-NetIPAddress -InterfaceAlias Wi-Fi -AddressFamily IPv4` (non fidarsi dell'indirizzo stampato da
   `astro dev status`: è quello di quando il server è partito). Scrivere sempre `http://` a mano: con `https://`
   compare `ERR_SSL_PROTOCOL_ERROR`. Spegnere il server con `npx.cmd astro dev stop`.
+- **Foto delle pagine per i controlli:** Edge senza finestra (`msedge.exe --headless=new --screenshot=… --window-size=496,700 <url>`).
+  Non scende sotto i **496 px** di larghezza: con valori più piccoli la foto è ritagliata e sembra che la pagina esca dallo schermo.
 
 ### ❓ Domande aperte
 - Nessuna (le due sulle assenze sono state risolte il 2026-10-23: vedi "Busta extra" e "Assenti").
@@ -162,7 +164,13 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       `src/pages/index.astro` è una vetrina provvisoria dello stile, da sostituire con la classifica in Fase 4.
 
 ### Fase 4 – Pagine
-- [ ] Home / Classifica (tabella + card su mobile, evoluzione per serata, ×2 della finale)
+- [x] Home / Classifica (tabella + card su mobile, evoluzione per serata, ×2 della finale)
+      — `src/pages/index.astro`, componenti `BarraRound.astro` e `Classifica.astro` (tabella da 44rem in su,
+      schede sotto), `src/lib/lega/riepilogo.ts` (stato della lega, frecce ↑↓, evoluzione, punti in finale, date in
+      italiano; 7 test, 102 in tutto). Nuovo colore `--testo-oro` (oro più scuro nel tema chiaro, per il contrasto).
+      La classifica è la prima cosa dopo la testata (richiesta utente): i riquadri ×2, busta extra e vincitore
+      stanno sotto. Evoluzione con `<details>` senza JavaScript, mostrata da 2 serate concluse in su. I nomi portano a
+      `/giocatori/<id>/` (pagina ancora da fare: per ora 404).
 - [ ] Prossimi match (round corrente, storico richiudibile, stile speciale della finale)
 - [ ] Pagina giocatore (pool, statistiche, storico partite) — niente mazzi, deciso in Fase 1
 

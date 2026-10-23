@@ -1,101 +1,161 @@
 ---
-// Pagina provvisoria (Fase 3): vetrina dello stile "Arena" nei due temi.
-// Nella Fase 4 diventerà la classifica.
+// Home: a che punto è la lega, classifica attuale, busta extra, finale ×2 ed evoluzione serata per serata.
+// Tutto viene calcolato quando si crea il sito: nel browser non gira nessun calcolo.
 import Base from '../layouts/Base.astro';
 import SkylinePavia from '../components/SkylinePavia.astro';
+import BarraRound from '../components/BarraRound.astro';
+import Classifica from '../components/Classifica.astro';
+import { caricaDati } from '../lib/dati/carica.ts';
+import { NUMERO_SERATE } from '../lib/dati/schema.ts';
+import { busteDellaSerata } from '../lib/lega/buste.ts';
+import {
+	NUMERO_ROUND,
+	classificaAttuale,
+	evoluzione,
+	formattaData,
+	puntiInFinale,
+	statoLega,
+} from '../lib/lega/riepilogo.ts';
 
-const colori = [
-	['--sfondo', 'Sfondo'],
-	['--superficie', 'Superficie'],
-	['--superficie-alta', 'Superficie alta'],
-	['--testo', 'Testo'],
-	['--testo-tenue', 'Testo tenue'],
-	['--accento', 'Accento'],
-	['--accento-2', 'Accento 2'],
-	['--oro', 'Oro (finale)'],
-	['--vittoria', 'Vittoria'],
-	['--sconfitta', 'Sconfitta'],
-];
-const mana = [
-	['W', 'Bianco'],
-	['U', 'Blu'],
-	['B', 'Nero'],
-	['R', 'Rosso'],
-	['G', 'Verde'],
-];
+const dati = caricaDati();
+const stato = statoLega(dati);
+const attuale = classificaAttuale(dati);
+const tappe = evoluzione(dati);
+const nomeDi = (id: string) => dati.giocatori.find((g) => g.id === id)?.nome ?? id;
+const dataDi = (serata: number) => dati.lega.serate.find((s) => s.numero === serata)?.data ?? null;
+
+// I punti della finale si mostrano in oro appena ce n'è almeno uno.
+const roundFinale = NUMERO_ROUND - 1;
+const puntiFinale = attuale.classifica.finoAlRound >= roundFinale ? puntiInFinale(dati) : undefined;
+
+// Testata: a che punto siamo.
+const dataSerata = dataDi(stato.serata);
+const etichetta = stato.finita
+	? 'Lega conclusa'
+	: stato.roundInCorso
+		? `Serata ${stato.serata}/${NUMERO_SERATE} · Round ${stato.roundInCorso}/${NUMERO_ROUND} in corso`
+		: `${stato.roundGiocati === 0 ? 'Si parte' : 'Prossima'}: serata ${stato.serata}/${NUMERO_SERATE}` +
+			(dataSerata ? ` · ${formattaData(dataSerata)}` : '');
+const vincitore = stato.finita ? attuale.classifica.righe[0] : undefined;
+
+// Busta extra della serata in corso o della prossima (non c'è alla serata 1).
+const buste = !stato.finita && stato.serata > 1 ? busteDellaSerata(dati, stato.serata) : null;
+
+const sottotitoloClassifica =
+	attuale.classifica.finoAlRound === 0
+		? 'Nessun round giocato: si comincia alla serata 1.'
+		: `Dopo il round ${attuale.classifica.finoAlRound} di ${NUMERO_ROUND}` +
+			(attuale.rispettoAllaSerata ? ` · frecce rispetto alla fine della serata ${attuale.rispettoAllaSerata}` : '');
 ---
 
-<Base titolo="Lega Sealed Pavia">
+<Base titolo={dati.lega.nome}>
 	<section class="eroe">
 		<div class="contenitore">
-			<p class="etichetta"><span class="punto" aria-hidden="true"></span> Serata 5/5 · Round 10/10</p>
-			<h1>Lega Sealed Pavia</h1>
-			<p class="sottotitolo">Reality Fracture · Sealed League</p>
-			<div class="avanzamento" role="img" aria-label="Round 10 di 10">
-				{Array.from({ length: 10 }, (_, i) => <span class:list={['tacca', 'fatta', { finale: i >= 8 }]}></span>)}
-			</div>
+			<p class="etichetta"><span class="punto" aria-hidden="true"></span> {etichetta}</p>
+			<h1>{dati.lega.nome}</h1>
+			<p class="sottotitolo">Reality Fracture · Sealed League · {dati.giocatori.length} giocatori</p>
+			<BarraRound stato={stato} />
 		</div>
 		<SkylinePavia class="eroe-skyline" />
 	</section>
 
 	<div class="contenitore">
-		<p class="avviso">
-			Pagina di prova dello stile: la classifica vera arriva nella Fase 4. Prova il pulsante in alto a destra per
-			cambiare tema.
-		</p>
-
-		<section aria-labelledby="titolo-colori">
-			<h2 id="titolo-colori" class="titolo-sezione">Colori</h2>
-			<ul class="colori">
-				{colori.map(([variabile, nome]) => (
-					<li class="scheda colore">
-						<span class="campione" style={`background: var(${variabile})`}></span>
-						<span>{nome}</span>
-						<code>{variabile}</code>
-					</li>
-				))}
-			</ul>
-			<p class="riga-mana">
-				{mana.map(([sigla, nome]) => (
-					<span class="voce-mana"><span class:list={['mana', sigla]}></span> {nome}</span>
-				))}
-			</p>
+		<section aria-labelledby="titolo-classifica">
+			<h2 id="titolo-classifica" class="titolo-sezione">Classifica</h2>
+			<p class="nota">{sottotitoloClassifica}</p>
+			<Classifica
+				classifica={attuale.classifica}
+				variazioni={attuale.variazioni}
+				puntiFinale={puntiFinale}
+				didascalia="Classifica attuale"
+			/>
+			<details class="legenda">
+				<summary>Come si legge la classifica</summary>
+				<dl>
+					<dt>Punti</dt>
+					<dd>Vittoria 3, pareggio 1, sconfitta 0. Il bye vale come una vittoria 2-0. Nella finale i punti valgono doppio.</dd>
+					<dt>V-P-S</dt>
+					<dd>Partite vinte, pareggiate e perse (bye compresi).</dd>
+					<dt>OMW%</dt>
+					<dd>Media delle percentuali di vittoria degli avversari affrontati (ognuno conta almeno 33%).</dd>
+					<dt>GW%</dt>
+					<dd>Percentuale di game vinti.</dd>
+					<dt>OGW%</dt>
+					<dd>Media delle percentuali di game vinti dagli avversari (ognuno conta almeno 33%).</dd>
+					<dt>Pari merito</dt>
+					<dd>
+						Stessi punti e stessi spareggi. L'ordine tra loro segue lo scontro diretto e, se serve, un sorteggio fisso.
+					</dd>
+				</dl>
+			</details>
 		</section>
 
-		<section aria-labelledby="titolo-schede">
-			<h2 id="titolo-schede" class="titolo-sezione">Schede</h2>
-			<ol class="esempi-classifica">
-				<li class="scheda riga-classifica">
-					<span class="badge oro" aria-label="Posizione 1">1</span>
-					<span class="chi"><strong>Anna Bianchi</strong><span class="dettagli">7-1-2 · OMW 58,3%</span></span>
-					<span class="punti"><strong>25</strong><small>pt</small></span>
-				</li>
-				<li class="scheda riga-classifica">
-					<span class="badge argento" aria-label="Posizione 2">2</span>
-					<span class="chi"><strong>Carla Rossi</strong><span class="dettagli">7-0-3 · OMW 55,0%</span></span>
-					<span class="punti"><strong>24</strong><small>pt</small></span>
-				</li>
-				<li class="scheda riga-classifica">
-					<span class="badge bronzo" aria-label="Posizione 3">3</span>
-					<span class="chi"><strong>Bruno Verdi</strong><span class="dettagli">6-1-3 · OMW 52,1%</span></span>
-					<span class="punti"><strong>21</strong><small>pt</small></span>
-				</li>
-			</ol>
-			<div class="scheda partita finale">
-				<span class="tavolo">T1</span>
-				<span class="giocatore vince">Anna Bianchi</span>
-				<span class="risultato">2-1</span>
-				<span class="giocatore destra perde">Giulia Neri</span>
-			</div>
-		</section>
+		{
+			(vincitore || buste || !stato.finita) && (
+				<div class="avvisi">
+					{vincitore && (
+						<p class="scheda avviso campione">
+							<span class="icona" aria-hidden="true">🏆</span>
+							<span>
+								Vince la lega <strong>{vincitore.nome}</strong> con {vincitore.punti} punti.
+							</span>
+						</p>
+					)}
+					{!stato.finita && (
+						<p class="scheda avviso finale">
+							<span class="icona" aria-hidden="true">×2</span>
+							<span>
+								<strong>La finale vale doppio.</strong> Nei round 9 e 10 (serata {NUMERO_SERATE}) la vittoria vale 6
+								punti e il pareggio 2.
+							</span>
+						</p>
+					)}
+					{buste && (buste.extra || buste.avviso) && (
+						<p class="scheda avviso">
+							<span class="icona" aria-hidden="true">🎁</span>
+							<span>
+								{buste.extra ? (
+									<>
+										Alla serata {buste.serata} la <strong>busta extra</strong> va a <strong>{nomeDi(buste.extra)}</strong>,
+										ultimo in classifica tra i presenti.
+									</>
+								) : (
+									buste.avviso
+								)}
+							</span>
+						</p>
+					)}
+				</div>
+			)
+		}
 
-		<section aria-labelledby="titolo-pulsanti">
-			<h2 id="titolo-pulsanti" class="titolo-sezione">Pulsanti</h2>
-			<p class="pulsanti">
-				<a class="pulsante principale" href="#contenuto">Vedi la classifica</a>
-				<a class="pulsante" href="#contenuto">Prossimi match</a>
-			</p>
-		</section>
+		{
+			tappe.length > 1 && (
+				<section aria-labelledby="titolo-evoluzione">
+					<h2 id="titolo-evoluzione" class="titolo-sezione">Serata per serata</h2>
+					<p class="nota">La classifica al termine di ogni serata, con le frecce rispetto alla serata prima.</p>
+					{tappe.map((tappa) => {
+						const data = dataDi(tappa.serata);
+						const primo = tappa.classifica.righe[0];
+						return (
+							<details class="tappa">
+								<summary>
+									<span class="numero-serata">Serata {tappa.serata}</span>
+									{data && <span class="data">{formattaData(data)}</span>}
+									{primo && <span class="testa">in testa: {primo.nome}</span>}
+								</summary>
+								<Classifica
+									classifica={tappa.classifica}
+									variazioni={tappa.variazioni}
+									puntiFinale={tappa.serata === NUMERO_SERATE ? puntiInFinale(dati) : undefined}
+									didascalia={`Classifica al termine della serata ${tappa.serata}`}
+								/>
+							</details>
+						);
+					})}
+				</section>
+			)
+		}
 	</div>
 </Base>
 
@@ -138,153 +198,128 @@ const mana = [
 		margin: 0.25rem 0 1.25rem;
 		color: var(--testo-tenue);
 	}
-	.avanzamento {
-		display: grid;
-		grid-template-columns: repeat(10, 1fr);
-		gap: 4px;
-		max-width: 24rem;
-	}
-	.tacca {
-		height: 6px;
-		border-radius: 3px;
-		background: var(--superficie-alta);
-	}
-	.tacca.fatta {
-		background: var(--sfumatura);
-	}
-	.tacca.finale.fatta {
-		background: var(--oro);
-	}
 	.eroe :global(.eroe-skyline) {
 		margin-top: 1rem;
 		min-height: 120px;
 	}
 
-	.avviso {
-		margin: 2rem 0;
-		padding: 0.75rem 1rem;
-		border-left: 4px solid var(--accento);
-		background: var(--superficie);
-		border-radius: var(--raggio-piccolo);
-		color: var(--testo-tenue);
-	}
 	section:not(.eroe) {
 		margin: 2.5rem 0;
 	}
-
-	.colori {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
-		gap: 0.5rem;
+	/* La classifica arriva subito dopo la testata */
+	.contenitore > section:first-child {
+		margin-top: 2rem;
 	}
-	.colore {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-		padding: 0.6rem;
+	.nota {
+		margin: -0.5rem 0 1rem;
 		font-size: 0.85rem;
-	}
-	.campione {
-		height: 2.5rem;
-		border-radius: var(--raggio-piccolo);
-		border: 1px solid var(--bordo);
-	}
-	code {
 		color: var(--testo-tenue);
-		font-size: 0.75rem;
-	}
-	.riga-mana {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-		margin-top: 1rem;
-	}
-	.voce-mana {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
 	}
 
-	.esempi-classifica {
-		list-style: none;
-		padding: 0;
-		margin: 0 0 1rem;
+	/* Avvisi sotto la classifica */
+	.avvisi {
 		display: grid;
-		gap: 0.5rem;
-	}
-	.riga-classifica {
-		display: grid;
-		grid-template-columns: auto 1fr auto;
-		align-items: center;
-		gap: 0.9rem;
-	}
-	.chi {
-		display: flex;
-		flex-direction: column;
-	}
-	.dettagli {
-		font-size: 0.8rem;
-		color: var(--testo-tenue);
-	}
-	.punti {
-		text-align: right;
-		line-height: 1;
-	}
-	.punti strong {
-		display: block;
-		font-size: 1.6rem;
-	}
-	.punti small {
-		color: var(--testo-tenue);
-		font-size: 0.7rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-	}
-
-	.partita {
-		display: grid;
-		grid-template-columns: auto 1fr auto 1fr;
-		align-items: center;
 		gap: 0.75rem;
 	}
-	.partita.finale {
+	@media (min-width: 44rem) {
+		.avvisi {
+			grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+		}
+	}
+	.avviso {
+		display: flex;
+		align-items: center;
+		gap: 0.9rem;
+		margin: 0;
+		font-size: 0.95rem;
+	}
+	.icona {
+		flex: none;
+		display: grid;
+		place-items: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 50%;
+		background: var(--superficie-alta);
+		font-size: 1.2rem;
+		font-weight: 800;
+	}
+	.avviso.finale,
+	.avviso.campione {
 		border-color: transparent;
 		background:
 			linear-gradient(var(--superficie), var(--superficie)) padding-box,
 			linear-gradient(120deg, var(--oro), #b8862b 40%, var(--accento)) border-box;
 	}
-	.tavolo {
-		font-size: 0.7rem;
-		font-weight: 700;
-		color: var(--testo-tenue);
-		background: var(--superficie-alta);
-		padding: 0.15rem 0.4rem;
-		border-radius: 4px;
+	.avviso.finale .icona,
+	.avviso.campione .icona {
+		background: var(--oro);
+		color: var(--su-medaglia);
 	}
-	.giocatore {
-		font-weight: 600;
+
+	/* Parti richiudibili */
+	details {
+		margin-top: 0.75rem;
 	}
-	.destra {
-		text-align: right;
-	}
-	.vince {
-		color: var(--vittoria);
-	}
-	.perde {
-		color: var(--testo-tenue);
-		font-weight: 400;
-	}
-	.risultato {
-		font-weight: 800;
-		font-variant-numeric: tabular-nums;
-		font-size: 1.1rem;
-	}
-	.pulsanti {
+	summary {
+		cursor: pointer;
+		min-height: 2.75rem;
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.75rem;
+		align-items: center;
+		gap: 0.25rem 0.75rem;
+		list-style: none;
+	}
+	summary::-webkit-details-marker {
+		display: none;
+	}
+	/* Freccetta che ruota quando il pannello è aperto */
+	summary::before {
+		content: '▸';
+		transition: rotate 0.15s;
+	}
+	details[open] > summary::before {
+		rotate: 90deg;
+	}
+	.legenda summary {
+		color: var(--accento);
+		font-weight: 600;
+	}
+	.legenda dl {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		gap: 0.4rem 1rem;
+		margin: 0.5rem 0 0;
+		font-size: 0.9rem;
+	}
+	.legenda dt {
+		font-weight: 700;
+	}
+	.legenda dd {
+		margin: 0;
+		color: var(--testo-tenue);
+	}
+	.tappa {
+		background: var(--superficie);
+		border: 1px solid var(--bordo);
+		border-radius: var(--raggio);
+		padding: 0 1rem;
+	}
+	.tappa[open] {
+		padding-bottom: 1rem;
+	}
+	.tappa[open] summary {
+		margin-bottom: 0.5rem;
+	}
+	.numero-serata {
+		font-weight: 800;
+	}
+	.data,
+	.testa {
+		font-size: 0.85rem;
+		color: var(--testo-tenue);
+	}
+	.testa {
+		margin-left: auto;
 	}
 </style>

@@ -22,6 +22,7 @@
 
 	/* Finale ×2 e podio */
 	--oro: #f2c14e;
+	--testo-oro: #f2c14e; /* scritte dorate: nel tema chiaro più scure per leggerle bene */
 	--argento: #c3cbd8;
 	--bronzo: #d4895a;
 	--su-medaglia: #14110a;
@@ -70,6 +71,7 @@
 		--accento-2: #0b8a7f;
 		--su-accento: #ffffff;
 		--oro: #f2c14e;
+		--testo-oro: #8a6100;
 		--argento: #c9d0dc;
 		--bronzo: #e09a6c;
 		--vittoria: #15803d;
@@ -102,6 +104,7 @@
 	--accento-2: #0b8a7f;
 	--su-accento: #ffffff;
 	--oro: #f2c14e;
+	--testo-oro: #8a6100;
 	--argento: #c9d0dc;
 	--bronzo: #e09a6c;
 	--vittoria: #15803d;

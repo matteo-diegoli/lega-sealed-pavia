@@ -1,0 +1,62 @@
+---
+// Barra dei 10 round: pieni quelli giocati, pulsante quello in corso, in oro i 2 della finale.
+import { NUMERO_ROUND, type StatoLega } from '../lib/lega/riepilogo.ts';
+
+interface Props {
+	stato: StatoLega;
+}
+const { stato } = Astro.props;
+const descrizione =
+	`Round giocati: ${stato.roundGiocati} di ${NUMERO_ROUND}` +
+	(stato.roundInCorso ? `, round ${stato.roundInCorso} in corso` : '') +
+	'. Gli ultimi 2 sono la finale.';
+---
+
+<div class="avanzamento" role="img" aria-label={descrizione}>
+	{
+		Array.from({ length: NUMERO_ROUND }, (_, i) => (
+			<span
+				class:list={[
+					'tacca',
+					{ fatta: i < stato.roundGiocati, 'in-corso': i + 1 === stato.roundInCorso, finale: i >= NUMERO_ROUND - 2 },
+				]}
+			/>
+		))
+	}
+</div>
+
+<style>
+	.avanzamento {
+		display: grid;
+		grid-template-columns: repeat(10, 1fr);
+		gap: 4px;
+		max-width: 24rem;
+	}
+	.tacca {
+		height: 6px;
+		border-radius: 3px;
+		background: var(--superficie-alta);
+	}
+	/* La finale si riconosce anche prima di essere giocata: bordo dorato */
+	.tacca.finale {
+		box-shadow: inset 0 0 0 1px var(--oro);
+	}
+	.tacca.fatta {
+		background: var(--sfumatura);
+	}
+	.tacca.finale.fatta {
+		background: var(--oro);
+	}
+	.tacca.in-corso {
+		background: var(--accento-2);
+		animation: pulsa 1.6s ease-in-out infinite;
+	}
+	.tacca.finale.in-corso {
+		background: var(--oro);
+	}
+	@keyframes pulsa {
+		50% {
+			opacity: 0.35;
+		}
+	}
+</style>

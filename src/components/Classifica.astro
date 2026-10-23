@@ -1,0 +1,292 @@
+---
+// Classifica: tabella completa sugli schermi larghi, una scheda per giocatore sul telefono.
+// Le due versioni hanno gli stessi dati; quella nascosta (display: none) non viene letta.
+import { formattaPercentuale, type Classifica } from '../lib/lega/classifica.ts';
+
+interface Props {
+	classifica: Classifica;
+	/** Posizioni guadagnate (positive) o perse (negative); vuota = niente frecce. */
+	variazioni?: Map<string, number>;
+	/** Punti fatti in finale, mostrati in oro sotto i punti; assente = non mostrarli. */
+	puntiFinale?: Map<string, number>;
+	/** Descrizione della tabella per i lettori di schermo. */
+	didascalia: string;
+}
+const { classifica, variazioni = new Map(), puntiFinale, didascalia } = Astro.props;
+
+// Prima del primo round sono tutti primi a 0 punti: niente medaglie.
+const iniziata = classifica.finoAlRound > 0;
+const medaglia = (posizione: number) => (iniziata ? (['oro', 'argento', 'bronzo'][posizione - 1] ?? null) : null);
+const puntiMassimi = Math.max(1, ...classifica.righe.map((r) => r.punti));
+const larghezzaBarra = (punti: number) => `${Math.round((punti / puntiMassimi) * 100)}%`;
+const vps = (r: (typeof classifica.righe)[number]) => `${r.vittorie}-${r.pareggi}-${r.sconfitte}`;
+const game = (r: (typeof classifica.righe)[number]) =>
+	`${r.gameVinti}-${r.gamePersi}${r.gamePareggiati ? `-${r.gamePareggiati}` : ''}`;
+const frase = (n: number) =>
+	n > 0 ? `salito di ${n} ${n === 1 ? 'posizione' : 'posizioni'}` : `sceso di ${-n} ${n === -1 ? 'posizione' : 'posizioni'}`;
+const linkGiocatore = (id: string) => `/giocatori/${id}/`;
+---
+
+<div class="classifica">
+	<table class="tabella">
+		<caption class="solo-lettori">{didascalia}</caption>
+		<thead>
+			<tr>
+				<th scope="col"><abbr title="Posizione">#</abbr></th>
+				<th scope="col" class="sinistra">Giocatore</th>
+				<th scope="col" class="sinistra">Punti</th>
+				<th scope="col"><abbr title="Vittorie, pareggi, sconfitte">V-P-S</abbr></th>
+				<th scope="col"><abbr title="Game vinti e persi">Game</abbr></th>
+				<th scope="col"><abbr title="Media delle vittorie degli avversari">OMW%</abbr></th>
+				<th scope="col"><abbr title="Percentuale di game vinti">GW%</abbr></th>
+				<th scope="col"><abbr title="Media dei game vinti dagli avversari">OGW%</abbr></th>
+			</tr>
+		</thead>
+		<tbody>
+			{
+				classifica.righe.map((r) => {
+					const variazione = variazioni.get(r.id) ?? 0;
+					const finale = puntiFinale?.get(r.id) ?? 0;
+					return (
+						<tr>
+							<td>
+								<span class:list={['badge', medaglia(r.posizione)]}>{r.posizione}</span>
+								{r.pariMerito && <span class="solo-lettori"> pari merito</span>}
+							</td>
+							<th scope="row" class="sinistra">
+								<a href={linkGiocatore(r.id)}>{r.nome}</a>
+								{variazione !== 0 && (
+									<span class:list={['freccia', variazione > 0 ? 'su' : 'giu']}>
+										<span aria-hidden="true">{variazione > 0 ? '▲' : '▼'}{Math.abs(variazione)}</span>
+										<span class="solo-lettori">{frase(variazione)}</span>
+									</span>
+								)}
+								{r.pariMerito && <span class="pari" aria-hidden="true">pari merito</span>}
+							</th>
+							<td class="sinistra colonna-punti">
+								<span class="punti-numero">{r.punti}</span>
+								<span class="barra" aria-hidden="true"><span style={`width: ${larghezzaBarra(r.punti)}`} /></span>
+								{finale > 0 && <span class="in-finale">+{finale} in finale</span>}
+							</td>
+							<td>{vps(r)}</td>
+							<td>{game(r)}</td>
+							<td>{formattaPercentuale(r.omw)}</td>
+							<td>{formattaPercentuale(r.gw)}</td>
+							<td>{formattaPercentuale(r.ogw)}</td>
+						</tr>
+					);
+				})
+			}
+		</tbody>
+	</table>
+
+	<ol class="schede" aria-label={didascalia}>
+		{
+			classifica.righe.map((r) => {
+				const variazione = variazioni.get(r.id) ?? 0;
+				const finale = puntiFinale?.get(r.id) ?? 0;
+				return (
+					<li class="scheda riga">
+						<span class:list={['badge', medaglia(r.posizione)]}>
+							<span class="solo-lettori">Posizione </span>
+							{r.posizione}
+							{r.pariMerito && <span class="solo-lettori"> pari merito</span>}
+						</span>
+						<span class="chi">
+							<span class="nome">
+								<a href={linkGiocatore(r.id)}>{r.nome}</a>
+								{variazione !== 0 && (
+									<span class:list={['freccia', variazione > 0 ? 'su' : 'giu']}>
+										<span aria-hidden="true">{variazione > 0 ? '▲' : '▼'}{Math.abs(variazione)}</span>
+										<span class="solo-lettori">, {frase(variazione)}</span>
+									</span>
+								)}
+								{r.pariMerito && <span class="pari" aria-hidden="true">pari merito</span>}
+							</span>
+							<span class="dettagli">
+								<span><abbr title="Vittorie, pareggi, sconfitte">V-P-S</abbr> {vps(r)}</span>
+								<span><abbr title="Media delle vittorie degli avversari">OMW</abbr> {formattaPercentuale(r.omw)}</span>
+								<span><abbr title="Percentuale di game vinti">GW</abbr> {formattaPercentuale(r.gw)}</span>
+								<span><abbr title="Media dei game vinti dagli avversari">OGW</abbr> {formattaPercentuale(r.ogw)}</span>
+							</span>
+							<span class="barra" aria-hidden="true"><span style={`width: ${larghezzaBarra(r.punti)}`} /></span>
+						</span>
+						<span class="punti">
+							<strong>{r.punti}</strong>
+							<small>punti</small>
+							{finale > 0 && <span class="in-finale">+{finale} finale</span>}
+						</span>
+					</li>
+				);
+			})
+		}
+	</ol>
+</div>
+
+<style>
+	/* --- Tabella (schermi larghi) --- */
+	.tabella {
+		display: none;
+		width: 100%;
+		border-collapse: separate;
+		border-spacing: 0;
+		background: var(--superficie);
+		border: 1px solid var(--bordo);
+		border-radius: var(--raggio);
+		font-variant-numeric: tabular-nums;
+	}
+	th,
+	td {
+		padding: 0.6rem 0.75rem;
+		text-align: right;
+		border-bottom: 1px solid var(--bordo);
+		white-space: nowrap;
+	}
+	tbody tr:last-child > * {
+		border-bottom: none;
+	}
+	thead th {
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--testo-tenue);
+	}
+	abbr {
+		text-decoration: none;
+	}
+	.sinistra {
+		text-align: left;
+	}
+	tbody th {
+		font-weight: 600;
+	}
+	td:first-child {
+		width: 3rem;
+	}
+	.colonna-punti {
+		width: 30%;
+	}
+	.punti-numero {
+		display: inline-block;
+		min-width: 2.2rem;
+		font-size: 1.15rem;
+		font-weight: 800;
+	}
+	.colonna-punti .barra {
+		display: inline-block;
+		width: calc(100% - 2.6rem);
+		vertical-align: middle;
+	}
+	.colonna-punti .in-finale {
+		display: block;
+	}
+
+	/* --- Schede (telefono) --- */
+	.schede {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 0.5rem;
+	}
+	.riga {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		gap: 0.9rem;
+	}
+	.chi {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		min-width: 0;
+	}
+	.nome {
+		font-weight: 700;
+	}
+	.dettagli {
+		display: flex;
+		flex-wrap: wrap;
+		column-gap: 0.75rem;
+		font-size: 0.8rem;
+		color: var(--testo-tenue);
+		font-variant-numeric: tabular-nums;
+	}
+	.punti {
+		text-align: right;
+		line-height: 1;
+	}
+	.punti strong {
+		display: block;
+		font-size: 1.6rem;
+		font-variant-numeric: tabular-nums;
+	}
+	.punti small {
+		color: var(--testo-tenue);
+		font-size: 0.7rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+	}
+	.punti .in-finale {
+		display: block;
+		margin-top: 0.3rem;
+	}
+
+	/* --- Parti comuni --- */
+	a {
+		color: var(--testo);
+		text-decoration: none;
+	}
+	a:hover {
+		color: var(--accento);
+		text-decoration: underline;
+	}
+	.barra {
+		display: block;
+		height: 6px;
+		border-radius: 3px;
+		background: var(--superficie-alta);
+		overflow: hidden;
+	}
+	.barra > span {
+		display: block;
+		height: 100%;
+		border-radius: 3px;
+		background: var(--sfumatura);
+	}
+	.freccia {
+		margin-left: 0.4rem;
+		font-size: 0.75rem;
+		font-weight: 700;
+	}
+	.freccia.su {
+		color: var(--vittoria);
+	}
+	.freccia.giu {
+		color: var(--sconfitta);
+	}
+	.pari {
+		margin-left: 0.4rem;
+		font-size: 0.7rem;
+		font-weight: 600;
+		color: var(--testo-tenue);
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+	.in-finale {
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--testo-oro);
+		white-space: nowrap;
+	}
+
+	@media (min-width: 44rem) {
+		.tabella {
+			display: table;
+		}
+		.schede {
+			display: none;
+		}
+	}
+</style>
