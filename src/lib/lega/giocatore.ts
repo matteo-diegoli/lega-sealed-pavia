@@ -8,22 +8,14 @@ import { testoRisultato, vincitore } from './match.ts';
 // --- Pool -----------------------------------------------------------------------
 
 export interface CartaDelPool {
-  /** Nome scritto nel file del giocatore. */
+  /** Nome di Scryfall, o quello scritto nel file se la carta non è nella cache. */
   nome: string;
   /** Copie in tutto, sommando le serate. */
   copie: number;
+  /** Copie sbustate a ogni serata, dalla prima. */
+  perSerata: { serata: number; copie: number }[];
   /** Dati di Scryfall; null se la carta non è nella cache. */
   carta: Carta | null;
-}
-
-export interface GruppoColore {
-  /** "W", "U", "B", "R", "G", "multi", "incolore" o "sconosciute". */
-  chiave: string;
-  nome: string;
-  /** Ordinate per valore di mana, poi per nome. */
-  carte: CartaDelPool[];
-  /** Carte del gruppo, contando le copie. */
-  totale: number;
 }
 
 export interface PoolGiocatore {
@@ -31,54 +23,37 @@ export interface PoolGiocatore {
   totale: number;
   /** Carte arrivate a ogni serata (solo le serate con almeno una carta). */
   perSerata: { serata: number; carte: number }[];
-  /** Solo i gruppi con almeno una carta, nell'ordine W U B R G, multicolore, incolore. */
-  gruppi: GruppoColore[];
-}
-
-const GRUPPI: { chiave: string; nome: string }[] = [
-  { chiave: 'W', nome: 'Bianco' },
-  { chiave: 'U', nome: 'Blu' },
-  { chiave: 'B', nome: 'Nero' },
-  { chiave: 'R', nome: 'Rosso' },
-  { chiave: 'G', nome: 'Verde' },
-  { chiave: 'multi', nome: 'Multicolore' },
-  { chiave: 'incolore', nome: 'Incolore' },
-  { chiave: 'sconosciute', nome: 'Carte non trovate' },
-];
-
-function chiaveGruppo(carta: Carta | null): string {
-  if (!carta) return 'sconosciute';
-  if (carta.colori.length === 0) return 'incolore';
-  return carta.colori.length === 1 ? carta.colori[0]! : 'multi';
+  /** Una voce per carta (le copie della stessa carta sono unite), in ordine di nome. */
+  carte: CartaDelPool[];
 }
 
 /** Pool di tutte le serate messo insieme: le copie della stessa carta si sommano. */
 export function poolDelGiocatore(giocatore: Giocatore, carte: Carta[]): PoolGiocatore {
   const indice = new IndiceCarte(carte);
   const unite = new Map<string, CartaDelPool>();
-  for (const { carte: righe } of giocatore.pool) {
+  for (const { serata, carte: righe } of giocatore.pool) {
     for (const { nome, copie } of righe) {
       const carta = indice.trova(nome) ?? null;
       // La stessa carta può essere scritta in modi un po' diversi in serate diverse.
       const chiave = carta?.nome ?? nome;
-      const giaVista = unite.get(chiave);
-      if (giaVista) giaVista.copie += copie;
-      else unite.set(chiave, { nome: carta?.nome ?? nome, copie, carta });
+      let voce = unite.get(chiave);
+      if (!voce) {
+        voce = { nome: chiave, copie: 0, perSerata: [], carta };
+        unite.set(chiave, voce);
+      }
+      voce.copie += copie;
+      const giaNellaSerata = voce.perSerata.find((s) => s.serata === serata);
+      if (giaNellaSerata) giaNellaSerata.copie += copie;
+      else voce.perSerata.push({ serata, copie });
     }
   }
 
-  const gruppi = GRUPPI.map(({ chiave, nome }) => {
-    const delGruppo = [...unite.values()]
-      .filter((c) => chiaveGruppo(c.carta) === chiave)
-      .sort((a, b) => (a.carta?.valore ?? 0) - (b.carta?.valore ?? 0) || a.nome.localeCompare(b.nome));
-    return { chiave, nome, carte: delGruppo, totale: delGruppo.reduce((n, c) => n + c.copie, 0) };
-  }).filter((g) => g.totale > 0);
-
+  const elenco = [...unite.values()].sort((a, b) => a.nome.localeCompare(b.nome));
   const perSerata = giocatore.pool
     .map(({ serata, carte: righe }) => ({ serata, carte: righe.reduce((n, r) => n + r.copie, 0) }))
     .filter((s) => s.carte > 0);
 
-  return { totale: gruppi.reduce((n, g) => n + g.totale, 0), perSerata, gruppi };
+  return { totale: elenco.reduce((n, c) => n + c.copie, 0), perSerata, carte: elenco };
 }
 
 // --- Storico delle partite --------------------------------------------------------

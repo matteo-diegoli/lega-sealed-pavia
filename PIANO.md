@@ -7,9 +7,8 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 4 (pagine) **completata** ✅ (Home, Match, pagina giocatore)
-- **Prossima azione:** Fase 5 – pool interattivo nella pagina giocatore: proporre il piano (filtri, ordinamento,
-  ricerca, contatore, stato nell'URL, bottom sheet su mobile) e aspettare l'ok.
+- **Fase attuale:** Fase 5 (pool interattivo) **completata** ✅
+- **Prossima azione:** proporre il piano della Fase 6 (PWA, SEO e agenti AI) e aspettare l'ok.
 - `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
 - **Ultimo aggiornamento:** 2026-10-23
@@ -187,7 +186,19 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       di vista del giocatore, bye, assenze, finale con bordo dorato e "×2".
 
 ### Fase 5 – Pool interattivo
-- [ ] Filtri a tag, ordinamento, ricerca, contatore, stato nell'URL, bottom sheet su mobile
+- [x] Filtri a tag, ordinamento, ricerca, contatore, stato nell'URL, bottom sheet su mobile
+      — `src/components/Pool.astro` (markup + script senza librerie), `src/lib/pool/filtri.ts` (logica pura, 8 test,
+      120 in tutto). Richieste dell'utente: **niente gruppi per colore** (un elenco unico, si capisce meglio cosa fanno
+      filtri e ordinamenti), **serata di sbustata** su ogni carta ("S1 ×2 · S3"), **due viste**: lista (predefinita) e
+      immagini (griglia scorrevole). La vista scelta si salva in `localStorage` (`pool-vista`); `?vista=` nell'indirizzo
+      ha la precedenza. Ordine predefinito: colore → costo → nome. Niente totali per serata sotto il titolo (richiesta utente: bastano i filtri).
+      Ricerca in nome, tipo e testo. Filtri: colore (W U B R G, multi, incolore), tipo, costo (0-1…6+), rarità, serata
+      (con il filtro serata si contano solo le copie di quelle serate); nello stesso gruppo basta un valore, tra gruppi
+      servono tutti. Stato nell'indirizzo, es. `?q=goblin&colore=R,G&serata=2&ordine=costo&vista=immagini`.
+      Sotto i 44rem i filtri sono in un pannello dal basso (Esc chiude, il focus torna al pulsante "Filtri").
+      Senza JavaScript: elenco completo in vista lista. Le immagini ricevono l'indirizzo (`data-src` → `src`) solo
+      in vista immagini: in vista lista non si scarica nessuna immagine.
+      Prove dei clic fatte con uno script temporaneo che pilota Edge (DevTools); in Fase 7 arriverà Playwright.
 
 ### Fase 6 – PWA, SEO e agenti AI
 - [ ] Manifest, icone, service worker, offline

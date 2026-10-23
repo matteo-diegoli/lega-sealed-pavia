@@ -1,8 +1,9 @@
 ---
-// Pagina di un giocatore: nome e posizione in classifica, il pool diviso per colore, lo storico delle partite.
+// Pagina di un giocatore: nome e posizione in classifica, il pool (con ricerca e filtri), lo storico delle partite.
 // Una pagina per ogni file in data/players/ (indirizzo /giocatori/<id>/).
 import type { GetStaticPaths } from 'astro';
 import Base from '../../layouts/Base.astro';
+import Pool from '../../components/Pool.astro';
 import { caricaDati, leggiCacheCarte } from '../../lib/dati/carica.ts';
 import { NUMERO_SERATE } from '../../lib/dati/schema.ts';
 import type { Giocatore } from '../../lib/dati/valida.ts';
@@ -27,15 +28,6 @@ const medaglia = riga && iniziata ? (['oro', 'argento', 'bronzo'][riga.posizione
 const pool = poolDelGiocatore(giocatore, leggiCacheCarte()?.carte ?? []);
 const partite = partiteDelGiocatore(dati, giocatore.id);
 
-const nomiRarita: Record<string, string> = {
-	common: 'Comune',
-	uncommon: 'Non comune',
-	rare: 'Rara',
-	mythic: 'Mitica',
-	special: 'Speciale',
-	bonus: 'Bonus',
-};
-const sigleRarita: Record<string, string> = { common: 'C', uncommon: 'N', rare: 'R', mythic: 'M', special: 'S', bonus: 'B' };
 const nomiEsito: Record<Esito, string> = {
 	vittoria: 'Vittoria',
 	pareggio: 'Pareggio',
@@ -52,7 +44,6 @@ const sigleEsito: Record<Esito, string> = {
 	bye: 'V',
 	assente: '–',
 };
-const carteDellaSerata = pool.perSerata.map((s) => `serata ${s.serata}: ${s.carte}`).join(' · ');
 ---
 
 <Base titolo={giocatore.nome} descrizione={`Pool e partite di ${giocatore.nome} nella ${dati.lega.nome}.`}>
@@ -80,44 +71,7 @@ const carteDellaSerata = pool.perSerata.map((s) => `serata ${s.serata}: ${s.cart
 	<div class="contenitore">
 		<section aria-labelledby="titolo-pool">
 			<h2 id="titolo-pool" class="titolo-sezione">Pool</h2>
-			{
-				pool.totale === 0 ? (
-					<p class="scheda tenue">Nessuna carta registrata.</p>
-				) : (
-					<>
-						<p class="nota">
-							{pool.totale} carte <span class="tenue">({carteDellaSerata})</span>
-						</p>
-						<div class="gruppi">
-							{pool.gruppi.map((gruppo) => (
-								<section class="scheda gruppo" aria-labelledby={`gruppo-${gruppo.chiave}`}>
-									<h3 id={`gruppo-${gruppo.chiave}`} class="titolo-gruppo">
-										<span class:list={['segno', gruppo.chiave]} aria-hidden="true" />
-										{gruppo.nome}
-										<span class="tenue conteggio">{gruppo.totale}</span>
-									</h3>
-									<ul class="carte">
-										{gruppo.carte.map(({ nome, copie, carta }) => (
-											<li class:list={['carta', carta?.rarita]}>
-												<span class="copie">{copie > 1 ? `${copie}×` : ''}</span>
-												<span class="nome-carta">
-													{carta?.scryfall ? <a href={carta.scryfall}>{nome}</a> : nome}
-												</span>
-												{carta && (
-													<span class:list={['rarita', carta.rarita]} title={nomiRarita[carta.rarita]}>
-														<span aria-hidden="true">{sigleRarita[carta.rarita]}</span>
-														<span class="solo-lettori">, {nomiRarita[carta.rarita]}</span>
-													</span>
-												)}
-											</li>
-										))}
-									</ul>
-								</section>
-							))}
-						</div>
-					</>
-				)
-			}
+			{pool.totale === 0 ? <p class="scheda tenue">Nessuna carta registrata.</p> : <Pool pool={pool} />}
 		</section>
 
 		<section aria-labelledby="titolo-partite">
@@ -180,19 +134,11 @@ const carteDellaSerata = pool.perSerata.map((s) => `serata ${s.serata}: ${s.cart
 		gap: 0.6rem;
 		margin: 0.75rem 0 0;
 	}
-	section:not(.testata, .gruppo) {
+	section:not(.testata) {
 		margin: 2rem 0 2.5rem;
 	}
 	.tenue {
 		color: var(--testo-tenue);
-	}
-	.nota {
-		margin: -0.5rem 0 1rem;
-		font-weight: 700;
-	}
-	.nota .tenue {
-		font-weight: 400;
-		font-size: 0.85rem;
 	}
 	a {
 		color: var(--testo);
@@ -201,92 +147,6 @@ const carteDellaSerata = pool.perSerata.map((s) => `serata ${s.serata}: ${s.cart
 	a:hover {
 		color: var(--accento);
 		text-decoration: underline;
-	}
-
-	/* --- Pool: un riquadro per colore --- */
-	.gruppi {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-		gap: 0.75rem;
-		align-items: start;
-	}
-	.titolo-gruppo {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		margin: 0 0 0.5rem;
-		font-size: 1rem;
-		font-weight: 800;
-	}
-	.conteggio {
-		margin-left: auto;
-		font-variant-numeric: tabular-nums;
-	}
-	/* Pallino del colore del gruppo (multicolore: sfumatura; incolore: grigio) */
-	.segno {
-		width: 0.85rem;
-		height: 0.85rem;
-		border-radius: 50%;
-		box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.25);
-		background: var(--superficie-alta);
-	}
-	.segno.W { background: var(--mana-w); }
-	.segno.U { background: var(--mana-u); }
-	.segno.B { background: var(--mana-b); }
-	.segno.R { background: var(--mana-r); }
-	.segno.G { background: var(--mana-g); }
-	.segno.multi {
-		background: conic-gradient(var(--mana-w), var(--mana-u), var(--mana-b), var(--mana-r), var(--mana-g), var(--mana-w));
-	}
-	.segno.incolore {
-		background: var(--argento);
-	}
-	.carte {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-	.carta {
-		display: grid;
-		grid-template-columns: 1.6rem 1fr auto;
-		align-items: center;
-		gap: 0.4rem;
-		min-height: 2rem;
-		border-top: 1px solid var(--bordo);
-		font-size: 0.9rem;
-	}
-	.copie {
-		font-weight: 700;
-		color: var(--testo-tenue);
-		font-variant-numeric: tabular-nums;
-	}
-	.nome-carta {
-		min-width: 0;
-		overflow-wrap: anywhere;
-	}
-	.carta.rare .nome-carta,
-	.carta.mythic .nome-carta {
-		font-weight: 700;
-	}
-	/* Sigla della rarità: rare e mitiche con il bordo colorato */
-	.rarita {
-		display: inline-grid;
-		place-items: center;
-		width: 1.4rem;
-		height: 1.4rem;
-		border-radius: 4px;
-		font-size: 0.7rem;
-		font-weight: 800;
-		color: var(--testo-tenue);
-		background: var(--superficie-alta);
-	}
-	.rarita.rare {
-		color: var(--testo-oro);
-		box-shadow: inset 0 0 0 2px var(--oro);
-	}
-	.rarita.mythic {
-		color: var(--mitica);
-		box-shadow: inset 0 0 0 2px var(--mitica);
 	}
 
 	/* --- Storico delle partite --- */

@@ -1,0 +1,761 @@
+---
+// Pool interattivo: ricerca, filtri, ordinamento e due viste (lista o immagini).
+// Senza JavaScript si vede l'elenco completo in vista lista (senza immagini); lo script nasconde e ordina le carte
+// già presenti nella pagina e tiene lo stato nell'indirizzo (?colore=R&q=…).
+// La vista scelta resta salvata nel browser (localStorage), ma un indirizzo con ?vista= ha la precedenza.
+import { COLORI, COSTI, ORDINI, ORDINE_PREDEFINITO, RARITA, TIPI, filtra, statoVuoto, vocePool } from '../lib/pool/filtri.ts';
+import type { PoolGiocatore } from '../lib/lega/giocatore.ts';
+
+interface Props {
+	pool: PoolGiocatore;
+}
+const { pool } = Astro.props;
+
+const voci = pool.carte.map((c) => vocePool(c.nome, c.carta, c.perSerata));
+// Ordine iniziale uguale a quello che darà lo script, così la pagina non "salta" all'avvio.
+const ordineIniziale = filtra(voci, statoVuoto()).visibili.map((v) => v.indice);
+
+// Nei filtri compaiono solo i valori presenti nel pool.
+const presenti = <T extends { chiave: string }>(valori: readonly T[], chiavi: Set<string>) =>
+	valori.filter((v) => chiavi.has(v.chiave));
+const gruppi = [
+	{
+		gruppo: 'colori',
+		titolo: 'Colore',
+		valori: presenti(COLORI, new Set(voci.map((v) => v.colore))).map((c) => ({ ...c, mana: c.chiave })),
+	},
+	{
+		gruppo: 'tipi',
+		titolo: 'Tipo',
+		valori: TIPI.filter((t) => voci.some((v) => v.tipi.includes(t.chiave))).map((t) => ({ ...t, mana: null })),
+	},
+	{
+		gruppo: 'costi',
+		titolo: 'Costo di mana',
+		valori: COSTI.filter((c) => voci.some((v) => v.costo === c)).map((c) => ({ chiave: c, nome: c, mana: null })),
+	},
+	{
+		gruppo: 'rarita',
+		titolo: 'Rarità',
+		valori: presenti(RARITA, new Set(voci.map((v) => v.rarita))).map((r) => ({ ...r, mana: null })),
+	},
+	{
+		gruppo: 'serate',
+		titolo: 'Serata',
+		valori: pool.perSerata.map((s) => ({ chiave: String(s.serata), nome: `Serata ${s.serata}`, mana: null })),
+	},
+];
+
+const nomiColori: Record<string, string> = { W: 'bianco', U: 'blu', B: 'nero', R: 'rosso', G: 'verde' };
+const rarita = (chiave: string) => RARITA.find((r) => r.chiave === chiave) ?? RARITA[3];
+const copieTesto = (n: number) => (n > 1 ? `${n}×` : '');
+const serateLette = (perSerata: { serata: number; copie: number }[]) =>
+	perSerata.map((s) => `serata ${s.serata}${s.copie > 1 ? ` (${s.copie} copie)` : ''}`).join(', ');
+---
+
+<div class="pool" data-pool data-totale={pool.totale}>
+	<div class="comandi" data-comandi hidden>
+		<label class="cerca">
+			<span class="solo-lettori">Cerca nel pool</span>
+			<input type="search" placeholder="Cerca per nome, tipo o testo…" autocomplete="off" data-cerca />
+		</label>
+		<div class="riga-comandi">
+			<button
+				type="button"
+				class="pulsante apri-filtri"
+				aria-expanded="false"
+				aria-controls="pannello-filtri"
+				data-apri-filtri
+			>
+				Filtri <span class="numero-filtri" data-numero-filtri hidden></span>
+			</button>
+			<label class="ordina">
+				<span>Ordina</span>
+				<select data-ordine>
+					{ORDINI.map((o) => <option value={o.chiave} selected={o.chiave === ORDINE_PREDEFINITO}>{o.nome}</option>)}
+				</select>
+			</label>
+			<div class="viste" role="group" aria-label="Vista">
+				<button type="button" class="vista" aria-pressed="true" data-vista="lista">Lista</button>
+				<button type="button" class="vista" aria-pressed="false" data-vista="immagini">Immagini</button>
+			</div>
+		</div>
+
+		<div class="velo" data-velo hidden></div>
+		<div id="pannello-filtri" class="pannello" role="group" aria-labelledby="titolo-filtri" data-pannello>
+			<div class="testa-pannello">
+				<h3 id="titolo-filtri">Filtri</h3>
+				<button type="button" class="chiudi" aria-label="Chiudi i filtri" data-chiudi>✕</button>
+			</div>
+			{
+				gruppi.map(({ gruppo, titolo, valori }) => (
+					<fieldset class="gruppo">
+						<legend>{titolo}</legend>
+						<div class="chip">
+							{valori.map((v) => (
+								<label class="scelta">
+									<input type="checkbox" name={gruppo} value={v.chiave} />
+									<span>
+										{v.mana && <span class:list={['segno', v.mana]} aria-hidden="true" />}
+										{v.nome}
+									</span>
+								</label>
+							))}
+						</div>
+					</fieldset>
+				))
+			}
+			<div class="piede-pannello">
+				<button type="button" class="pulsante" data-azzera>Azzera</button>
+				<button type="button" class="pulsante principale" data-chiudi data-mostra>Mostra le carte</button>
+			</div>
+		</div>
+	</div>
+
+	<p class="contatore">
+		<span aria-live="polite" data-contatore>{pool.totale} carte</span>
+		<button type="button" class="azzera-tutto" data-azzera hidden>Azzera filtri</button>
+	</p>
+
+	<ul class="carte vista-lista" data-elenco>
+		{
+			ordineIniziale.map((indice) => {
+				const { nome, copie, perSerata, carta } = pool.carte[indice]!;
+				const r = rarita(carta?.rarita ?? 'common');
+				const immagine = carta?.immagini[0]?.normale;
+				return (
+					<li class:list={['carta', carta?.rarita]} data-indice={indice}>
+						<span class="copie" data-copie>
+							{copieTesto(copie)}
+						</span>
+						<a class="collegamento" href={carta?.scryfall || undefined}>
+							{immagine && (
+								<img class="immagine" data-src={immagine} alt="" loading="lazy" decoding="async" width="488" height="680" />
+							)}
+							<span class="nome-carta">{nome}</span>
+						</a>
+						<span class="colori" aria-hidden="true">
+							{(carta?.colori ?? []).map((c) => (
+								<span class:list={['mana', c]} title={nomiColori[c]} />
+							))}
+						</span>
+						<span class="serate">
+							<span aria-hidden="true">
+								{perSerata.map((s) => (
+									<span class="serata">
+										S{s.serata}
+										{s.copie > 1 && <small>×{s.copie}</small>}
+									</span>
+								))}
+							</span>
+							<span class="solo-lettori">, sbustata alla {serateLette(perSerata)}</span>
+						</span>
+						<span class:list={['rarita', r.chiave]} title={r.nome}>
+							<span aria-hidden="true">{r.sigla}</span>
+							<span class="solo-lettori">, {r.nome}</span>
+						</span>
+					</li>
+				);
+			})
+		}
+	</ul>
+	<p class="scheda nessuna" data-nessuna hidden>Nessuna carta con questi filtri.</p>
+
+	<script type="application/json" data-voci set:html={JSON.stringify(voci)} />
+</div>
+
+<script>
+	import {
+		filtra,
+		filtriAttivi,
+		leggiStato,
+		scriviStato,
+		PARAMETRI,
+		type GruppoFiltro,
+		type Ordine,
+		type VocePool,
+		type Vista,
+	} from '../lib/pool/filtri.ts';
+
+	const CHIAVE_VISTA = 'pool-vista';
+
+	function vistaSalvata(): Vista | null {
+		try {
+			const v = localStorage.getItem(CHIAVE_VISTA);
+			return v === 'lista' || v === 'immagini' ? v : null;
+		} catch {
+			return null; // browser con i dati del sito bloccati
+		}
+	}
+	function salvaVista(vista: Vista) {
+		try {
+			localStorage.setItem(CHIAVE_VISTA, vista);
+		} catch {
+			// niente: la scelta vale solo finché la pagina resta aperta
+		}
+	}
+
+	function avvia(radice: HTMLElement) {
+		const trova = <T extends Element = HTMLElement>(selettore: string) => radice.querySelector<T>(selettore)!;
+		const tutti = <T extends Element = HTMLElement>(selettore: string) => [...radice.querySelectorAll<T>(selettore)];
+
+		const voci = JSON.parse(trova('[data-voci]').textContent ?? '[]') as VocePool[];
+		const totale = Number(radice.dataset.totale);
+		const elenco = trova<HTMLUListElement>('[data-elenco]');
+		const righe = new Map(tutti<HTMLLIElement>('[data-indice]').map((li) => [Number(li.dataset.indice), li]));
+		const cerca = trova<HTMLInputElement>('[data-cerca]');
+		const ordine = trova<HTMLSelectElement>('[data-ordine]');
+		const caselle = tutti<HTMLInputElement>('input[type=checkbox]');
+		const pulsantiVista = tutti<HTMLButtonElement>('[data-vista]');
+		const contatore = trova('[data-contatore]');
+		const numeroFiltri = trova('[data-numero-filtri]');
+		const apriFiltri = trova<HTMLButtonElement>('[data-apri-filtri]');
+		const pannello = trova<HTMLElement>('[data-pannello]');
+		const velo = trova<HTMLElement>('[data-velo]');
+
+		const stato = leggiStato(new URLSearchParams(location.search));
+		let vista: Vista = stato.vista ?? vistaSalvata() ?? 'lista';
+
+		// Riporta lo stato nei comandi.
+		cerca.value = stato.q;
+		ordine.value = stato.ordine;
+		for (const casella of caselle) {
+			casella.checked = stato[casella.name as GruppoFiltro].includes(casella.value);
+		}
+
+		function mostraVista() {
+			elenco.classList.toggle('vista-lista', vista === 'lista');
+			elenco.classList.toggle('vista-immagini', vista === 'immagini');
+			for (const p of pulsantiVista) p.setAttribute('aria-pressed', String(p.dataset.vista === vista));
+			// Le immagini ricevono l'indirizzo solo in vista immagini: in vista lista non si scarica niente.
+			if (vista === 'immagini') {
+				for (const img of tutti<HTMLImageElement>('img[data-src]')) {
+					img.src = img.dataset.src!;
+					img.removeAttribute('data-src');
+				}
+			}
+		}
+
+		function aggiorna() {
+			const esito = filtra(voci, stato);
+			for (const li of righe.values()) li.hidden = true;
+			// Rimettere gli elementi in fila nell'ordine giusto li sposta senza ricrearli.
+			for (const { indice, copie } of esito.visibili) {
+				const li = righe.get(indice)!;
+				li.hidden = false;
+				li.querySelector('[data-copie]')!.textContent = copie > 1 ? `${copie}×` : '';
+				elenco.append(li);
+			}
+			const filtrato = esito.visibili.length < voci.length || esito.copie < totale;
+			contatore.textContent = filtrato ? `${esito.copie} di ${totale} carte` : `${totale} carte`;
+			trova('[data-nessuna]').hidden = esito.visibili.length > 0;
+			elenco.hidden = esito.visibili.length === 0;
+			trova('[data-mostra]').textContent = `Mostra ${esito.copie} ${esito.copie === 1 ? 'carta' : 'carte'}`;
+
+			const attivi = filtriAttivi(stato);
+			numeroFiltri.hidden = attivi === 0;
+			numeroFiltri.textContent = String(attivi);
+			trova('.azzera-tutto').hidden = attivi === 0 && stato.q.trim() === '';
+
+			const parametri = scriviStato(stato);
+			history.replaceState(history.state, '', parametri ? `?${parametri}${location.hash}` : location.pathname + location.hash);
+		}
+
+		// --- Pannello dei filtri (sul telefono sale dal basso) ---
+		function apri() {
+			pannello.classList.add('aperto');
+			velo.hidden = false;
+			apriFiltri.setAttribute('aria-expanded', 'true');
+			document.documentElement.classList.add('blocca-scorrimento');
+			pannello.querySelector<HTMLElement>('input, button')?.focus();
+		}
+		function chiudi() {
+			if (!pannello.classList.contains('aperto')) return;
+			pannello.classList.remove('aperto');
+			velo.hidden = true;
+			apriFiltri.setAttribute('aria-expanded', 'false');
+			document.documentElement.classList.remove('blocca-scorrimento');
+			apriFiltri.focus();
+		}
+
+		apriFiltri.addEventListener('click', apri);
+		velo.addEventListener('click', chiudi);
+		for (const b of tutti('[data-chiudi]')) b.addEventListener('click', chiudi);
+		pannello.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') chiudi();
+		});
+
+		cerca.addEventListener('input', () => {
+			stato.q = cerca.value;
+			aggiorna();
+		});
+		ordine.addEventListener('change', () => {
+			stato.ordine = ordine.value as Ordine;
+			aggiorna();
+		});
+		for (const casella of caselle) {
+			casella.addEventListener('change', () => {
+				const gruppo = casella.name as GruppoFiltro;
+				const scelti = caselle.filter((c) => c.name === gruppo && c.checked).map((c) => c.value);
+				stato[gruppo] = scelti;
+				aggiorna();
+			});
+		}
+		for (const b of tutti('[data-azzera]')) {
+			b.addEventListener('click', () => {
+				stato.q = cerca.value = '';
+				for (const gruppo of Object.keys(PARAMETRI) as GruppoFiltro[]) stato[gruppo] = [];
+				for (const casella of caselle) casella.checked = false;
+				aggiorna();
+			});
+		}
+		for (const p of pulsantiVista) {
+			p.addEventListener('click', () => {
+				vista = p.dataset.vista as Vista;
+				stato.vista = vista;
+				salvaVista(vista);
+				mostraVista();
+				aggiorna();
+			});
+		}
+
+		mostraVista();
+		aggiorna();
+		trova('[data-comandi]').hidden = false;
+	}
+
+	for (const radice of document.querySelectorAll<HTMLElement>('[data-pool]')) avvia(radice);
+</script>
+
+<style>
+	/* --- Comandi: ricerca, filtri, ordinamento, vista --- */
+	.comandi {
+		display: grid;
+		gap: 0.6rem;
+		margin-bottom: 1rem;
+	}
+	.comandi[hidden] {
+		display: none;
+	}
+	.cerca input {
+		width: 100%;
+		min-height: 2.75rem;
+		padding: 0 0.9rem;
+		border: 1px solid var(--bordo);
+		border-radius: var(--raggio-piccolo);
+		background: var(--superficie);
+		color: var(--testo);
+		font: inherit;
+	}
+	.cerca input::placeholder {
+		color: var(--testo-tenue);
+	}
+	.riga-comandi {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.numero-filtri {
+		display: inline-grid;
+		place-items: center;
+		min-width: 1.4rem;
+		height: 1.4rem;
+		border-radius: 999px;
+		background: var(--accento);
+		color: var(--su-accento);
+		font-size: 0.75rem;
+		font-weight: 800;
+	}
+	.numero-filtri[hidden] {
+		display: none;
+	}
+	.ordina {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		font-size: 0.9rem;
+		color: var(--testo-tenue);
+	}
+	.ordina select {
+		min-height: 2.75rem;
+		padding: 0 0.6rem;
+		border: 1px solid var(--bordo);
+		border-radius: var(--raggio-piccolo);
+		background: var(--superficie-alta);
+		color: var(--testo);
+		font: inherit;
+	}
+	.viste {
+		display: inline-flex;
+		margin-left: auto;
+		border: 1px solid var(--bordo);
+		border-radius: var(--raggio-piccolo);
+		overflow: hidden;
+	}
+	.vista {
+		min-height: 2.75rem;
+		padding: 0 0.9rem;
+		border: none;
+		background: var(--superficie);
+		color: var(--testo-tenue);
+		font: inherit;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	.vista[aria-pressed='true'] {
+		background: var(--accento);
+		color: var(--su-accento);
+	}
+
+	/* Pannello dei filtri: sempre visibile sugli schermi larghi */
+	.pannello {
+		background: var(--superficie);
+		border: 1px solid var(--bordo);
+		border-radius: var(--raggio);
+		padding: 0.75rem 1rem;
+	}
+	.testa-pannello,
+	.piede-pannello,
+	.apri-filtri,
+	.velo {
+		display: none;
+	}
+	.testa-pannello h3 {
+		margin: 0;
+		font-size: 1.1rem;
+	}
+	.gruppo {
+		border: none;
+		margin: 0;
+		padding: 0.35rem 0;
+	}
+	.gruppo legend {
+		padding: 0;
+		margin-bottom: 0.35rem;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--testo-tenue);
+	}
+	.chip {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+	/* Ogni filtro è una casella di spunta che ha l'aspetto di un'etichetta */
+	.scelta input {
+		position: absolute;
+		opacity: 0;
+		width: 1px;
+		height: 1px;
+	}
+	.scelta > span {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		min-height: 2.25rem;
+		padding: 0 0.75rem;
+		border: 1px solid var(--bordo);
+		border-radius: 999px;
+		background: var(--superficie-alta);
+		font-size: 0.85rem;
+		font-weight: 600;
+		cursor: pointer;
+		user-select: none;
+	}
+	.scelta input:checked + span {
+		border-color: var(--accento);
+		background: var(--accento);
+		color: var(--su-accento);
+	}
+	.scelta input:focus-visible + span {
+		outline: 3px solid var(--accento-2);
+		outline-offset: 2px;
+	}
+	.segno {
+		width: 0.8rem;
+		height: 0.8rem;
+		border-radius: 50%;
+		box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.25);
+	}
+	.segno.W { background: var(--mana-w); }
+	.segno.U { background: var(--mana-u); }
+	.segno.B { background: var(--mana-b); }
+	.segno.R { background: var(--mana-r); }
+	.segno.G { background: var(--mana-g); }
+	.segno.multi {
+		background: conic-gradient(var(--mana-w), var(--mana-u), var(--mana-b), var(--mana-r), var(--mana-g), var(--mana-w));
+	}
+	.segno.incolore {
+		background: var(--argento);
+	}
+
+	/* Telefono: i filtri stanno in un pannello che sale dal basso */
+	@media (max-width: 43.99rem) {
+		.apri-filtri {
+			display: inline-flex;
+		}
+		.pannello {
+			display: none;
+		}
+		.pannello.aperto {
+			display: block;
+			position: fixed;
+			z-index: 20;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			max-height: 85dvh;
+			overflow-y: auto;
+			padding: 0 1rem;
+			border-radius: var(--raggio) var(--raggio) 0 0;
+			box-shadow: var(--ombra);
+			animation: sale 0.2s ease-out;
+		}
+		.pannello.aperto .testa-pannello,
+		.pannello.aperto .piede-pannello {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			position: sticky;
+			background: var(--superficie);
+			padding: 0.75rem 0;
+		}
+		.testa-pannello {
+			top: 0;
+			justify-content: space-between;
+			border-bottom: 1px solid var(--bordo);
+		}
+		.piede-pannello {
+			bottom: 0;
+			border-top: 1px solid var(--bordo);
+			margin-top: 0.5rem;
+		}
+		.piede-pannello .principale {
+			flex: 1;
+			justify-content: center;
+		}
+		.velo:not([hidden]) {
+			display: block;
+			position: fixed;
+			inset: 0;
+			z-index: 19;
+			background: rgb(0 0 0 / 0.5);
+		}
+	}
+	.chiudi {
+		min-width: 2.75rem;
+		min-height: 2.75rem;
+		border: none;
+		border-radius: var(--raggio-piccolo);
+		background: var(--superficie-alta);
+		color: var(--testo);
+		font: inherit;
+		cursor: pointer;
+	}
+	@keyframes sale {
+		from {
+			transform: translateY(100%);
+		}
+	}
+	:global(html.blocca-scorrimento) {
+		overflow: hidden;
+	}
+
+	/* --- Contatore --- */
+	.contatore {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin: 0 0 0.75rem;
+		font-weight: 700;
+	}
+	.azzera-tutto {
+		min-height: 2.75rem;
+		padding: 0;
+		border: none;
+		background: none;
+		color: var(--accento);
+		font: inherit;
+		font-size: 0.9rem;
+		font-weight: 600;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+	.azzera-tutto[hidden] {
+		display: none;
+	}
+	.nessuna {
+		color: var(--testo-tenue);
+	}
+
+	/* --- Elenco delle carte --- */
+	.carte {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.carte[hidden] {
+		display: none;
+	}
+	/* Più specifica delle regole delle due viste, che altrimenti la scavalcano */
+	.carte > .carta[hidden] {
+		display: none;
+	}
+	.collegamento {
+		color: var(--testo);
+		text-decoration: none;
+	}
+	.collegamento:hover .nome-carta {
+		color: var(--accento);
+		text-decoration: underline;
+	}
+	.carta.rare .nome-carta,
+	.carta.mythic .nome-carta {
+		font-weight: 700;
+	}
+	.colori {
+		display: inline-flex;
+		gap: 3px;
+	}
+	.serate {
+		display: inline-flex;
+		gap: 0.25rem;
+		font-size: 0.75rem;
+		color: var(--testo-tenue);
+		white-space: nowrap;
+	}
+	.serata {
+		padding: 0.05rem 0.35rem;
+		border-radius: 4px;
+		background: var(--superficie-alta);
+		font-weight: 700;
+	}
+	.serata + .serata {
+		margin-left: 0.25rem;
+	}
+	.serata small {
+		font-size: inherit;
+		font-weight: 400;
+		margin-left: 1px;
+	}
+	.rarita {
+		display: inline-grid;
+		place-items: center;
+		width: 1.4rem;
+		height: 1.4rem;
+		border-radius: 4px;
+		font-size: 0.7rem;
+		font-weight: 800;
+		color: var(--testo-tenue);
+		background: var(--superficie-alta);
+	}
+	.rarita.rare {
+		color: var(--testo-oro);
+		box-shadow: inset 0 0 0 2px var(--oro);
+	}
+	.rarita.mythic {
+		color: var(--mitica);
+		box-shadow: inset 0 0 0 2px var(--mitica);
+	}
+	.copie {
+		font-weight: 700;
+		color: var(--testo-tenue);
+		font-variant-numeric: tabular-nums;
+	}
+
+	/* Vista lista: una riga per carta (anche senza JavaScript) */
+	.vista-lista {
+		background: var(--superficie);
+		border: 1px solid var(--bordo);
+		border-radius: var(--raggio);
+		padding: 0 1rem;
+	}
+	.vista-lista .carta {
+		display: grid;
+		grid-template-columns: 1.6rem 1fr auto auto auto;
+		align-items: center;
+		gap: 0.5rem;
+		min-height: 2.6rem;
+		font-size: 0.9rem;
+	}
+	.vista-lista .carta:not([hidden]) ~ .carta:not([hidden]) {
+		border-top: 1px solid var(--bordo);
+	}
+	.vista-lista .carta > .collegamento {
+		grid-column: 2;
+		grid-row: 1;
+		min-width: 0;
+		overflow-wrap: anywhere;
+	}
+	.vista-lista .immagine {
+		display: none;
+	}
+
+	/* Vista immagini: griglia di carte da scorrere */
+	.vista-immagini {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+		gap: 1rem 0.75rem;
+	}
+	.vista-immagini .carta {
+		position: relative;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.35rem;
+		font-size: 0.75rem;
+	}
+	.vista-immagini .collegamento {
+		order: -1;
+		width: 100%;
+	}
+	.vista-immagini .immagine {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: 4.75% / 3.5%;
+		box-shadow: var(--ombra);
+		background: var(--superficie-alta);
+	}
+	.vista-immagini .carta.rare .immagine {
+		box-shadow: 0 0 0 2px var(--oro), var(--ombra);
+	}
+	.vista-immagini .carta.mythic .immagine {
+		box-shadow: 0 0 0 2px var(--mitica), var(--ombra);
+	}
+	/* Il nome è già sull'immagine: resta per i lettori di schermo e per le carte senza immagine */
+	.vista-immagini .immagine + .nome-carta {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+	.vista-immagini .copie:not(:empty) {
+		position: absolute;
+		top: 0.4rem;
+		right: 0.4rem;
+		z-index: 1;
+		padding: 0.1rem 0.45rem;
+		border-radius: 999px;
+		background: var(--accento);
+		color: var(--su-accento);
+		font-size: 0.85rem;
+		font-weight: 800;
+	}
+	.vista-immagini .copie:empty {
+		display: none;
+	}
+	.vista-immagini .rarita {
+		margin-left: auto;
+	}
+	@media (min-width: 44rem) {
+		.vista-immagini {
+			grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+		}
+	}
+</style>

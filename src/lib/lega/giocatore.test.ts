@@ -53,28 +53,28 @@ describe('pool del giocatore', () => {
     ],
   };
 
-  it('raggruppa per colore nell\'ordine W U B R G, multicolore, incolore', () => {
+  it('somma le copie della stessa carta tra le serate, ricordando quante per serata', () => {
     const pool = poolDelGiocatore(giocatore, carte);
-    expect(pool.gruppi.map((g) => [g.chiave, g.totale])).toEqual([
-      ['W', 1],
-      ['R', 1],
-      ['G', 4],
-      ['multi', 1],
-      ['incolore', 1],
+    expect(pool.carte.map((c) => c.nome)).toEqual([
+      'Giant Growth',
+      'Grizzly Bears',
+      'Lightning Bolt',
+      'Ornithopter',
+      'Serra Angel',
+      'Wear // Tear',
     ]);
-  });
-
-  it('somma le copie della stessa carta tra le serate e ordina per valore di mana', () => {
-    const verde = poolDelGiocatore(giocatore, carte).gruppi.find((g) => g.chiave === 'G')!;
-    expect(verde.carte.map((c) => [c.nome, c.copie])).toEqual([
-      ['Giant Growth', 1],
-      ['Grizzly Bears', 3],
-    ]);
+    expect(pool.carte[1]).toMatchObject({
+      copie: 3,
+      perSerata: [
+        { serata: 1, copie: 2 },
+        { serata: 3, copie: 1 },
+      ],
+    });
   });
 
   it('usa il nome completo di Scryfall e conta le carte per serata', () => {
     const pool = poolDelGiocatore(giocatore, carte);
-    expect(pool.gruppi.find((g) => g.chiave === 'multi')!.carte[0]!.nome).toBe('Wear // Tear');
+    expect(pool.carte.at(-1)!.carta?.colori).toEqual(['R', 'W']);
     expect(pool.totale).toBe(8);
     expect(pool.perSerata).toEqual([
       { serata: 1, carte: 6 },
@@ -82,9 +82,9 @@ describe('pool del giocatore', () => {
     ]);
   });
 
-  it('senza la cache delle carte le mette tutte tra le "non trovate"', () => {
+  it('tiene anche le carte che non sono nella cache', () => {
     const pool = poolDelGiocatore(giocatore, []);
-    expect(pool.gruppi.map((g) => g.chiave)).toEqual(['sconosciute']);
+    expect(pool.carte.every((c) => c.carta === null)).toBe(true);
     expect(pool.totale).toBe(8);
   });
 });
