@@ -176,6 +176,11 @@ Si può inserire un giocatore alla volta, pubblicando ogni volta o tutti insieme
 Finché mancano dei pool, `controlla` stampa il promemoria **⚠️ Pool della serata X ancora da inserire: …**
 (gli assenti sono esclusi: quella sera non hanno aperto buste).
 
+**Conto delle carte.** Ogni busta ha 14 carte Magic più un token (che non si scrive). Togliendo le terre base,
+per ogni busta restano **13 o 14 carte** da scrivere (14 se lo slot terra era una terra doppia). Se le carte di
+una serata non tornano con le buste ricevute (comprese quelle recuperate e la busta extra), la pagina del
+giocatore mostra sopra il pool l'avviso **⚠️ Serata X: N carte scritte, ne servono da … a …**: ricontrolla le foto.
+
 ---
 
 ## 6. La finale (serata 5)

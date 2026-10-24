@@ -3,6 +3,7 @@
 import type { Carta } from '../carte/carta.ts';
 import { IndiceCarte } from '../carte/nomi.ts';
 import type { DatiLega, Giocatore } from '../dati/valida.ts';
+import { busteDellaSerata } from './buste.ts';
 import { testoRisultato, vincitore } from './match.ts';
 
 // --- Pool -----------------------------------------------------------------------
@@ -54,6 +55,34 @@ export function poolDelGiocatore(giocatore: Giocatore, carte: Carta[]): PoolGioc
     .filter((s) => s.carte > 0);
 
   return { totale: elenco.reduce((n, c) => n + c.copie, 0), perSerata, carte: elenco };
+}
+
+// Ogni busta ha 14 carte Magic (più un token, che non scriviamo). La carta dello slot terra
+// si scrive solo se è una terra doppia: le terre base sono escluse dai pool. Quindi per busta
+// le carte scritte sono 13 o 14.
+const CARTE_MINIME_PER_BUSTA = 13;
+const CARTE_MASSIME_PER_BUSTA = 14;
+
+export interface AvvisoPool {
+  serata: number;
+  /** Carte scritte nel pool per quella serata. */
+  carte: number;
+  /** Buste ricevute quella sera (comprese quelle recuperate e la busta extra). */
+  buste: number;
+  minimo: number;
+  massimo: number;
+}
+
+/** Le serate in cui le carte scritte non tornano con le buste ricevute: un promemoria per ricontrollare il pool. */
+export function controllaPool(dati: DatiLega, id: string, perSerata: PoolGiocatore['perSerata']): AvvisoPool[] {
+  const avvisi: AvvisoPool[] = [];
+  for (const { serata, carte } of perSerata) {
+    const buste = busteDellaSerata(dati, serata).giocatori.find((g) => g.id === id)?.totale ?? 0;
+    const minimo = buste * CARTE_MINIME_PER_BUSTA;
+    const massimo = buste * CARTE_MASSIME_PER_BUSTA;
+    if (carte < minimo || carte > massimo) avvisi.push({ serata, carte, buste, minimo, massimo });
+  }
+  return avvisi;
 }
 
 // --- Storico delle partite --------------------------------------------------------

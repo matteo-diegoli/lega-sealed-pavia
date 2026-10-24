@@ -7,7 +7,7 @@ import Pool from '../../components/Pool.astro';
 import { caricaDati, leggiCacheCarte } from '../../lib/dati/carica.ts';
 import { NUMERO_SERATE } from '../../lib/dati/schema.ts';
 import type { Giocatore } from '../../lib/dati/valida.ts';
-import { partiteDelGiocatore, poolDelGiocatore, type Esito } from '../../lib/lega/giocatore.ts';
+import { controllaPool, partiteDelGiocatore, poolDelGiocatore, type Esito } from '../../lib/lega/giocatore.ts';
 import { classificaAttuale } from '../../lib/lega/riepilogo.ts';
 import { linkGiocatore } from '../../lib/sito/percorso.ts';
 import { anteprimaGiocatore } from '../../lib/sito/anteprime.ts';
@@ -29,6 +29,7 @@ const medaglia = riga && iniziata ? (['oro', 'argento', 'bronzo'][riga.posizione
 
 const carte = leggiCacheCarte()?.carte ?? [];
 const pool = poolDelGiocatore(giocatore, carte);
+const avvisiPool = controllaPool(dati, giocatore.id, pool.perSerata);
 const anteprima = anteprimaGiocatore(dati, giocatore, carte);
 const partite = partiteDelGiocatore(dati, giocatore.id);
 
@@ -75,6 +76,18 @@ const sigleEsito: Record<Esito, string> = {
 	<div class="contenitore">
 		<section aria-labelledby="titolo-pool">
 			<h2 id="titolo-pool" class="titolo-sezione">Pool</h2>
+			{
+				avvisiPool.map((a) => (
+					<p class="scheda avviso-pool">
+						<span aria-hidden="true">⚠️</span>
+						<span>
+							<strong>Serata {a.serata}:</strong>{' '}
+							{`${a.carte} carte scritte, ne servono da ${a.minimo} a ${a.massimo} (${a.buste} ${a.buste === 1 ? 'busta' : 'buste'}).`}{' '}
+							Controlla il tuo pool.
+						</span>
+					</p>
+				))
+			}
 			{pool.totale === 0 ? <p class="scheda tenue">Nessuna carta registrata.</p> : <Pool pool={pool} />}
 		</section>
 
@@ -143,6 +156,14 @@ const sigleEsito: Record<Esito, string> = {
 	}
 	.tenue {
 		color: var(--testo-tenue);
+	}
+	/* Promemoria: le carte di una serata non tornano con le buste ricevute */
+	.avviso-pool {
+		display: flex;
+		gap: 0.6rem;
+		margin: 0 0 0.75rem;
+		border-left: 4px solid var(--oro);
+		font-size: 0.95rem;
 	}
 	a {
 		color: var(--testo);

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Carta } from '../carte/carta.ts';
 import type { Giocatore } from '../dati/valida.ts';
-import { partiteDelGiocatore, poolDelGiocatore } from './giocatore.ts';
+import { controllaPool, partiteDelGiocatore, poolDelGiocatore } from './giocatore.ts';
 import { lega, round } from './prova.ts';
 
 function carta(nome: string, colori: string[], valore: number): Carta {
@@ -115,5 +115,34 @@ describe('partite del giocatore', () => {
       [1, 'vittoria', '2-1'],
     ]);
     expect(partiteDelGiocatore(dati, 'd')[2]).toMatchObject({ esito: 'vittoria', avversario: 'c', risultato: '2-0' });
+  });
+});
+
+describe('controllo del numero di carte del pool', () => {
+  // Due serate giocate: D ultimo dopo la serata 1, quindi alla serata 2 riceve la busta extra.
+  const serata1 = [
+    round(1, [['a', 'b', '2-0'], ['c', 'd', '2-1']]),
+    round(2, [['a', 'c', '2-1'], ['b', 'd', '1-1-1']]),
+  ];
+  const dati = lega(['a', 'b', 'c', 'd'], serata1);
+
+  it('nessun avviso se le carte sono tra 13 e 14 per busta', () => {
+    expect(controllaPool(dati, 'a', [{ serata: 1, carte: 78 }, { serata: 2, carte: 14 }])).toEqual([]);
+    expect(controllaPool(dati, 'a', [{ serata: 1, carte: 84 }, { serata: 2, carte: 13 }])).toEqual([]);
+  });
+
+  it('avvisa se le carte sono troppo poche o troppe', () => {
+    expect(controllaPool(dati, 'a', [{ serata: 1, carte: 77 }, { serata: 2, carte: 15 }])).toEqual([
+      { serata: 1, carte: 77, buste: 6, minimo: 78, massimo: 84 },
+      { serata: 2, carte: 15, buste: 1, minimo: 13, massimo: 14 },
+    ]);
+  });
+
+  it('conta la busta extra e quelle recuperate', () => {
+    // D riceve la busta extra alla serata 2: 2 buste = da 26 a 28 carte.
+    expect(controllaPool(dati, 'd', [{ serata: 2, carte: 27 }])).toEqual([]);
+    // E salta la serata 1: alla serata 2 recupera 6 buste + 1 = 7 buste.
+    const conAssente = lega(['a', 'b', 'c', 'd', 'e'], serata1, [['e']]);
+    expect(controllaPool(conAssente, 'e', [{ serata: 2, carte: 95 }])).toEqual([]);
   });
 });

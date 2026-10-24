@@ -13,7 +13,7 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
   proporre un piano e aspettare l'ok.
 - `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore: `cloud` = claudio, `moro` = massimo,
   `salva` = salvatore, `iappo` = iacopo) contiene foto e `pool.txt` dei pool della serata 1 (già trascritti in `data/players/`).
-- **Ultimo aggiornamento:** 2026-10-24 (legenda della classifica con le formule; serata 2 il 29 ottobre)
+- **Ultimo aggiornamento:** 2026-10-24 (avviso sul conto delle carte del pool; meno spazio in cima alla Home)
 
 ---
 
@@ -299,6 +299,14 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - [x] Legenda della classifica riscritta (richiesta utente): per ogni spareggio si dice se conta **match** o **game**, con le
       formule (MW%, OMW%, GW% con i game pareggiati a 1/3, OGW%), l'ordine OMW% → GW% → OGW% e il ×2 escluso dagli spareggi.
 - Serata 2 fissata a **giovedì 2026-10-29**.
+- [x] Richieste utente (2026-10-24): **Home**: spazio sopra la pillola «Prossima: serata …» ridotto (`padding-top` della
+      testata da 2.5rem a 1rem). **Avviso sul pool** nella pagina giocatore: per ogni serata, se le carte scritte non sono
+      tra **buste × 13 e buste × 14**, sopra il pool compare «⚠️ Serata X: N carte scritte, ne servono da … a …».
+      Composizione di una busta (Play Booster di Reality Fracture, dato dall'utente): 14 carte Magic + 1 token non scritto;
+      lo slot terra è una terra base (esclusa) o una terra doppia comune (scritta) → 13 o 14 carte. Buste contate con
+      `busteDellaSerata` (recuperate ed extra comprese). **Niente controllo per rarità**: slot foil, comune/non comune e
+      coppie eco le rendono troppo variabili. `controllaPool` in `src/lib/lega/giocatore.ts` (3 test, 144 in tutto).
+      Serata 1: tutti dentro l'intervallo (da 79 a 83 carte su 78–84). Spiegato anche in `GUIDA.md` (sezione 5).
 - [x] Dati veri al posto di quelli fittizi (2026-10-24, fatto **prima** di `GUIDA.md`, così la guida descrive cose già provate).
       Cancellati i giocatori fittizi e i round delle serate 2–5; serate 2–5 di `data/league.yml` con `data: null` e `assenti: []`.
       8 giocatori veri (matteo, simone, massimo, salvatore, riccardo, claudio, iacopo, diego) con il pool della serata 1,
