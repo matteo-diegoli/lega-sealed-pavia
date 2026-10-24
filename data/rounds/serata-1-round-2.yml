@@ -1,16 +1,14 @@
-# Dati FITTIZI generati da "npm run genera-prova": da sostituire con quelli veri.
-
 serata: 1
 round: 2
 
 partite:
-  - giocatori: [fabio, bruno]
+  - giocatori: [matteo, massimo]
+    risultato: 2-0
+  - giocatori: [riccardo, diego]
     risultato: 2-1
-  - giocatori: [giulia, anna]
-    risultato: 1-1-1
-  - giocatori: [dario, elena]
-    risultato: 2-1
-  - giocatori: [carla, marco]
-    risultato: 2-1
+  - giocatori: [simone, salvatore]
+    risultato: 2-1 # punteggio non noto, ipotizzato 2-1
+  - giocatori: [claudio, iacopo]
+    risultato: 2-1 # punteggio non noto, ipotizzato 2-1
 
 bye: null
