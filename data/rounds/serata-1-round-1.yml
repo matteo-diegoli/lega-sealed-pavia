@@ -5,7 +5,7 @@ partite:
   - giocatori: [matteo, riccardo]
     risultato: 2-1
   - giocatori: [massimo, claudio]
-    risultato: 2-1 # punteggio non noto, ipotizzato 2-1
+    risultato: 2-01
   - giocatori: [salvatore, diego]
     risultato: 2-1 # punteggio non noto, ipotizzato 2-1
   - giocatori: [simone, iacopo]
