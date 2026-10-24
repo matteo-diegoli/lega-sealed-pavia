@@ -54,7 +54,7 @@ const serateLette = (perSerata: { serata: number; copie: number }[]) =>
 ---
 
 <div class="pool" data-pool data-totale={pool.totale}>
-	<div class="comandi" data-comandi hidden>
+	<div class="comandi" data-comandi>
 		<label class="cerca">
 			<span class="solo-lettori">Cerca nel pool</span>
 			<input type="search" placeholder="Cerca per nome, tipo o testo…" autocomplete="off" data-cerca />
@@ -321,7 +321,6 @@ const serateLette = (perSerata: { serata: number; copie: number }[]) =>
 
 		mostraVista();
 		aggiorna();
-		trova('[data-comandi]').hidden = false;
 	}
 
 	for (const radice of document.querySelectorAll<HTMLElement>('[data-pool]')) avvia(radice);
@@ -334,7 +333,8 @@ const serateLette = (perSerata: { serata: number; copie: number }[]) =>
 		gap: 0.6rem;
 		margin-bottom: 1rem;
 	}
-	.comandi[hidden] {
+	/* Senza JavaScript i comandi non funzionerebbero: si nascondono (la classe "js" la mette Base.astro). */
+	:global(html:not(.js)) .comandi {
 		display: none;
 	}
 	.cerca input {

@@ -70,6 +70,8 @@ const paginaAttuale = Astro.url.pathname.replace(/\/?$/, '/');
 		{jsonLd && <script type="application/ld+json" set:html={testoJsonLd(jsonLd)} />}
 		<!-- Applica subito il tema scelto con il pulsante, prima di disegnare la pagina (niente lampi di colore). -->
 		<script is:inline>
+			// Segna che JavaScript è attivo: i comandi del pool restano al loro posto fin dall'inizio (niente spostamenti).
+			document.documentElement.classList.add('js');
 			try {
 				const tema = localStorage.getItem('tema');
 				if (tema === 'chiaro' || tema === 'scuro') {
