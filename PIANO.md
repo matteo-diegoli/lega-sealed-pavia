@@ -10,11 +10,10 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - **Fase attuale:** Fase 8 in corso. Piano approvato il 2026-10-24: 1) preparazione ✅ 2) repository pubblico + primo push ✅
   3) Action (test + `npm run accessibilita` + deploy su Pages) ✅ 4) verifica online 5) dominio (facoltativo).
   Si pubblica **con i dati fittizi**: in Fase 9 il passaggio ai dati veri servirà anche a provare l'aggiornamento del sito.
-- **Prossima azione:** Step 4a – l'utente fa `git push` della correzione dello spostamento nel pool; rimisurare Lighthouse
-  sulla pagina giocatore online. Poi Step 4b (prove sul telefono). **4c (TalkBack/VoiceOver) saltato** per decisione dell'utente.
+- **Prossima azione:** Step 4b – guidare l'utente nelle prove sul telefono (installazione dell'app, icona, modalità aereo). **4c (TalkBack/VoiceOver) saltato** per decisione dell'utente.
 - `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
-- **Ultimo aggiornamento:** 2026-10-24 (Fase 8, step 4a)
+- **Ultimo aggiornamento:** 2026-10-24 (Fase 8, step 4a concluso)
 
 ---
 
@@ -277,10 +276,10 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       (checkout v7, setup-node v7, configure-pages v6, upload-pages-artifact v5, deploy-pages v5).
       Seguire una pubblicazione: `"/c/Program Files/GitHub CLI/gh.exe" run list -R matteo-diegoli/lega-sealed-pavia`.
 - [ ] Verifica online + installazione su iPhone e Android
-  - [ ] 4a. Controlli dal PC (2026-10-24). Lighthouse online: Home e Match 100/100/100, giocatore 95 per uno spostamento
+  - [x] 4a. Controlli dal PC (2026-10-24). Lighthouse online: Home e Match 100/100/100, giocatore 95 per uno spostamento
         (CLS 0,124): la barra dei comandi del pool era `hidden` e la mostrava lo script, che online arriva dopo la pagina.
         Corretto: `Base.astro` mette la classe `js` su `<html>` prima di disegnare; `Pool.astro` nasconde i comandi solo con
-        `html:not(.js)`. Da rimisurare online. Service worker online: attivo, 25 voci salvate; manifest ok; offline funzionano
+        `html:not(.js)`. Rimisurato online: pagine giocatore **100/100/100, CLS 0**. Service worker online: attivo, 25 voci salvate; manifest ok; offline funzionano
         tutte le pagine, i JSON e `llms.txt`, un indirizzo sconosciuto dà "Sei offline".
   - [ ] 4b. Prove sul telefono: installazione dell'app, icona e nome, modalità aereo.
   - 4c. Prova con TalkBack/VoiceOver: **saltata** (decisione dell'utente il 2026-10-24); la guida resta in `docs/TEST-LETTORE-SCHERMO.md`.
