@@ -1,0 +1,67 @@
+# Pubblica il sito su GitHub Pages.
+# Parte a ogni push su main (o a mano dalla pagina "Actions" con "Run workflow").
+# Se i test o il controllo di accessibilità falliscono, il sito online resta quello di prima.
+name: Pubblica il sito
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Permessi minimi: leggere il codice e pubblicare su Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Una pubblicazione alla volta: se ne parte una nuova, quella in corso finisce comunque.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Test, accessibilità e build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scarica il progetto
+        uses: actions/checkout@v5
+
+      - name: Installa Node 24
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Installa le dipendenze
+        run: npm ci
+
+      - name: Test automatici
+        run: npm test
+
+      - name: Installa Chromium per i controlli di accessibilità
+        run: npx playwright install --with-deps chromium
+
+      # Fa anche il controllo dei dati e la build (cartella dist/).
+      - name: Build e controllo di accessibilità (axe)
+        run: npm run accessibilita
+
+      - name: Prepara la pubblicazione
+        uses: actions/configure-pages@v5
+
+      - name: Carica la cartella dist/
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    name: Pubblica su GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.pubblicazione.outputs.page_url }}
+    steps:
+      - name: Pubblica
+        id: pubblicazione
+        uses: actions/deploy-pages@v4
