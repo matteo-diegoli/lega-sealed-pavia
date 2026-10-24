@@ -9,6 +9,6 @@ partite:
   - giocatori: [simone, salvatore]
     risultato: 2-0
   - giocatori: [claudio, iacopo]
-    risultato: 2-1 # punteggio non noto, ipotizzato 2-1
+    risultato: 2-0
 
 bye: null

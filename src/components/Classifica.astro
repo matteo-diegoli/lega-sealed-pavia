@@ -123,6 +123,20 @@ const frase = (n: number) =>
 	</ol>
 </div>
 
+<script>
+	// Tabella: un clic in qualunque punto della riga apre la pagina del giocatore.
+	// (Sulle schede basta il CSS; sulle righe di tabella non funziona bene in tutti i browser.)
+	// Da tastiera e per i lettori di schermo resta il link sul nome.
+	for (const riga of document.querySelectorAll<HTMLTableRowElement>('.classifica tbody tr')) {
+		riga.addEventListener('click', (evento) => {
+			const link = riga.querySelector('a');
+			if (link === null || (evento.target as Element).closest('a') !== null) return;
+			if (evento.ctrlKey || evento.metaKey) window.open(link.href, '_blank');
+			else link.click();
+		});
+	}
+</script>
+
 <style>
 	/* --- Tabella (schermi larghi) --- */
 	.tabella {
@@ -161,6 +175,14 @@ const frase = (n: number) =>
 	tbody th {
 		font-weight: 600;
 	}
+	/* Righe cliccabili (con lo script qui sotto): al passaggio il nome si colora. */
+	:global(html.js) tbody tr {
+		cursor: pointer;
+	}
+	tbody tr:hover a {
+		color: var(--accento);
+		text-decoration: underline;
+	}
 	td:first-child {
 		width: 3rem;
 	}
@@ -191,6 +213,7 @@ const frase = (n: number) =>
 		gap: 0.5rem;
 	}
 	.riga {
+		position: relative;
 		display: grid;
 		grid-template-columns: auto 1fr auto;
 		align-items: center;
@@ -204,6 +227,24 @@ const frase = (n: number) =>
 	}
 	.nome {
 		font-weight: 700;
+	}
+	/* Il link del nome copre tutta la scheda: si apre il giocatore toccando ovunque. */
+	.nome a::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: var(--raggio);
+	}
+	.riga:hover {
+		border-color: var(--accento);
+	}
+	/* Il contorno del focus segue la scheda intera, non solo il nome. */
+	.nome a:focus-visible {
+		outline: none;
+	}
+	.nome a:focus-visible::after {
+		outline: 3px solid var(--accento-2);
+		outline-offset: 2px;
 	}
 	.dettagli {
 		display: flex;

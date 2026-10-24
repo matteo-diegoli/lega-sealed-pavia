@@ -13,7 +13,7 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
   proporre un piano e aspettare l'ok.
 - `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore: `cloud` = claudio, `moro` = massimo,
   `salva` = salvatore, `iappo` = iacopo) contiene foto e `pool.txt` dei pool della serata 1 (già trascritti in `data/players/`).
-- **Ultimo aggiornamento:** 2026-10-24 (Fase 9: `GUIDA.md` scritta, promemoria dei pool mancanti)
+- **Ultimo aggiornamento:** 2026-10-24 (card della classifica cliccabili; risultato claudio–iacopo 2-0)
 
 ---
 
@@ -292,6 +292,10 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       la serata), finale, aggiunta di un giocatore (assente nelle serate già giocate), cosa fare se la pubblicazione fallisce.
       **Promemoria dei pool mancanti** in `npm run controlla` (solo avviso, non blocca): per ogni serata con almeno un round,
       i presenti senza carte in `serata-N` — `src/lib/dati/promemoria.ts` (3 test, 141 in tutto).
+- [x] Dopo la chiusura (richiesta utente, 2026-10-24): in classifica **tutta la card/riga apre il giocatore**.
+      Schede (telefono): il link del nome copre la scheda con `::after` (resta un solo link per i lettori di schermo; bordo viola
+      al passaggio, focus su tutta la scheda). Tabella (PC): piccolo script in `Classifica.astro` (clic sulla riga = clic sul nome,
+      Ctrl/Cmd apre in una nuova scheda), perché il `::after` sulle righe di tabella non è affidabile in tutti i browser (Safari).
 - [x] Dati veri al posto di quelli fittizi (2026-10-24, fatto **prima** di `GUIDA.md`, così la guida descrive cose già provate).
       Cancellati i giocatori fittizi e i round delle serate 2–5; serate 2–5 di `data/league.yml` con `data: null` e `assenti: []`.
       8 giocatori veri (matteo, simone, massimo, salvatore, riccardo, claudio, iacopo, diego) con il pool della serata 1,
