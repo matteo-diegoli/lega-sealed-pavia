@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# foto dei pool (dati personali: mai su GitHub)
+data/photo-from-whatsapp/

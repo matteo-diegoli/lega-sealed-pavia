@@ -7,12 +7,13 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 7 **completata** ✅ (axe, Lighthouse, guida al lettore di schermo).
-- **Prossima azione:** proporre il piano della Fase 8 (repository GitHub, primo push, Action con build + `npm run accessibilita`
-  + deploy su Pages, verifica online) e aspettare l'ok.
-- `data/photo-from-whatsapp/` (non salvata in git, una sottocartella per giocatore) contiene le foto dei **pool veri**
+- **Fase attuale:** Fase 8 in corso. Piano approvato il 2026-10-24: 1) preparazione ✅ 2) repository pubblico + primo push
+  3) Action (test + `npm run accessibilita` + deploy su Pages) 4) verifica online 5) dominio (facoltativo).
+  Si pubblica **con i dati fittizi**: in Fase 9 il passaggio ai dati veri servirà anche a provare l'aggiornamento del sito.
+- **Prossima azione:** Step 2 – `gh repo create matteo-diegoli/lega-sealed-pavia --public` e primo push.
+- `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
-- **Ultimo aggiornamento:** 2026-10-23 (Fase 7, step 3)
+- **Ultimo aggiornamento:** 2026-10-24 (Fase 8, step 1)
 
 ---
 
@@ -264,6 +265,7 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       (il service worker salva tutte le pagine alla prima visita: non si vede quasi mai). **Prova vera in Fase 8.**
 
 ### Fase 8 – Rilascio
+- [x] Preparazione: `data/photo-from-whatsapp/` esclusa in `.gitignore`; repository **pubblico** (Pages gratuito), sito con dati fittizi
 - [ ] Repository su GitHub e primo push
 - [ ] GitHub Action per build e deploy su Pages (con `npm run accessibilita`: `npx playwright install --with-deps chromium`)
 - [ ] Verifica online + installazione su iPhone e Android (+ rimisurare Lighthouse sul sito online, + prova con TalkBack/VoiceOver seguendo `docs/TEST-LETTORE-SCHERMO.md`)
