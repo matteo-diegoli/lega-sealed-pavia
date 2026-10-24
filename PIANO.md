@@ -7,13 +7,13 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 8 in corso. Piano approvato il 2026-10-24: 1) preparazione ✅ 2) repository pubblico + primo push ✅
-  3) Action (test + `npm run accessibilita` + deploy su Pages) ✅ 4) verifica online 5) dominio (facoltativo).
-  Si pubblica **con i dati fittizi**: in Fase 9 il passaggio ai dati veri servirà anche a provare l'aggiornamento del sito.
-- **Prossima azione:** chiedere se fare lo Step 5 (dominio personalizzato, facoltativo) o chiudere la Fase 8 e passare alla Fase 9. **4c (TalkBack/VoiceOver) saltato** per decisione dell'utente.
+- **Fase attuale:** Fase 8 **completata** ✅ (sito online su https://matteo-diegoli.github.io/lega-sealed-pavia/,
+  pubblicazione automatica a ogni push su `main`). Dominio personalizzato saltato (decisione dell'utente il 2026-10-24).
+- **Prossima azione:** proporre il piano della Fase 9 (`GUIDA.md` + sostituzione dei dati fittizi con quelli veri, che
+  serve anche a provare l'aggiornamento del sito online) e aspettare l'ok.
 - `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
-- **Ultimo aggiornamento:** 2026-10-24 (Fase 8, step 4 concluso)
+- **Ultimo aggiornamento:** 2026-10-24 (Fase 8 completata)
 
 ---
 
@@ -275,7 +275,7 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       Prima pubblicazione riuscita il 2026-10-24 (circa 3 minuti). Azioni aggiornate alle versioni con Node 24
       (checkout v7, setup-node v7, configure-pages v6, upload-pages-artifact v5, deploy-pages v5).
       Seguire una pubblicazione: `"/c/Program Files/GitHub CLI/gh.exe" run list -R matteo-diegoli/lega-sealed-pavia`.
-- [ ] Verifica online + installazione su iPhone e Android
+- [x] Verifica online + installazione su iPhone e Android
   - [x] 4a. Controlli dal PC (2026-10-24). Lighthouse online: Home e Match 100/100/100, giocatore 95 per uno spostamento
         (CLS 0,124): la barra dei comandi del pool era `hidden` e la mostrava lo script, che online arriva dopo la pagina.
         Corretto: `Base.astro` mette la classe `js` su `<html>` prima di disegnare; `Pool.astro` nasconde i comandi solo con
@@ -284,7 +284,7 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
   - [x] 4b. Prove sul telefono (2026-10-24): app installata e usata anche in modalità aereo. Offline mancano le immagini
         delle carte mai viste online: è il comportamento previsto (il service worker le salva solo quando si vedono), va bene così.
   - 4c. Prova con TalkBack/VoiceOver: **saltata** (decisione dell'utente il 2026-10-24); la guida resta in `docs/TEST-LETTORE-SCHERMO.md`.
-- [ ] (facoltativo) dominio personalizzato
+- [x] ~~(facoltativo) dominio personalizzato~~ — saltato: basta l'indirizzo di github.io (per cambiarlo in futuro: `indirizzo:` in `data/league.yml`)
 
 ### Fase 9 – Documentazione
 - [ ] `GUIDA.md`: checklist di ogni serata, finale, aggiunta giocatori, pubblicazione anche da telefono, cosa fare se la build fallisce
