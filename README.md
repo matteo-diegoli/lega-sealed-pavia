@@ -19,7 +19,7 @@ Requisito: **Node.js 24** o superiore.
 ## Documentazione
 
 - [`PIANO.md`](PIANO.md): scaletta del progetto e decisioni prese
-- `GUIDA.md` (in arrivo): istruzioni per gestire ogni serata
+- [`GUIDA.md`](GUIDA.md): istruzioni per gestire ogni serata (abbinamenti, risultati, pool, pubblicazione)
 
 ---
 

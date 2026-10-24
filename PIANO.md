@@ -7,14 +7,13 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 9 in corso. Fatto lo step 1: **dati veri della serata 1** al posto di quelli fittizi (sito online su
-  https://matteo-diegoli.github.io/lega-sealed-pavia/, pubblicazione automatica a ogni push su `main`).
-- **Prossima azione:** far lanciare all'utente il push (`! git push`), seguire la pubblicazione con
-  `"/c/Program Files/GitHub CLI/gh.exe" run list -R matteo-diegoli/lega-sealed-pavia` e controllare il sito online;
-  poi proporre la struttura di `GUIDA.md` e aspettare l'ok.
+- **Fase attuale:** Fase 9 **completata** ✅ — progetto concluso. Sito con i dati veri su
+  https://matteo-diegoli.github.io/lega-sealed-pavia/ (pubblicazione automatica a ogni push su `main`).
+- **Prossima azione:** nessuna fase in programma. Si gestisce la lega seguendo `GUIDA.md`; per nuove richieste
+  proporre un piano e aspettare l'ok.
 - `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore: `cloud` = claudio, `moro` = massimo,
   `salva` = salvatore, `iappo` = iacopo) contiene foto e `pool.txt` dei pool della serata 1 (già trascritti in `data/players/`).
-- **Ultimo aggiornamento:** 2026-10-24 (Fase 9, dati veri della serata 1)
+- **Ultimo aggiornamento:** 2026-10-24 (Fase 9: `GUIDA.md` scritta, promemoria dei pool mancanti)
 
 ---
 
@@ -288,7 +287,11 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - [x] ~~(facoltativo) dominio personalizzato~~ — saltato: basta l'indirizzo di github.io (per cambiarlo in futuro: `indirizzo:` in `data/league.yml`)
 
 ### Fase 9 – Documentazione
-- [ ] `GUIDA.md`: checklist di ogni serata, finale, aggiunta giocatori, pubblicazione anche da telefono, cosa fare se la build fallisce
+- [x] `GUIDA.md`: prima della serata (data, assenti, buste), durante (pair, risultati), pubblicare dal PC e dal telefono
+      (matita sul sito di GitHub; abbinamenti solo dal PC), **pool anche giorni dopo** (richiesta utente: non servono durante
+      la serata), finale, aggiunta di un giocatore (assente nelle serate già giocate), cosa fare se la pubblicazione fallisce.
+      **Promemoria dei pool mancanti** in `npm run controlla` (solo avviso, non blocca): per ogni serata con almeno un round,
+      i presenti senza carte in `serata-N` — `src/lib/dati/promemoria.ts` (3 test, 141 in tutto).
 - [x] Dati veri al posto di quelli fittizi (2026-10-24, fatto **prima** di `GUIDA.md`, così la guida descrive cose già provate).
       Cancellati i giocatori fittizi e i round delle serate 2–5; serate 2–5 di `data/league.yml` con `data: null` e `assenti: []`.
       8 giocatori veri (matteo, simone, massimo, salvatore, riccardo, claudio, iacopo, diego) con il pool della serata 1,
