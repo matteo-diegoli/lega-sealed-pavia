@@ -62,6 +62,8 @@ Gli **identificativi** dei giocatori sono: `matteo`, `simone`, `massimo`, `salva
 
 ### Abbinamenti del round
 
+> Solo con il telefono? Vedi **Abbinamenti dal telefono** al punto 4.
+
 ```powershell
 npm.cmd run pair -- --prova     # mostra soltanto gli abbinamenti, senza scrivere niente
 npm.cmd run pair                # crea il file del round
@@ -128,7 +130,8 @@ Dal terminale: `& "C:\Program Files\GitHub CLI\gh.exe" run list -R matteo-diegol
 
 ## 4. Pubblicare dal telefono
 
-Senza PC si possono **scrivere risultati, date, assenti e pool**, modificando i file sul sito di GitHub:
+Senza PC si possono **scrivere risultati, date, assenti e pool** e **creare gli abbinamenti** (sotto).
+I dati si modificano sul sito di GitHub:
 
 1. Apri https://github.com/matteo-diegoli/lega-sealed-pavia (con l'accesso fatto).
 2. Entra nella cartella `data`, poi nel file da cambiare (es. `rounds` → `serata-2-round-1.yml`).
@@ -138,10 +141,22 @@ Senza PC si possono **scrivere risultati, date, assenti e pool**, modificando i 
 La pubblicazione parte da sola. Se un dato è sbagliato fallisce e il sito resta quello di prima:
 nella scheda **Actions** si legge il motivo (vedi il punto 8).
 
-> **Gli abbinamenti dal telefono non si possono calcolare** (`npm.cmd run pair` gira solo sul PC).
-> In emergenza si può creare il file del round a mano con **Add file → Create new file**, nome
-> `data/rounds/serata-X-round-Y.yml`, copiando la forma di un round esistente: il controllo verifica
-> che tutti i presenti siano abbinati, ma **non** che gli abbinamenti siano quelli svizzeri giusti.
+### Abbinamenti dal telefono
+
+Fa lo stesso lavoro di `npm.cmd run pair`, ma su GitHub:
+
+1. Sul repository apri la scheda **Actions** e, nell'elenco a sinistra (o nel menu in alto), **Crea abbinamenti**.
+2. Tocca **Run workflow** e di nuovo **Run workflow** nella finestrella. Per vedere i tavoli senza salvare
+   niente, prima spunta **Solo prova**.
+3. Dopo circa un minuto l'esecuzione ha il ✓ verde: aprila e trovi i **tavoli** nel riepilogo.
+   Il file `data/rounds/serata-X-round-Y.yml` è già nel repository e la pubblicazione è partita da sola:
+   dopo un paio di minuti i tavoli sono anche nella pagina Match del sito.
+4. A fine partite scrivi i risultati in quel file con la matita, come sopra. Quando il round è completo,
+   ripeti dal punto 1 per il round successivo.
+
+Valgono gli stessi rifiuti di `npm.cmd run pair` (risultati mancanti, serata senza data, round già creato):
+in quel caso l'esecuzione ha la ✗ rossa e il motivo è scritto nel riepilogo.
+Segna gli **assenti** in `data/league.yml` **prima** di creare gli abbinamenti del primo round della serata.
 
 ---
 

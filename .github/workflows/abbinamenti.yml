@@ -1,0 +1,72 @@
+# Crea gli abbinamenti del prossimo round (come "npm run pair"), anche dal telefono.
+# Si avvia a mano: Actions → "Crea abbinamenti" → "Run workflow".
+# Salva il file in data/rounds/ con un commit e poi fa partire la pubblicazione del sito.
+name: Crea abbinamenti
+
+on:
+  workflow_dispatch:
+    inputs:
+      prova:
+        description: 'Solo prova: mostra gli abbinamenti senza salvare niente'
+        type: boolean
+        default: false
+
+# Scrivere il file del round e avviare la pubblicazione.
+permissions:
+  contents: write
+  actions: write
+
+# Un'esecuzione alla volta: se premi due volte, la seconda trova il round già creato e si ferma.
+concurrency:
+  group: abbinamenti
+  cancel-in-progress: false
+
+jobs:
+  abbinamenti:
+    name: Abbinamenti del prossimo round
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scarica il progetto
+        uses: actions/checkout@v7
+
+      - name: Installa Node 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Installa le dipendenze
+        run: npm ci
+
+      # I tavoli finiscono anche nel riepilogo dell'esecuzione, leggibile dal telefono.
+      - name: Calcola gli abbinamenti
+        env:
+          PROVA: ${{ inputs.prova && '--prova' || '' }}
+        run: |
+          set +e
+          npm run --silent pair -- $PROVA > "$RUNNER_TEMP/uscita.txt" 2>&1
+          esito=$?
+          cat "$RUNNER_TEMP/uscita.txt"
+          { echo '```'; cat "$RUNNER_TEMP/uscita.txt"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          exit $esito
+
+      - name: Salva il file del round
+        if: ${{ !inputs.prova }}
+        run: |
+          file=$(git status --porcelain --untracked-files=all data/rounds | sed 's/^?? //')
+          if [[ ! "$file" =~ serata-([0-9]+)-round-([0-9]+)\.yml$ ]]; then
+            echo "Nessun file nuovo in data/rounds/ (trovato: '$file')."
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898333+github-actions[bot]@users.noreply.github.com"
+          git add "$file"
+          git commit -m "Serata ${BASH_REMATCH[1]}: abbinamenti del round ${BASH_REMATCH[2]}"
+          git push
+
+      # I commit fatti da un workflow non fanno partire "Pubblica il sito": lo avvio io.
+      - name: Avvia la pubblicazione del sito
+        if: ${{ !inputs.prova }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pubblica.yml --ref main

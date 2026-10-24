@@ -13,7 +13,7 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
   proporre un piano e aspettare l'ok.
 - `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore: `cloud` = claudio, `moro` = massimo,
   `salva` = salvatore, `iappo` = iacopo) contiene foto e `pool.txt` dei pool della serata 1 (già trascritti in `data/players/`).
-- **Ultimo aggiornamento:** 2026-10-24 (avviso sul conto delle carte del pool; meno spazio in cima alla Home)
+- **Ultimo aggiornamento:** 2026-10-24 (abbinamenti anche dal telefono con il workflow «Crea abbinamenti»)
 
 ---
 
@@ -307,6 +307,13 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       `busteDellaSerata` (recuperate ed extra comprese). **Niente controllo per rarità**: slot foil, comune/non comune e
       coppie eco le rendono troppo variabili. `controllaPool` in `src/lib/lega/giocatore.ts` (3 test, 144 in tutto).
       Serata 1: tutti dentro l'intervallo (da 79 a 83 carte su 78–84). Spiegato anche in `GUIDA.md` (sezione 5).
+- [x] **Abbinamenti dal telefono** (richiesta utente, 2026-10-24: durante le serate c'è solo il telefono).
+      Workflow `.github/workflows/abbinamenti.yml` («Crea abbinamenti»), avviato a mano (Actions → Run workflow):
+      esegue `npm run pair` (opzione «Solo prova» = `--prova`), mette i tavoli nel riepilogo dell'esecuzione,
+      salva il file del round con un commit del bot e avvia `pubblica.yml` con `gh workflow run`, perché i commit
+      fatti con il token del workflow non fanno partire gli altri workflow. **Non automatico** a ogni push (deciso):
+      gli abbinamenti calcolati giorni prima sarebbero sbagliati con gli assenti dell'ultimo momento.
+      `GUIDA.md` sezione 4 aggiornata (prima diceva «abbinamenti solo dal PC»).
 - [x] Dati veri al posto di quelli fittizi (2026-10-24, fatto **prima** di `GUIDA.md`, così la guida descrive cose già provate).
       Cancellati i giocatori fittizi e i round delle serate 2–5; serate 2–5 di `data/league.yml` con `data: null` e `assenti: []`.
       8 giocatori veri (matteo, simone, massimo, salvatore, riccardo, claudio, iacopo, diego) con il pool della serata 1,
