@@ -297,6 +297,9 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       terre base non scritte). Diego ha **Consign to Memory** (Special Guest, set MH3): aggiunta alla cache con `npm run scryfall`.
       Round 1 e 2 della serata 1 già scritti in precedenza: in 5 partite il punteggio è **2-1 ipotizzato** (vincitore certo).
       Dopo la serata 1: Matteo e Simone 6 punti; busta extra della serata 2 a **Diego**.
+      Prima pubblicazione con i dati veri fallita al controllo di accessibilità: nel tema chiaro il verde delle vittorie
+      (`#15803d`) sulle schede grigie della pagina Match aveva contrasto 4,24:1 (con i dati fittizi la serata aperta era la
+      finale, a sfondo bianco). Verde del tema chiaro scurito a **`#166534`** in `src/styles/tema.css`.
 
 ---
 
