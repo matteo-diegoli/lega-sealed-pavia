@@ -82,18 +82,36 @@ const sottotitoloClassifica =
 				<summary>Come si legge la classifica</summary>
 				<dl>
 					<dt>Punti</dt>
-					<dd>Vittoria 3, pareggio 1, sconfitta 0. Il bye vale come una vittoria 2-0. Nella finale i punti valgono doppio.</dd>
+					<dd>
+						Vittoria 3, pareggio 1, sconfitta 0, contati sui <strong>match</strong> (BO3). Il bye vale come una
+						vittoria 2-0. In finale i punti valgono doppio, ma solo nella colonna Punti: negli spareggi qui sotto
+						contano normali.
+					</dd>
 					<dt>V-P-S</dt>
-					<dd>Partite vinte, pareggiate e perse (bye compresi).</dd>
+					<dd><strong>Match</strong> vinti, pareggiati e persi (bye compresi).</dd>
+					<dt>Spareggi</dt>
+					<dd>A parità di punti decide OMW%, poi GW%, poi OGW%.</dd>
 					<dt>OMW%</dt>
-					<dd>Media delle percentuali di vittoria degli avversari affrontati (ognuno conta almeno 33%).</dd>
+					<dd>
+						Si contano i <strong>match</strong>: media delle percentuali di vittoria (MW%) degli avversari affrontati.
+						<span class="formula">MW% = punti nei match ÷ (3 × match giocati)</span>
+						<span class="formula">OMW% = media degli MW% degli avversari, ognuno almeno 33%</span>
+						Il bye conta per il proprio MW% ma non come avversario; un avversario incontrato due volte conta due volte.
+					</dd>
 					<dt>GW%</dt>
-					<dd>Percentuale di game vinti.</dd>
+					<dd>
+						Si contano i <strong>game</strong>: la propria percentuale di game vinti.
+						<span class="formula">GW% = (3 × game vinti + 1 × game pareggiati) ÷ (3 × game giocati)</span>
+						Es. chi vince 2-1 fa 2 game vinti su 3. Il bye vale 2 game vinti.
+					</dd>
 					<dt>OGW%</dt>
-					<dd>Media delle percentuali di game vinti dagli avversari (ognuno conta almeno 33%).</dd>
+					<dd>
+						Si contano i <strong>game</strong>: media dei GW% degli avversari affrontati, ognuno almeno 33%.
+					</dd>
 					<dt>Pari merito</dt>
 					<dd>
-						Stessi punti e stessi spareggi. L'ordine tra loro segue lo scontro diretto e, se serve, un sorteggio fisso.
+						Stessi punti, OMW%, GW% e OGW%. Tra loro decide lo scontro diretto (con più di due giocatori, i punti fatti
+						negli scontri tra loro), poi un sorteggio fisso, sempre uguale.
 					</dd>
 				</dl>
 			</details>
@@ -307,6 +325,18 @@ const sottotitoloClassifica =
 	.legenda dd {
 		margin: 0;
 		color: var(--testo-tenue);
+	}
+	.legenda strong {
+		color: var(--testo);
+	}
+	/* Formula su una riga a parte, in carattere monospaziato */
+	.legenda .formula {
+		display: block;
+		margin: 0.3rem 0;
+		font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+		font-size: 0.8rem;
+		color: var(--testo);
+		overflow-wrap: anywhere;
 	}
 	.tappa {
 		background: var(--superficie);
