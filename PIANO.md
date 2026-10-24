@@ -8,12 +8,12 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 ## 📍 Dove siamo
 
 - **Fase attuale:** Fase 8 in corso. Piano approvato il 2026-10-24: 1) preparazione ✅ 2) repository pubblico + primo push ✅
-  3) Action (test + `npm run accessibilita` + deploy su Pages) 4) verifica online 5) dominio (facoltativo).
+  3) Action (test + `npm run accessibilita` + deploy su Pages) ✅ 4) verifica online 5) dominio (facoltativo).
   Si pubblica **con i dati fittizi**: in Fase 9 il passaggio ai dati veri servirà anche a provare l'aggiornamento del sito.
-- **Prossima azione:** Step 3 – l'utente attiva Pages con la Action come sorgente e fa `git push`; poi controllare la prima pubblicazione.
+- **Prossima azione:** Step 4 – verifica online (aspetto su telefono, installazione dell'app, offline, Lighthouse, TalkBack/VoiceOver).
 - `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore) contiene le foto dei **pool veri**
   della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
-- **Ultimo aggiornamento:** 2026-10-24 (Fase 8, step 3)
+- **Ultimo aggiornamento:** 2026-10-24 (Fase 8, step 3 concluso)
 
 ---
 
@@ -269,9 +269,12 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - [x] Repository su GitHub e primo push — https://github.com/matteo-diegoli/lega-sealed-pavia (pubblico, ramo `main`).
       I comandi verso GitHub (`gh`, `git push`) li lancia **l'utente** con `!` (a Claude vengono bloccati). In questa shell
       `gh` non è nel `PATH`: usare `"/c/Program Files/GitHub CLI/gh.exe"`.
-- [ ] GitHub Action per build e deploy su Pages — `.github/workflows/pubblica.yml` (scritto): a ogni push su `main` o a mano;
+- [x] GitHub Action per build e deploy su Pages — `.github/workflows/pubblica.yml`: a ogni push su `main` o a mano;
       Node 24, `npm ci`, `npm test`, `npx playwright install --with-deps chromium`, `npm run accessibilita`, pubblica `dist/`.
-      Se un passo fallisce il sito online resta quello di prima. Da fare: attivare Pages (sorgente: Action) e primo push.
+      Se un passo fallisce il sito online resta quello di prima. Pages attivato con `gh api -X POST repos/…/pages -f build_type=workflow`.
+      Prima pubblicazione riuscita il 2026-10-24 (circa 3 minuti). Azioni aggiornate alle versioni con Node 24
+      (checkout v7, setup-node v7, configure-pages v6, upload-pages-artifact v5, deploy-pages v5).
+      Seguire una pubblicazione: `"/c/Program Files/GitHub CLI/gh.exe" run list -R matteo-diegoli/lega-sealed-pavia`.
 - [ ] Verifica online + installazione su iPhone e Android (+ rimisurare Lighthouse sul sito online, + prova con TalkBack/VoiceOver seguendo `docs/TEST-LETTORE-SCHERMO.md`)
 - [ ] (facoltativo) dominio personalizzato
 
