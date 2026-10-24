@@ -7,13 +7,14 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ## 📍 Dove siamo
 
-- **Fase attuale:** Fase 8 **completata** ✅ (sito online su https://matteo-diegoli.github.io/lega-sealed-pavia/,
-  pubblicazione automatica a ogni push su `main`). Dominio personalizzato saltato (decisione dell'utente il 2026-10-24).
-- **Prossima azione:** proporre il piano della Fase 9 (`GUIDA.md` + sostituzione dei dati fittizi con quelli veri, che
-  serve anche a provare l'aggiornamento del sito online) e aspettare l'ok.
-- `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore) contiene le foto dei **pool veri**
-  della serata 1. Non serve leggerle: quando si sostituiscono i dati fittizi (Fase 9) l'utente fornirà una **lista scritta**.
-- **Ultimo aggiornamento:** 2026-10-24 (Fase 8 completata)
+- **Fase attuale:** Fase 9 in corso. Fatto lo step 1: **dati veri della serata 1** al posto di quelli fittizi (sito online su
+  https://matteo-diegoli.github.io/lega-sealed-pavia/, pubblicazione automatica a ogni push su `main`).
+- **Prossima azione:** far lanciare all'utente il push (`! git push`), seguire la pubblicazione con
+  `"/c/Program Files/GitHub CLI/gh.exe" run list -R matteo-diegoli/lega-sealed-pavia` e controllare il sito online;
+  poi proporre la struttura di `GUIDA.md` e aspettare l'ok.
+- `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore: `cloud` = claudio, `moro` = massimo,
+  `salva` = salvatore, `iappo` = iacopo) contiene foto e `pool.txt` dei pool della serata 1 (già trascritti in `data/players/`).
+- **Ultimo aggiornamento:** 2026-10-24 (Fase 9, dati veri della serata 1)
 
 ---
 
@@ -288,9 +289,14 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 ### Fase 9 – Documentazione
 - [ ] `GUIDA.md`: checklist di ogni serata, finale, aggiunta giocatori, pubblicazione anche da telefono, cosa fare se la build fallisce
-- [ ] Come sostituire i dati fittizi con quelli veri (inclusa la serata 1 del 22/10).
-      Ricordarsi: in `data/league.yml` date e assenti delle serate 2–5 sono **fittizi** (segnati con `# FITTIZIA`):
-      con i dati veri rimettere `data: null` e `assenti: []` e cancellare i file fittizi in `data/players/` e `data/rounds/`.
+- [x] Dati veri al posto di quelli fittizi (2026-10-24, fatto **prima** di `GUIDA.md`, così la guida descrive cose già provate).
+      Cancellati i giocatori fittizi e i round delle serate 2–5; serate 2–5 di `data/league.yml` con `data: null` e `assenti: []`.
+      8 giocatori veri (matteo, simone, massimo, salvatore, riccardo, claudio, iacopo, diego) con il pool della serata 1,
+      **terre base escluse**. Pool presi dai `pool.txt`; quello di **Iacopo** (solo foto) e quello di **Salvatore** (file con nomi
+      storpiati e 86 carte) ricavati dalle 6 foto (84 carte). Claudio ha 79 carte e Diego 83 nei loro elenchi (probabilmente
+      terre base non scritte). Diego ha **Consign to Memory** (Special Guest, set MH3): aggiunta alla cache con `npm run scryfall`.
+      Round 1 e 2 della serata 1 già scritti in precedenza: in 5 partite il punteggio è **2-1 ipotizzato** (vincitore certo).
+      Dopo la serata 1: Matteo e Simone 6 punti; busta extra della serata 2 a **Diego**.
 
 ---
 

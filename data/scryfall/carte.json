@@ -1,6 +1,6 @@
 {
   "set": "fra",
-  "aggiornato": "2026-10-23T10:06:49.128Z",
+  "aggiornato": "2026-10-24T05:19:11.850Z",
   "carte": [
     {
       "nome": "Academic Ascent",
@@ -950,6 +950,34 @@
         }
       ],
       "scryfall": "https://scryfall.com/card/fra/101/compel-brutality?utm_source=api"
+    },
+    {
+      "nome": "Consign to Memory",
+      "set": "mh3",
+      "numero": "54",
+      "rarita": "uncommon",
+      "valore": 1,
+      "colori": [
+        "U"
+      ],
+      "identita": [
+        "U"
+      ],
+      "facce": [
+        {
+          "nome": "Consign to Memory",
+          "costo": "{U}",
+          "tipo": "Instant",
+          "testo": "Replicate {1} (When you cast this spell, copy it for each time you paid its replicate cost. You may choose new targets for the copies.)\nCounter target triggered ability or colorless spell."
+        }
+      ],
+      "immagini": [
+        {
+          "piccola": "https://cards.scryfall.io/small/front/b/c/bc95af55-d1dd-4fe6-adb0-3ad6db20d986.jpg?1783911293",
+          "normale": "https://cards.scryfall.io/normal/front/b/c/bc95af55-d1dd-4fe6-adb0-3ad6db20d986.jpg?1783911293"
+        }
+      ],
+      "scryfall": "https://scryfall.com/card/mh3/54/consign-to-memory?utm_source=api"
     },
     {
       "nome": "Countersculpt",
