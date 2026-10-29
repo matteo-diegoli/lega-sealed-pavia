@@ -6,10 +6,10 @@ round: 2
 
 partite:
   - giocatori: [simone, riccardo]
-    risultato: null
+    risultato: 2-1
   - giocatori: [matteo, diego]
-    risultato: null
+    risultato: 2-1
   - giocatori: [massimo, salvatore]
-    risultato: null
+    risultato: 2-0
 
 bye: null
