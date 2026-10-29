@@ -1,0 +1,15 @@
+# Abbinamenti calcolati da "npm run pair" il 2026-10-29.
+# A fine partita scrivi il risultato al posto di null: 2-0, 2-1, 1-2, 1-1-1, ...
+
+serata: 2
+round: 2
+
+partite:
+  - giocatori: [simone, riccardo]
+    risultato: null
+  - giocatori: [matteo, diego]
+    risultato: null
+  - giocatori: [massimo, salvatore]
+    risultato: null
+
+bye: null
