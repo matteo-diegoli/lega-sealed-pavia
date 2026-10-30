@@ -17,7 +17,7 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore: `cloud` = claudio, `moro` = massimo,
   `salva` = salvatore, `iappo` = iacopo) contiene foto e `pool.txt` dei pool; dalla serata 1 le foto stanno in
   sottocartelle `serataN` (serate 1 e 2 già trascritte in `data/players/`).
-- **Ultimo aggiornamento:** 2026-10-30 (busta extra: escluso chi l'ha ricevuta la serata prima)
+- **Ultimo aggiornamento:** 2026-10-30 (busta extra: escluso chi l'ha ricevuta la serata prima; in home "ultimo tra chi ne ha diritto")
 
 ---
 
