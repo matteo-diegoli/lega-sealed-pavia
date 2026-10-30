@@ -40,14 +40,32 @@ describe('buste di una serata', () => {
 
   it('la busta extra non spetta a chi era assente alla serata precedente; al ritorno recupera la busta', () => {
     // Serata 2 senza D. R3: B batte A, bye a C.  R4: C batte B, bye ad A.
-    // Dopo la serata 2: A 9, C 9, B 4, D 1 → D è ultimo ma era assente: l'extra va a B.
+    // Dopo la serata 2: A 9, C 9, B 4, D 1 → D è ultimo ma era assente, B ha avuto l'extra
+    // alla serata 2 (al posto di D): l'extra va ad A, ultimo tra A e C per i tie-breaker.
     const dati = lega(
       ['a', 'b', 'c', 'd'],
       [...serata1, round(3, [['a', 'b', '0-2']], 'c'), round(4, [['b', 'c', '0-2']], 'a')],
       [[], ['d']],
     );
-    expect(busteDellaSerata(dati, 3).extra).toBe('b');
+    expect(busteDellaSerata(dati, 2).extra).toBe('b');
+    expect(busteDellaSerata(dati, 3).extra).toBe('a');
     expect(di(dati, 3, 'd')).toMatchObject({ normali: 1, recuperate: 1, extra: 0, totale: 2 });
+  });
+
+  it("la busta extra non spetta a chi l'ha ricevuta alla serata precedente, ma due serate dopo sì", () => {
+    // Le serate 2 e 3 si giocano come la serata 1: D resta sempre ultimo, B penultimo.
+    const ripeti = (serata: number) => {
+      const primo = (serata - 1) * 2 + 1;
+      return [
+        round(primo, [['a', 'b', '2-0'], ['c', 'd', '2-1']]),
+        round(primo + 1, [['a', 'c', '2-1'], ['b', 'd', '1-1-1']]),
+      ];
+    };
+    const dati = lega(['a', 'b', 'c', 'd'], [...serata1, ...ripeti(2), ...ripeti(3)]);
+    expect(busteDellaSerata(dati, 2).extra).toBe('d');
+    expect(busteDellaSerata(dati, 3).extra).toBe('b');
+    expect(di(dati, 3, 'd')).toMatchObject({ extra: 0, totale: 1 });
+    expect(busteDellaSerata(dati, 4).extra).toBe('d');
   });
 
   it('chi salta la serata 1 recupera le 6 buste alla serata 2', () => {

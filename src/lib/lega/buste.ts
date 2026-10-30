@@ -4,8 +4,9 @@
 // - chi è assente riceve tutte le buste saltate alla prima serata in cui si presenta
 //   (chi salta la finale non recupera niente);
 // - dalla serata 2, 1 busta extra all'ultimo in classifica al termine della serata precedente,
-//   contando solo chi era presente alla serata precedente ed è presente a questa
-//   (se l'ultimo non c'è passa al penultimo, e così via); la busta extra non si recupera;
+//   contando solo chi era presente alla serata precedente ed è presente a questa, e senza chi
+//   l'ha ricevuta alla serata precedente (se l'ultimo è escluso passa al penultimo, e così via);
+//   la busta extra non si recupera;
 // - la busta extra si decide solo quando la serata precedente ha tutti i risultati.
 
 import { NUMERO_SERATE, ROUND_PER_SERATA } from '../dati/schema.ts';
@@ -67,8 +68,9 @@ export function busteDellaSerata(dati: DatiLega, serata: number): BusteSerata {
   if (serata > 1) {
     if (serataCompleta(dati, serata - 1)) {
       const assentiPrima = assenti(dati, serata - 1);
+      const extraPrima = busteDellaSerata(dati, serata - 1).extra;
       const candidati = classificaDellaSerata(dati, serata - 1).righe.filter(
-        (r) => !assentiPrima.has(r.id) && !assentiOra.has(r.id),
+        (r) => !assentiPrima.has(r.id) && !assentiOra.has(r.id) && r.id !== extraPrima,
       );
       extra = candidati.at(-1)?.id ?? null;
     } else {

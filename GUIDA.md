@@ -52,6 +52,7 @@ Gli **identificativi** dei giocatori sono: `matteo`, `simone`, `massimo`, `salva
    ```
 
    Mostra le buste della prossima serata: 1 a testa, più la **busta extra** all'ultimo in classifica
+   (escluso chi era assente alla serata precedente e chi l'ha già ricevuta alla serata precedente)
    e le buste da recuperare per chi è stato assente. Per una serata precisa: `npm.cmd run buste -- 3`.
 
 > Gli assenti si possono aggiungere anche all'ultimo momento, purché **prima** di creare gli abbinamenti.

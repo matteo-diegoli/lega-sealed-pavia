@@ -17,7 +17,7 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore: `cloud` = claudio, `moro` = massimo,
   `salva` = salvatore, `iappo` = iacopo) contiene foto e `pool.txt` dei pool; dalla serata 1 le foto stanno in
   sottocartelle `serataN` (serate 1 e 2 già trascritte in `data/players/`).
-- **Ultimo aggiornamento:** 2026-10-30 (pool della serata 2 dalle foto di WhatsApp)
+- **Ultimo aggiornamento:** 2026-10-30 (busta extra: escluso chi l'ha ricevuta la serata prima)
 
 ---
 
@@ -30,6 +30,8 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - **Busta extra:** 1 busta in più all'**ultimo in classifica** al termine della serata precedente (dalla serata 2 in poi; parità → decidono i tie-breaker).
   **Non spetta** a chi ha saltato la serata precedente: va all'**ultimo in classifica tra i presenti** alla serata precedente.
   Se l'ultimo **è assente alla serata in cui la riceverebbe**, passa al penultimo (e così via) (deciso il 2026-10-23).
+  **Non spetta** nemmeno a chi **l'ha ricevuta alla serata precedente** (deciso il 2026-10-30): niente due extra di fila,
+  ma due serate dopo può riaverla.
   La busta extra non si recupera.
 - **Assenti:** chi salta una o più serate **riceve tutte le buste normali saltate** alla prima serata in cui si presenta
   (es. assente alla 2 → alla 3 riceve 2 buste; assente alla 1 → alla 2 riceve 6 + 1 = 7 buste).
@@ -348,6 +350,11 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       (es. Refute Destiny; «Skilled Bladecarver» = Skilled Battlecarver). Esclusi terre base, token e le carte della
       serata 1 visibili in cima ai mazzi. Eye of Ugin (Special Guest, set MM2) aggiunta alla cache con `npm run scryfall`.
       Carte: Matteo 14, Massimo 13, Riccardo 14, Salvatore 12, Simone 13, Diego 26. Due carte in sospeso (vedi «Dove siamo»).
+- [x] **Busta extra mai due volte di fila** (richiesta utente, 2026-10-30): `busteDellaSerata` esclude chi l'ha ricevuta
+      alla serata precedente (oltre agli assenti della serata precedente e di questa). 1 test nuovo, 146 in tutto.
+      Serata 3: l'extra passa da Diego (che l'aveva avuta alla 2) a **Salvatore**.
+- Il link di nvm (`C:\nvm4w\nodejs`) il 2026-10-30 puntava a **Node 16**: usare `nvm use 24.22.1` o
+  `$env:APPDATA\nvm\v24.22.1` in testa al `PATH`.
 
 ---
 
