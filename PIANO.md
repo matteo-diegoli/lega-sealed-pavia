@@ -11,9 +11,13 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
   https://matteo-diegoli.github.io/lega-sealed-pavia/ (pubblicazione automatica a ogni push su `main`).
 - **Prossima azione:** nessuna fase in programma. Si gestisce la lega seguendo `GUIDA.md`; per nuove richieste
   proporre un piano e aspettare l'ok.
+  **In sospeso:** due carte dei pool della serata 2 illeggibili nelle foto (l'utente chiede ai giocatori):
+  **Massimo** — carta bianca in alto a destra bruciata dal flash (forse il token: allora le sue 13 carte sono giuste);
+  **Salvatore** — carta bianca coperta da Eye of Ugin (ne ha 12 scritte: la sua pagina mostra l'avviso 13–14).
 - `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore: `cloud` = claudio, `moro` = massimo,
-  `salva` = salvatore, `iappo` = iacopo) contiene foto e `pool.txt` dei pool della serata 1 (già trascritti in `data/players/`).
-- **Ultimo aggiornamento:** 2026-10-30 (abbinamenti senza cicli: priorità agli scontri mai disputati in tutta la lega)
+  `salva` = salvatore, `iappo` = iacopo) contiene foto e `pool.txt` dei pool; dalla serata 1 le foto stanno in
+  sottocartelle `serataN` (serate 1 e 2 già trascritte in `data/players/`).
+- **Ultimo aggiornamento:** 2026-10-30 (pool della serata 2 dalle foto di WhatsApp)
 
 ---
 
@@ -339,6 +343,11 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       scontri nuovi il prima possibile, caso vero della serata 2 (28 scontri su 28 entro l'R10); leghe simulate ridotte
       da 200 a 30 per tipo (ognuna ora richiede circa mezzo secondo). Lega di prova: seme da 2026 a **2**, perché con il
       2026 l'assenza di Elena alla serata 4 costringeva a due ripetizioni anticipate. 145 test.
+- [x] **Pool della serata 2** (2026-10-30) letti dalle foto in `data/photo-from-whatsapp/<giocatore>/serata2/` (Diego: zip
+      con 2 foto, ha avuto la busta extra). Nomi poco leggibili ricavati dal testo delle regole nella cache di Scryfall
+      (es. Refute Destiny; «Skilled Bladecarver» = Skilled Battlecarver). Esclusi terre base, token e le carte della
+      serata 1 visibili in cima ai mazzi. Eye of Ugin (Special Guest, set MM2) aggiunta alla cache con `npm run scryfall`.
+      Carte: Matteo 14, Massimo 13, Riccardo 14, Salvatore 12, Simone 13, Diego 26. Due carte in sospeso (vedi «Dove siamo»).
 
 ---
 

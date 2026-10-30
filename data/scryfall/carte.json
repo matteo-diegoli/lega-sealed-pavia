@@ -1,6 +1,6 @@
 {
   "set": "fra",
-  "aggiornato": "2026-10-24T05:19:11.850Z",
+  "aggiornato": "2026-10-30T18:28:23.602Z",
   "carte": [
     {
       "nome": "Academic Ascent",
@@ -1001,8 +1001,8 @@
       ],
       "immagini": [
         {
-          "piccola": "https://cards.scryfall.io/small/front/1/4/145b928d-a7ff-4fe5-ae4d-bbae7b1d955b.jpg?1788878107",
-          "normale": "https://cards.scryfall.io/normal/front/1/4/145b928d-a7ff-4fe5-ae4d-bbae7b1d955b.jpg?1788878107"
+          "piccola": "https://cards.scryfall.io/small/front/1/4/145b928d-a7ff-4fe5-ae4d-bbae7b1d955b.jpg?1793032893",
+          "normale": "https://cards.scryfall.io/normal/front/1/4/145b928d-a7ff-4fe5-ae4d-bbae7b1d955b.jpg?1793032893"
         }
       ],
       "scryfall": "https://scryfall.com/card/fra/25/countersculpt?utm_source=api"
@@ -1776,6 +1776,30 @@
         }
       ],
       "scryfall": "https://scryfall.com/card/fra/170/eye-of-jace?utm_source=api"
+    },
+    {
+      "nome": "Eye of Ugin",
+      "set": "mm2",
+      "numero": "242",
+      "rarita": "rare",
+      "valore": 0,
+      "colori": [],
+      "identita": [],
+      "facce": [
+        {
+          "nome": "Eye of Ugin",
+          "costo": "",
+          "tipo": "Legendary Land",
+          "testo": "Colorless Eldrazi spells you cast cost {2} less to cast.\n{7}, {T}: Search your library for a colorless creature card, reveal it, put it into your hand, then shuffle."
+        }
+      ],
+      "immagini": [
+        {
+          "piccola": "https://cards.scryfall.io/small/front/d/2/d2d5124b-4d73-4aa9-9331-88e03779ffad.jpg?1790606871",
+          "normale": "https://cards.scryfall.io/normal/front/d/2/d2d5124b-4d73-4aa9-9331-88e03779ffad.jpg?1790606871"
+        }
+      ],
+      "scryfall": "https://scryfall.com/card/mm2/242/eye-of-ugin?utm_source=api"
     },
     {
       "nome": "Face Yourself",
