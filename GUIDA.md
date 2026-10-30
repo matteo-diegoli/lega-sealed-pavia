@@ -76,7 +76,9 @@ npm.cmd run pair                # crea il file del round
 - la serata non ha ancora la data in `data/league.yml`;
 - il file del round esiste già (non sovrascrive mai niente: se vuoi rifarlo, cancellalo e rilancia).
 
-Se vedi **⚠️ Attenzione**, le assenze hanno reso inevitabile una rivincita: è già stata scelta la meno grave.
+Gli abbinamenti danno la priorità a far giocare tutti gli scontri non ancora disputati, guardando fino alla fine
+della lega. Se vedi **⚠️ Attenzione**, per colpa delle assenze due giocatori si riaffrontano prima di aver incontrato
+tutti: è già la scelta che fa giocare più scontri nuovi da qui alla fine, non serve fare niente.
 
 ### Risultati
 

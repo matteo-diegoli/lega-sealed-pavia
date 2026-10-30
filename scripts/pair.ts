@@ -16,8 +16,8 @@ try {
   const punti = new Map(calcolaClassifica(dati, abb.numeroGlobale - 1).righe.map((r) => [r.id, r.punti]));
   const chi = (id: string) => `${nomi.get(id)} (${punti.get(id)} pt)`;
 
-  const tipo = abb.finale ? '🏆 FINALE: punti ×2' : `ciclo ${abb.ciclo}`;
-  console.log(`\nSerata ${abb.serata} · Round ${abb.round}  (round ${abb.numeroGlobale} di ${ROUND_TOTALI}, ${tipo})\n`);
+  const tipo = abb.finale ? ', 🏆 FINALE: punti ×2' : '';
+  console.log(`\nSerata ${abb.serata} · Round ${abb.round}  (round ${abb.numeroGlobale} di ${ROUND_TOTALI}${tipo})\n`);
   abb.partite.forEach(([a, b], i) => console.log(`  Tavolo ${i + 1}:  ${chi(a)}  contro  ${chi(b)}`));
   if (abb.bye) console.log(`  Bye:       ${chi(abb.bye)}`);
   const assenti = dati.lega.serate.find((s) => s.numero === abb.serata)?.assenti ?? [];

@@ -32,8 +32,8 @@ describe('lega di prova completa', () => {
     }
   });
 
-  it('non ha rivincite (il seme è scelto apposta)', () => {
-    expect(completa.avvisi.flat().filter((a) => a.startsWith('Rivincita'))).toEqual([]);
+  it('non ha partite ripetute in anticipo (il seme è scelto apposta)', () => {
+    expect(completa.avvisi.flat().filter((a) => a.includes(' si affrontano per la '))).toEqual([]);
   });
 
   it('nella classifica finale i punti della finale valgono doppio', () => {

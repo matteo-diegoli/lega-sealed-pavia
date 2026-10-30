@@ -13,7 +13,7 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
   proporre un piano e aspettare l'ok.
 - `data/photo-from-whatsapp/` (esclusa in `.gitignore`, una sottocartella per giocatore: `cloud` = claudio, `moro` = massimo,
   `salva` = salvatore, `iappo` = iacopo) contiene foto e `pool.txt` dei pool della serata 1 (già trascritti in `data/players/`).
-- **Ultimo aggiornamento:** 2026-10-24 (abbinamenti anche dal telefono con il workflow «Crea abbinamenti»)
+- **Ultimo aggiornamento:** 2026-10-30 (abbinamenti senza cicli: priorità agli scontri mai disputati in tutta la lega)
 
 ---
 
@@ -34,15 +34,15 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 
 | Serata | Round | Tipo | Punti |
 |---|---|---|---|
-| 1 | R1, R2 | Svizzera – ciclo 1 | ×1 |
-| 2 | R3, R4 | Svizzera – ciclo 1 | ×1 |
-| 3 | R5, R6 | Svizzera – ciclo 1 | ×1 |
-| 4 | R7 | Svizzera – ciclo 1 (ultimo: tutti si sono affrontati) | ×1 |
-| 4 | R8 | Svizzera – **ciclo 2** | ×1 |
-| 5 | R9, R10 | Svizzera – ciclo 2, **finale** | **×2** |
+| 1 | R1, R2 | Svizzera | ×1 |
+| 2 | R3, R4 | Svizzera | ×1 |
+| 3 | R5, R6 | Svizzera | ×1 |
+| 4 | R7, R8 | Svizzera | ×1 |
+| 5 | R9, R10 | Svizzera, **finale** | **×2** |
 
-- **Ciclo 1 (R1–R7):** nessuna rivincita; backtracking per garantire che R7 sia sempre abbinabile.
-- **Ciclo 2 (R8–R10):** abbinamenti per classifica, nessuna rivincita *dentro* il ciclo 2; riaffrontare chi si è incontrato in R1–R7 è ammesso.
+- **Niente cicli** (deciso il 2026-10-30; prima c'erano un ciclo 1 R1–R7 e un ciclo 2 R8–R10): un'unica svizzera
+  di 10 round che dà la priorità a far giocare tutti gli scontri non ancora disputati (vedi **Abbinamenti**).
+  Senza assenze tutti si affrontano entro l'R7 e negli R8–R10 nessuno si affronta per la terza volta.
 - **Punti:** BO3, vittoria 3, pareggio 1, sconfitta 0. Bye = vittoria 2-0, al giocatore con meno punti che non l'ha ancora avuto.
 - **Tie-breaker:** OMW% (minimo 33%), GW%, OGW%. La finale **conta normalmente** nei tie-breaker (il ×2 vale solo per i punti).
 - **Parità su tutto** (deciso il 2026-10-23): stessa posizione in classifica ("pari merito"). Quando bisogna
@@ -51,11 +51,18 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
 - Dettagli del calcolo: il bye conta come vittoria 2-0 (3 punti, ×2 in finale) e vale per MW% e GW%, ma non è
   un avversario in OMW%/OGW%; l'assenza non conta niente; le partite con risultato `null` si ignorano.
   Il minimo del 33% vale solo per gli avversari (il proprio MW%/GW% resta quello vero).
-- **Abbinamenti** (deciso il 2026-10-23): ordine della classifica dopo l'ultimo round; dall'alto in basso, ognuno
-  contro il più alto libero e mai incontrato nel ciclo. Backtracking: un abbinamento si accetta solo se i round
-  rimasti nel ciclo restano abbinabili senza rivincite, supponendo tutti presenti (al massimo n − 1 round per ciclo).
-  Bye: al più basso in classifica tra chi ne ha avuti meno; se serve a evitare rivincite passa al candidato successivo.
-  Se le assenze rendono le rivincite inevitabili: il minor numero possibile, le più vecchie, con un **avviso**.
+- **Abbinamenti** (rivisti il 2026-10-30, dopo le assenze di Claudio e Iacopo alla serata 2): si guarda tutta la lega
+  dal round da abbinare fino all'R10, supponendo tutti presenti nei round futuri, e si sceglie in quest'ordine:
+  1. il **maggior numero di scontri mai disputati** in tutta la lega (una ripetizione si anticipa, anche all'R5 o all'R6,
+     solo se così se ne giocano di più); a parità, gli scontri nuovi **il prima possibile**;
+  2. se una coppia deve rigiocare, **quella che si è affrontata meno volte** (nessuno per la 3ª volta se un'altra coppia
+     può farlo per la 2ª);
+  3. a parità, la **classifica**: bye al più basso tra chi ne ha avuti meno; poi dall'alto in basso, ognuno contro il
+     più alto possibile.
+  Un **avviso** per ogni coppia che rigioca prima che i due abbiano incontrato tutti, e per il bye non al primo candidato.
+  Calcolo esatto (ricerca con limiti inferiori dati da un flusso massimo): circa 50 ms a round, al peggio un paio di secondi.
+  Confronto sul caso vero (tutti presenti dalla serata 3, 10 serie di risultati): prima 25–27 scontri diversi su 28
+  e qualche coppia 3 volte; ora sempre **28 su 28** e nessuna coppia 3 volte.
 - **`npm run pair`**: trova da solo il prossimo round, si rifiuta se mancano risultati o la data della serata,
   crea `data/rounds/serata-X-round-Y.yml` con `risultato: null` (mai sovrascrivere). `-- --prova` mostra soltanto.
 
@@ -158,7 +165,7 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       quando la serata precedente ha tutti i risultati. Anche `genera-prova` usa questo modulo.
 - [x] `npm run pair` (e `npm run pair -- --prova`)
 - [x] Test automatici + dati di prova che simulano tutte e 5 le serate: `src/lib/lega/simulazione.ts` gioca la lega
-      con il motore vero (abbinamenti svizzeri, buste) e risultati casuali ripetibili (seme 2026, senza rivincite).
+      con il motore vero (abbinamenti svizzeri, buste) e risultati casuali ripetibili (seme 2, senza ripetizioni anticipate; era 2026 fino al 2026-10-30).
       Assenze fittizie: Marco alla serata 2, Elena alla 4. `npm run genera-prova -- --forza` crea la lega completa;
       `npm run genera-prova -- --fino-a 3 --forza` la ferma al termine della serata 3 con il round successivo da giocare
       (utile in Fase 4 per vedere il sito a metà lega). 13 test della catena intera (95 in tutto); ai test delle
@@ -325,6 +332,13 @@ così si può interrompere la sessione e ripartire da qui in qualsiasi momento.
       Prima pubblicazione con i dati veri fallita al controllo di accessibilità: nel tema chiaro il verde delle vittorie
       (`#15803d`) sulle schede grigie della pagina Match aveva contrasto 4,24:1 (con i dati fittizi la serata aperta era la
       finale, a sfondo bianco). Verde del tema chiaro scurito a **`#166534`** in `src/styles/tema.css`.
+- [x] **Abbinamenti senza cicli** (richiesta utente, 2026-10-30). Dopo le assenze della serata 2 il vecchio algoritmo
+      rimandava le ripetizioni all'R7 e nel ciclo 2 non cercava gli scontri mancanti. Nuova regola in **Abbinamenti**
+      (sopra). `src/lib/lega/abbinamenti.ts`: `Ripetizione` (volta, round precedenti) al posto di `Rivincita`; tolti
+      `ciclo` e `ULTIMO_ROUND_CICLO_1`; `npm run pair` non stampa più il ciclo. Test nuovi: ripetizione meno usata,
+      scontri nuovi il prima possibile, caso vero della serata 2 (28 scontri su 28 entro l'R10); leghe simulate ridotte
+      da 200 a 30 per tipo (ognuna ora richiede circa mezzo secondo). Lega di prova: seme da 2026 a **2**, perché con il
+      2026 l'assenza di Elena alla serata 4 costringeva a due ripetizioni anticipate. 145 test.
 
 ---
 

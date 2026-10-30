@@ -53,8 +53,8 @@ export const GIOCATORI_DI_PROVA = [
 export const DATE_DI_PROVA = ['2026-10-22', '2026-10-29', '2026-11-05', '2026-11-12', '2026-11-19'];
 /** Marco salta la serata 2 (recupera la busta alla 3), Elena la 4 (recupera alla finale). */
 export const ASSENTI_DI_PROVA = [[], ['marco'], [], ['elena'], []];
-/** Seme scelto perché la lega di prova non ha rivincite (vedi il test). */
-export const SEME_DI_PROVA = 2026;
+/** Seme scelto perché nella lega di prova nessuno rigioca prima di aver incontrato tutti (vedi il test). */
+export const SEME_DI_PROVA = 2;
 
 export function opzioniDiProva(carte: Carta[]): OpzioniSimulazione {
   return {
