@@ -18,7 +18,7 @@ serate:
     assenti: [claudio,iacopo]
   - numero: 3
     data: null
-    assenti: []
+    assenti: [diego]
   - numero: 4
     data: null
     assenti: []
