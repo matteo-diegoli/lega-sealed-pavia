@@ -10,6 +10,6 @@ partite:
   - giocatori: [matteo, claudio]
     risultato: 2-0
   - giocatori: [salvatore, iacopo]
-    risultato: null
+    risultato: 2-1
 
 bye: null
