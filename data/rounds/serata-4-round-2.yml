@@ -8,10 +8,10 @@ partite:
   - giocatori: [simone, matteo]
     risultato: 0-2
   - giocatori: [massimo, salvatore]
-    risultato: 0-2
+    risultato: 2-0
   - giocatori: [riccardo, iacopo]
     risultato: 2-1
   - giocatori: [claudio, diego]
-    risultato: null
+    risultato: 2-1
 
 bye: null
