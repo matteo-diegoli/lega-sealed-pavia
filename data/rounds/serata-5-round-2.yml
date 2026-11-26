@@ -6,7 +6,7 @@ round: 2
 
 partite:
   - giocatori: [simone, salvatore]
-    risultato: null
+    risultato: 2-0
   - giocatori: [matteo, massimo]
     risultato: 2-0
   - giocatori: [riccardo, diego]
