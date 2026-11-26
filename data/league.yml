@@ -23,5 +23,5 @@ serate:
     data: 2026-11-19
     assenti: []
   - numero: 5
-    data: null
-    assenti: []
+    data: 2026-11-26
+    assenti: [claudio,iacopo]
