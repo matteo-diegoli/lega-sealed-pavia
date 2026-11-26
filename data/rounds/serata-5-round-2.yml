@@ -10,6 +10,6 @@ partite:
   - giocatori: [matteo, massimo]
     risultato: 2-0
   - giocatori: [riccardo, diego]
-    risultato: null
+    risultato: 2-1
 
 bye: null
