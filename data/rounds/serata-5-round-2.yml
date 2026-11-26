@@ -8,7 +8,7 @@ partite:
   - giocatori: [simone, salvatore]
     risultato: null
   - giocatori: [matteo, massimo]
-    risultato: null
+    risultato: 2-0
   - giocatori: [riccardo, diego]
     risultato: null
 
